@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "GUI_prog1/1.0.0": {
+        "runtime": {
+          "GUI_prog1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GUI_prog1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
