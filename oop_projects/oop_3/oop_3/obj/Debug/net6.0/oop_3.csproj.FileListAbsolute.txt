@@ -1,0 +1,15 @@
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\bin\Debug\net6.0\oop_3.exe
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\bin\Debug\net6.0\oop_3.deps.json
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\bin\Debug\net6.0\oop_3.runtimeconfig.json
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\bin\Debug\net6.0\oop_3.dll
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\bin\Debug\net6.0\oop_3.pdb
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.csproj.AssemblyReference.cache
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.AssemblyInfoInputs.cache
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.AssemblyInfo.cs
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.csproj.CoreCompileInputs.cache
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.dll
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\refint\oop_3.dll
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.pdb
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\oop_3.genruntimeconfig.cache
+C:\Users\yuval\Desktop\C# projects\Campus_il_projects\oop_3\oop_3\obj\Debug\net6.0\ref\oop_3.dll
