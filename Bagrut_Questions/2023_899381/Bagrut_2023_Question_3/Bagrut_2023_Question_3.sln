@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bagrut_2023_Question_3", "Bagrut_2023_Question_3\Bagrut_2023_Question_3.csproj", "{3C268AD8-8C49-495B-AC9B-89E8A6665CD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C268AD8-8C49-495B-AC9B-89E8A6665CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C268AD8-8C49-495B-AC9B-89E8A6665CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C268AD8-8C49-495B-AC9B-89E8A6665CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C268AD8-8C49-495B-AC9B-89E8A6665CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CC7B8CD-F2EF-4BE9-A22B-E82E85A1A4F3}
+	EndGlobalSection
+EndGlobal
