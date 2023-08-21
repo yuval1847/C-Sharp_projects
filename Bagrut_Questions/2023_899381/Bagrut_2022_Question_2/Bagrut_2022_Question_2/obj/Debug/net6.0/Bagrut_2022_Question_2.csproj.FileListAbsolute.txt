@@ -1,0 +1,15 @@
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\bin\Debug\net6.0\Bagrut_2022_Question_2.exe
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\bin\Debug\net6.0\Bagrut_2022_Question_2.deps.json
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\bin\Debug\net6.0\Bagrut_2022_Question_2.runtimeconfig.json
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\bin\Debug\net6.0\Bagrut_2022_Question_2.dll
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\bin\Debug\net6.0\Bagrut_2022_Question_2.pdb
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.csproj.AssemblyReference.cache
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.AssemblyInfoInputs.cache
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.AssemblyInfo.cs
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.csproj.CoreCompileInputs.cache
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.dll
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\refint\Bagrut_2022_Question_2.dll
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.pdb
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\Bagrut_2022_Question_2.genruntimeconfig.cache
+C:\Users\yuval\Desktop\C# projects\BAGRUT_QUESTIONS\Bagrut_2022_Question_2\Bagrut_2022_Question_2\obj\Debug\net6.0\ref\Bagrut_2022_Question_2.dll
