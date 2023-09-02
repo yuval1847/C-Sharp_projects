@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "KEjCVag7RjOcC4Cz/VucjoXFO+G5UWSY/MLbc6dUhkIRcwEL0hEutiCwql6fOaYRRauQJ64+QyiX46wduVe06w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\USER\\Desktop\\C# projects\\Recursion_2\\Recursion_2\\Recursion_2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\USER\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
+  "logs": []
+}
