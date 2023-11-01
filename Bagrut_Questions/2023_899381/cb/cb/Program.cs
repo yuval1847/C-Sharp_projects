@@ -3,8 +3,8 @@ using System.Drawing;
 
 class ColoredBox
 {
-    double length, width, height;
-    string color;
+    private double length, width, height;
+    private string color;
     public ColoredBox(double length, double width, double height, string color)
     {
         this.length = length;
