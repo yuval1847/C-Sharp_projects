@@ -5,6 +5,11 @@
     private int green = 0;
     private int blue = 0;
 
+    public Pixel(int red, int green, int blue){
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
     public int GetRed()
     {
         // The function get nothing
