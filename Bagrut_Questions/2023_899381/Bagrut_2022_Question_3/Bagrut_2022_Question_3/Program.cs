@@ -74,7 +74,9 @@
 class Structure
 {
     private Pixel[] arr = new Pixel[9];
-
+    public Structure(Pixel[] arr1 = new Pixel[9]){
+        this.arr = arr1;
+    }
     public bool isBalanced()
     {
         // The function get nothing
