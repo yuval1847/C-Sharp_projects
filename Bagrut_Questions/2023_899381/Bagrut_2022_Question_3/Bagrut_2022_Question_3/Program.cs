@@ -9,19 +9,19 @@
     {
         // The function get nothing
         // The function return the value of the red attribute
-        return red;
+        return this.red;
     }
     public int GetGreen()
     {
         // The function get nothing
         // The function return the value of the green attribute
-        return green;
+        return this.green;
     }
     public int GetBlue()
     {
         // The function get nothing
         // The function return the value of the blue attribute
-        return blue;
+        return this.blue;
     }
 
     public void SetRed(int newRedValue)
