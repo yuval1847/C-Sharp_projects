@@ -31,8 +31,7 @@ namespace Lesson_1_v3_calculator
             DataColumn column = new DataColumn("expression", typeof(double), expression);
             table.Columns.Add(column);
             table.Rows.Add(0);
-            double result = (double)(table.Rows[0]["expression"]);
-            return result.ToString();
+            return ((double)(table.Rows[0]["expression"])).ToString();
         }
 
         private void btn_0_Click(object sender, EventArgs e)
