@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +16,25 @@ namespace Lesson_1_v3_calculator
         {
             InitializeComponent();
         }
+
+        private string EvaluateExpression(string expression)
+        {
+            // Using DataTable.Compute method to evaluate the expression
+            for (int i = 0; i < expression.Length; i++)
+            {
+                if (expression[i] == '/' && expression[i + 1] == '0')
+                {
+                    return "Error!";
+                }
+            }
+            DataTable table = new DataTable();
+            DataColumn column = new DataColumn("expression", typeof(double), expression);
+            table.Columns.Add(column);
+            table.Rows.Add(0);
+            double result = (double)(table.Rows[0]["expression"]);
+            return result.ToString();
+        }
+
         private void btn_0_Click(object sender, EventArgs e)
         {
             if (label_result.Text != "0")
@@ -126,7 +145,7 @@ namespace Lesson_1_v3_calculator
 
         private void plus_btn_Click(object sender, EventArgs e)
         {
-            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == 'x' || label_result.Text[label_result.Text.Length - 1] == '÷'))
+            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == '*' || label_result.Text[label_result.Text.Length - 1] == '/'))
             {
                 label_result.Text += "+";
             }
@@ -134,7 +153,7 @@ namespace Lesson_1_v3_calculator
 
         private void minus_btn_Click(object sender, EventArgs e)
         {
-            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == 'x' || label_result.Text[label_result.Text.Length - 1] == '÷'))
+            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == '*' || label_result.Text[label_result.Text.Length - 1] == '/'))
             {
                 label_result.Text += "-";
             }
@@ -142,80 +161,23 @@ namespace Lesson_1_v3_calculator
 
         private void multi_btn_Click(object sender, EventArgs e)
         {
-            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == 'x' || label_result.Text[label_result.Text.Length - 1] == '÷'))
+            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == '*' || label_result.Text[label_result.Text.Length - 1] == '/'))
             {
-                label_result.Text += "x";
+                label_result.Text += "*";
             }
         }
 
         private void Divide_btn_Click(object sender, EventArgs e)
         {
-            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == 'x' || label_result.Text[label_result.Text.Length - 1] == '÷'))
+            if (!(label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == '*' || label_result.Text[label_result.Text.Length - 1] == '/'))
             {
-                label_result.Text += "÷";
+                label_result.Text += "/";
             }
         }
 
         private void result_btn_Click(object sender, EventArgs e)
         {
-            int first_num = 0, index = 0, calculating_result = 0;
-            char operator_sign;
-            if (!(label_result.Text.Length == 1 && (label_result.Text[label_result.Text.Length - 1] == '+' || label_result.Text[label_result.Text.Length - 1] == '-' || label_result.Text[label_result.Text.Length - 1] == 'x' || label_result.Text[label_result.Text.Length - 1] == '÷')))
-            {
-                label_result.Text += '$'; // A special sign to find the end of the string
-                while (!(label_result.Text[index] == '+' || label_result.Text[index] == '-' || label_result.Text[index] == 'x' || label_result.Text[index] == '÷'))
-                {
-                    if (label_result.Text[index] == '$')
-                    {
-                        break;
-                    }
-                    first_num = first_num * 10 + ((int)(label_result.Text[index])-48);
-                    index++;
-                }
-                calculating_result+=first_num;
-                while (!(label_result.Text[index] == '$'))
-                {
-                    first_num = 0;
-                    operator_sign = label_result.Text[index];
-                    index++;
-                    while (!(label_result.Text[index] == '+' || label_result.Text[index] == '-' || label_result.Text[index] == 'x' || label_result.Text[index] == '÷'))
-                    {
-                        if (label_result.Text[index] == '$')
-                        {
-                            break;
-                        }
-                        first_num = first_num * 10 + ((int)(label_result.Text[index]) - 48);
-                        index++;
-                    }
-                    if (operator_sign == '+')
-                    {
-                        calculating_result += first_num;
-                    }
-                    else if (operator_sign == '-')
-                    {
-                        calculating_result -= first_num;
-                    }
-                    else if (operator_sign == 'x')
-                    {
-                        Console.WriteLine(calculating_result);
-                        calculating_result *= first_num;
-                    }
-                    else
-                    {
-                        if (first_num != 0)
-                        {
-                            calculating_result /= first_num;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Can't divide with 0 ...", "Calculating error");
-                            calculating_result = 0;
-                            break;
-                        }
-                    }
-                }
-            }
-            label_result.Text = calculating_result.ToString();
+            label_result.Text = this.EvaluateExpression(label_result.Text);
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
