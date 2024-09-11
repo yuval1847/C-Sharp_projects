@@ -1,0 +1,17 @@
+﻿<Window x:Class="WPF_Prog1_Widgets_Learning.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Prog1_Widgets_Learning"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Background="RoyalBlue">
+    <Grid>
+        <TextBlock Name="lblHelloWorld" Text="Hello, World!" FontSize="40" FontFamily="Inter" Foreground="White"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Button Name="btnChangeLblPos" Width="200" Height="50" Background="Orange"
+                Content="change text position" Foreground="White" FontSize="20"
+                Click="btnChangeLblPos_Click"/>
+        
+    </Grid>
+</Window>
