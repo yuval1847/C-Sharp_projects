@@ -1,0 +1,11 @@
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\bin\Debug\Prog_1_winforms.exe.config
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\bin\Debug\Prog_1_winforms.exe
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\bin\Debug\Prog_1_winforms.pdb
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.csproj.AssemblyReference.cache
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.csproj.SuggestedBindingRedirects.cache
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.Form1.resources
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.Properties.Resources.resources
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.csproj.GenerateResource.cache
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.csproj.CoreCompileInputs.cache
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.exe
+C:\Users\yuval\Desktop\C# projects\Prog_1_winforms\Prog_1_winforms\obj\Debug\Prog_1_winforms.pdb
