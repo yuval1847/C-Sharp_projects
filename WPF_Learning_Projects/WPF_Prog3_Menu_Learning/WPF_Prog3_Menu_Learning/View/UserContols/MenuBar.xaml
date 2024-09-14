@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="WPF_Prog3_Menu_Learning.View.UserContols.MenuBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Prog3_Menu_Learning.View.UserContols"
+             mc:Ignorable="d" 
+             d:DesignHeight="37.5" d:DesignWidth="800">
+    <Grid>
+        <Menu Background="Black" Foreground="White">
+            <MenuItem Header="File" FontSize="16" Margin="5">
+                <MenuItem Header="New File" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Open File" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="New Folder" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Open Folder" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Exit" FontSize="16" Margin="5" Foreground="Black" Click="MenuItem_Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit" FontSize="16" Margin="5">
+                <MenuItem Header="Cut" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Copy" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Paste" FontSize="16" Margin="5" Foreground="Black"/>
+                <MenuItem Header="Delete" FontSize="16" Margin="5" Foreground="Black"/>
+            </MenuItem>
+            <MenuItem Header="Help" FontSize="16" Margin="5"/>
+        </Menu>
+    </Grid>
+</UserControl>
