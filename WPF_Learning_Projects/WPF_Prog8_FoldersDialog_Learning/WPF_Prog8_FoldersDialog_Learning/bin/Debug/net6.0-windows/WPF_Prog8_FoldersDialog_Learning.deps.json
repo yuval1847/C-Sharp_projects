@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WPF_Prog8_FoldersDialog_Learning/1.0.0": {
+        "runtime": {
+          "WPF_Prog8_FoldersDialog_Learning.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WPF_Prog8_FoldersDialog_Learning/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
