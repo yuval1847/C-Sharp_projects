@@ -6,16 +6,51 @@
         xmlns:local="clr-namespace:ExtremeLink"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="960">
+    <Window.Resources>
+        <!-- Storyboard for the Image animation -->
+        <Storyboard x:Key="ImageFadeAndMoveStoryboard">
+            <!-- Fade In Animation -->
+            <DoubleAnimation Storyboard.TargetName="loadingImage" Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:3"/>
+            <!-- Move Up Animation -->
+            <DoubleAnimation Storyboard.TargetName="loadingImage" 
+                             Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.Y)"
+                             From="20" To="0" Duration="0:0:1" BeginTime="0:0:3"/>
+        </Storyboard>
+
+        <!-- Storyboard for the TextBox animation -->
+        <Storyboard x:Key="TextBoxAnimationStoryboard">
+            <!-- Example of TextBox Fade In -->
+            <DoubleAnimation Storyboard.TargetName="infoTextBox" Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:5"/>
+            <!-- Example of TextBox Slide Up -->
+            <DoubleAnimation Storyboard.TargetName="infoTextBox" 
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="20" To="0" Duration="0:0:5"/>
+        </Storyboard>
+        
+        <LinearGradientBrush x:Key="GradientBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="Gray" Offset="0"/>
+            <GradientStop Color="Black" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    
     <Grid>
-        <Border>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="2">
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,2" EndPoint="1,1">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="Black" Offset="0.1"/>
-                    <GradientStop Color="Blue" Offset="1.5"/>
+                    <GradientStop Color="Blue" Offset="1.2"/>
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Image Name="loadingImage" Source="Images/ExtremLink_Icon.png" 
+
+        <Image Grid.Row="0" Name="loadingImage" Source="Images/ExtremLink_Icon.png" 
                Width="200" Height="200" 
                HorizontalAlignment="Center" VerticalAlignment="Center"
                Opacity="0" RenderTransformOrigin="0.5,0.5">
@@ -26,29 +61,19 @@
             </Image.RenderTransform>
             <Image.Triggers>
                 <EventTrigger RoutedEvent="Image.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <!-- Fade In Animation -->
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                             From="0" To="1" Duration="0:0:3"
-                                             BeginTime="0:0:0"/>
-                            <!-- Move Up Animation -->
-                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.Y)"
-                                             From="20" To="0" Duration="0:0:1"
-                                             BeginTime="0:0:3"/>
-                            <!-- Trigger TextBox Visibility After Animation -->
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="infoTextBox"
-                                                           Storyboard.TargetProperty="Visibility">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:4">
-                                    <DiscreteObjectKeyFrame.Value>
-                                        <Visibility>Visible</Visibility>
-                                    </DiscreteObjectKeyFrame.Value>
-                                </DiscreteObjectKeyFrame>
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
+                    <BeginStoryboard Storyboard="{StaticResource ImageFadeAndMoveStoryboard}"/>
                 </EventTrigger>
             </Image.Triggers>
         </Image>
+        <TextBlock Grid.Row="1" x:Name="MatrixTextBlock" Text="ExtremLink" 
+                   FontSize="70" Background="Transparent" Foreground="White" 
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   FontFamily="Inter"/>
+        
+        <!-- Loading progress bar -->
+        <ProgressBar Grid.Row="1" x:Name = "loadingProgressBar" Margin="10" Value = "0" Maximum = "200"  
+        VerticalAlignment="Bottom" HorizontalAlignment="Center"
+        Height = "15" Width="850" IsIndeterminate = "False" Foreground="{StaticResource GradientBrush}"/>
+
     </Grid>
 </Window>
