@@ -5,10 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExtremeLink"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="960"
-        Loaded="Window_Loaded"
-        WindowStyle="None"
-        AllowsTransparency="True">
+        Title="MainWindow" Height="600" Width="960">
     <Grid>
         <Border>
             <Border.Background>
@@ -18,16 +15,36 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Image Name="loadingImage" Source="/Images/ExtremLink_Icon.png" 
-               Width="224" Height="198" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="1">
+        <Image Name="loadingImage" Source="Images/ExtremLink_Icon.png" 
+               Width="200" Height="200" 
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Opacity="0" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="imageTranslateTransform"/>
+                </TransformGroup>
+            </Image.RenderTransform>
             <Image.Triggers>
                 <EventTrigger RoutedEvent="Image.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                 From="0" To="1" Duration="0:0:5" 
-                                 AutoReverse="False"/>
+                            <!-- Fade In Animation -->
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0" To="1" Duration="0:0:3"
+                                             BeginTime="0:0:0"/>
+                            <!-- Move Up Animation -->
+                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(TranslateTransform.Y)"
+                                             From="20" To="0" Duration="0:0:1"
+                                             BeginTime="0:0:3"/>
+                            <!-- Trigger TextBox Visibility After Animation -->
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="infoTextBox"
+                                                           Storyboard.TargetProperty="Visibility">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:4">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
