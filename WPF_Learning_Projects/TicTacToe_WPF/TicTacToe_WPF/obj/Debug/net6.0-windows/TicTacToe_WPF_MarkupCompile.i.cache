@@ -1,0 +1,20 @@
+﻿TicTacToe_WPF
+1.0.0.0
+
+winexe
+C#
+.cs
+C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\
+TicTacToe_WPF
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\App.xaml
+4-221275238
+
+10806167053
+194618410957
+MainWindow.xaml;Pages\GamePage.xaml;Pages\RulesPage.xaml;Pages\StartPage.xaml;
+
+False
+
