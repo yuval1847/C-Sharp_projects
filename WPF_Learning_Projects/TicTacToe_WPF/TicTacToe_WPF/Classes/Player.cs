@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 
 namespace TicTacToe_WPF.Classes
 {
@@ -25,13 +28,25 @@ namespace TicTacToe_WPF.Classes
         }
 
 
-        public Player(Image img, string type)
+        public Player(string type)
         {
-            this.img = img;
             this.type = type;
+
+            // Set the image based on the type
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            if (this.type == "x")
+            {
+                bitmap.UriSource = new Uri("Images/x.png");
+            }
+            else
+            {
+                bitmap.UriSource = new Uri("Images/o.png");
+            }
+            bitmap.EndInit();
+            this.Img.Source = bitmap;
         }
 
-
-
+        
     }
 }
