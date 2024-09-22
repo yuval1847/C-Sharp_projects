@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using TicTacToe_WPF.Classes;
 
 namespace TicTacToe_WPF.Pages
@@ -40,41 +41,52 @@ namespace TicTacToe_WPF.Pages
         // Top Buttons
         private void TopLeftBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            game.ChangeButtonImage(TopLeftImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void TopCenterBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(TopCenterImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void TopRightBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(TopRightImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
+
         // Center Buttons
         private void CenterLeftBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(CenterLeftImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void CenterCenterBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(CenterCenterImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void CenterRightBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(CenterRightImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
+
         // Bottom buttons
         private void BottomLeftBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(BottomLeftImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void BottomCenterBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(BottomCenterImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void BottomRightBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.ChangeButtonImage(BottomRightImage);
+            turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
     }
 }

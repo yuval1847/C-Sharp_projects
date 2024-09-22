@@ -17,74 +17,75 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <TextBlock x:Name="turnTextBox" Grid.Row="0" Grid.Column="1" Text="Turn of player: x" FontSize="50" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+
         <!-- Top Left -->
         <Button x:Name="TopLeftBtn" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="TopLeftBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="TopLeftBtn_Click">
+            <Image x:Name="TopLeftImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Top Center -->
         <Button x:Name="TopCenterBtn" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="TopCenterBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="TopCenterBtn_Click">
+            <Image x:Name="TopCenterImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Top Right -->
         <Button x:Name="TopRightBtn" Width="100" Height="100" HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="TopRightBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="TopRightBtn_Click">
+            <Image x:Name="TopRightImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
-        
-        
+
         <!-- Center Left -->
         <Button x:Name="CenterLeftBtn" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="CenterLeftBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="CenterLeftBtn_Click">
+            <Image x:Name="CenterLeftImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Center Center -->
         <Button x:Name="CenterCenterBtn" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="CenterCenterBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="CenterCenterBtn_Click">
+            <Image x:Name="CenterCenterImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Center Right -->
         <Button x:Name="CenterRightBtn" Width="100" Height="100" HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="CenterRightBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="CenterRightBtn_Click">
+            <Image x:Name="CenterRightImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
-        
-        
+
         <!-- Bottom Left -->
         <Button x:Name="BottomLeftBtn" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="BottomLeftBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="BottomLeftBtn_Click">
+            <Image x:Name="BottomLeftImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Bottom Center -->
         <Button x:Name="BottomCenterBtn" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="BottomCenterBtn_Click">
-            <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="BottomCenterBtn_Click">
+            <Image x:Name="BottomCenterImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
         <!-- Bottom Right -->
         <Button x:Name="BottomRightBtn" Width="100" Height="100" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
-                    Click="BottomRightBtn_Click">
-                    <Image Source="/Images/empty_cell.png" Width="100" Height="100"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"
+        Click="BottomRightBtn_Click">
+            <Image x:Name="BottomRightImage" Source="/Images/empty_cell.png" Width="100" Height="100"
+           VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
-        
+
     </Grid>
 </UserControl>

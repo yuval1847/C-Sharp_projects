@@ -32,18 +32,29 @@ namespace TicTacToe_WPF.Classes
             else { currentPlayer = this.players[1]; }
         }
 
-        public void ChangeButtonImage(Button btn)
+        public void SwitchUser()
         {
-            Image? buttonImage = btn.Content as Image;
-            if (buttonImage.Source.Equals(new BitmapImage(new Uri("/Images/empty_cell.png", UriKind.Relative)))){
-                if (CurrentPlayer.Type == "x")
-                {
-                    buttonImage.Source = new BitmapImage(new Uri("/Images/x.png", UriKind.Relative));
-                }
-                else
-                {
-                    buttonImage.Source = new BitmapImage(new Uri("/Images/o.png", UriKind.Relative));
-                }
+            // The function gets nothing.
+            // The function switches the current user to the next one.
+            if(this.CurrentPlayer == this.players[0])
+            {
+                this.CurrentPlayer = this.players[1];
+            }
+            else
+            {
+                this.CurrentPlayer = this.players[0];
+            }
+        }
+
+        public void ChangeButtonImage(Image btnImg)
+        {
+            // The function gets a button.
+            // The function switch the button's image to the player's sign if it isn't filled already.
+            if (btnImg.Source.ToString().Contains("empty_cell.png"))
+            {
+                btnImg.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/{this.CurrentPlayer.Type}.png"));
+                this.SwitchUser();
+                
             }
         }
     }
