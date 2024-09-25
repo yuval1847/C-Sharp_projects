@@ -21,6 +21,9 @@
         <TextBlock x:Name="turnTextBox" Grid.Row="0" Grid.Column="1" Text="Turn of player: x" FontSize="50" HorizontalAlignment="Center"
                    VerticalAlignment="Center" />
 
+        <Image x:Name="winningLine" Grid.Row="1" Grid.Column="1" Panel.ZIndex="1"
+               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
         <!-- Top Left -->
         <Button x:Name="TopLeftBtn" Width="100" Height="100" HorizontalAlignment="Left" VerticalAlignment="Top"
         Background="Transparent" Grid.Column="1" Grid.Row="1" BorderThickness="0"

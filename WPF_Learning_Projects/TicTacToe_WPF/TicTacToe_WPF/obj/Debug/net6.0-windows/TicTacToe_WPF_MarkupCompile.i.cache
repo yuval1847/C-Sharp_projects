@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\App.xaml
-4-221275238
+6-1421527101
 
-10806167053
+12-1433012929
 194618410957
-MainWindow.xaml;Pages\GamePage.xaml;Pages\RulesPage.xaml;Pages\StartPage.xaml;
+MainWindow.xaml;Pages\GamePage.xaml;Pages\RulesPage.xaml;Pages\StartPage.xaml;Pages\UserTypeChoosingPage.xaml;Pages\WinnerDeclerationPage.xaml;
 
-False
+True
 

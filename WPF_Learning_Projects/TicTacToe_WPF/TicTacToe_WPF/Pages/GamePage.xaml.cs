@@ -30,11 +30,13 @@ namespace TicTacToe_WPF.Pages
             InitializeComponent();
             this.mainContentControl = mainContentControl;
 
-            //Button[,] board = { { TopLeftBtn, TopCenterBtn, TopRightBtn },
-            //                    { CenterLeftBtn, CenterCenterBtn, CenterRightBtn},
-            //                    { BottomLeftBtn, BottomCenterBtn, BottomRightBtn} };
-            Player[] players = { new Player("x"), new Player("o") };
-            game = new Game(players);
+            Button[,] board = { { TopLeftBtn, TopCenterBtn, TopRightBtn },
+                                { CenterLeftBtn, CenterCenterBtn, CenterRightBtn},
+                                { BottomLeftBtn, BottomCenterBtn, BottomRightBtn} };
+            Image[,] boardImages = { { TopLeftImage, TopCenterImage, TopRightImage },
+                                     { CenterLeftImage, CenterCenterImage, CenterRightImage},
+                                     { BottomLeftImage, BottomCenterImage, BottomRightImage} };
+            game = new Game(new Player("x"), new Player("o"), board, boardImages, winningLine);
         }
 
         // 3x3 Board
@@ -42,7 +44,13 @@ namespace TicTacToe_WPF.Pages
         private void TopLeftBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(TopLeftImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus(); 
+            if(winnerPlayer != null)
+            {
+
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
+           
         }
         private void TopCenterBtn_Click(object sender, RoutedEventArgs e)
         {
