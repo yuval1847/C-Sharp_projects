@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -9,14 +8,32 @@
 
   <ItemGroup>
     <None Remove="Images\empty_cell.png" />
+    <None Remove="Images\lineCrossBottomTop.png" />
+    <None Remove="Images\lineCrossTopBottom.png" />
+    <None Remove="Images\lineHorizontalBottom.png" />
+    <None Remove="Images\lineHorizontalCenter.png" />
+    <None Remove="Images\lineHorizontalTop.png" />
+    <None Remove="Images\lineVerticalCenter.png" />
+    <None Remove="Images\lineVerticalLeft.png" />
+    <None Remove="Images\lineVerticalRight.png" />
     <None Remove="Images\o.png" />
     <None Remove="Images\x.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\lineVerticalLeft.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\empty_cell.png" />
+    <Resource Include="Images\lineCrossBottomTop.png" />
+    <Resource Include="Images\lineCrossTopBottom.png" />
+    <Resource Include="Images\lineHorizontalBottom.png" />
+    <Resource Include="Images\lineHorizontalCenter.png" />
+    <Resource Include="Images\lineHorizontalTop.png" />
+    <Resource Include="Images\lineVerticalCenter.png" />
+    <Resource Include="Images\lineVerticalRight.png" />
     <Resource Include="Images\o.png" />
     <Resource Include="Images\x.png" />
   </ItemGroup>
-
 </Project>

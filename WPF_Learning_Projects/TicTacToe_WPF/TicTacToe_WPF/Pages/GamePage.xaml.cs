@@ -47,7 +47,7 @@ namespace TicTacToe_WPF.Pages
             Player? winnerPlayer = this.game.CheckBoardStatus(); 
             if(winnerPlayer != null)
             {
-
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
             }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
            
@@ -55,11 +55,21 @@ namespace TicTacToe_WPF.Pages
         private void TopCenterBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(TopCenterImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void TopRightBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(TopRightImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
 
@@ -67,16 +77,31 @@ namespace TicTacToe_WPF.Pages
         private void CenterLeftBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(CenterLeftImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void CenterCenterBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(CenterCenterImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void CenterRightBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(CenterRightImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
 
@@ -84,16 +109,31 @@ namespace TicTacToe_WPF.Pages
         private void BottomLeftBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(BottomLeftImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void BottomCenterBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(BottomCenterImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
         private void BottomRightBtn_Click(object sender, RoutedEventArgs e)
         {
             game.ChangeButtonImage(BottomRightImage);
+            Player? winnerPlayer = this.game.CheckBoardStatus();
+            if (winnerPlayer != null)
+            {
+                this.mainContentControl = new WinnerDeclerationPage(winnerPlayer.Type);
+            }
             turnTextBox.Text = $"Turn of player: {this.game.CurrentPlayer.Type}";
         }
     }

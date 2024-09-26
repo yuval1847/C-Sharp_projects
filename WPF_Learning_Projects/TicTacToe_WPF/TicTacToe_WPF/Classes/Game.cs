@@ -90,13 +90,23 @@ namespace TicTacToe_WPF.Classes
             }
         }
 
-        public void SetWinningLine(string direction)
+        public void SetWinningLine(string direction, string? hAlingment, string? vAlingment)
         {
-            // The function gets string of the line direction("Horizontal", "Vertical", "CrossTopBottom", "CrossBottomTop").
+            // The function gets string of the line direction("Horizontal", "Vertical", "CrossTopBottom", "CrossBottomTop")
+            // and additional 2 strings which reprenent the image alignment according to the winning position on the board.
             // The function set the image of the winning line.
-            if (direction == "Horizontal" || direction == "Vertical" || direction == "CrossTopBottom" || direction == "CrossBottomTop")
+            if (direction == "CrossTopBottom" || direction == "CrossBottomTop")
             {
-                this.WinningLine.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/{direction}.png"));
+                this.WinningLine.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/line{direction}.png"));
+            }
+            else if (direction == "Horizontal") {
+                // vertical aligment
+                this.WinningLine.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/line{direction+hAlingment}.png"));
+                
+            }
+            else if (direction == "Vertical"){
+                // horizontal aligment
+                this.WinningLine.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/line{direction+vAlingment}.png"));
             }
             else
             {
@@ -114,41 +124,41 @@ namespace TicTacToe_WPF.Classes
             // X
             if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[0, 1].Source.ToString().Contains("x.png") && this.BoardImages[0, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Top", "Center");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Top", "Center");
                 return PlayerO;
             }
 
             // Second row
             // X
-            if (this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Center", "Center");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Center", "Center");
                 return PlayerO;
             }
 
             // Third row
             // X
-            if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Bottom", "Center");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Horizontal");
+                this.SetWinningLine("Horizontal", "Bottom", "Center");
                 return PlayerO;
             }
 
@@ -157,73 +167,73 @@ namespace TicTacToe_WPF.Classes
             
             // First col
             // X
-            if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 0].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 0].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Left");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 0].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 0].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Left");
                 return PlayerO;
             }
 
             // Second col
             // X
-            if (this.BoardImages[0, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[0, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Center");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Center");
                 return PlayerO;
             }
 
             // Third col
             // X
-            if (this.BoardImages[0, 2].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[0, 2].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Right");
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[0, 2].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[0, 2].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("Vertical");
+                this.SetWinningLine("Vertical", "Center", "Right");
                 return PlayerO;
             }
 
 
             // Check for winning cross bottom top
             // X
-            if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[0, 2].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[0, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("CrossBottomTop");
+                this.SetWinningLine("CrossBottomTop", null, null);
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("CrossBottomTop");
+                this.SetWinningLine("CrossBottomTop", null, null);
                 return PlayerO;
             }
 
 
             // Check for winning cross top bottom
             // X
-            if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
+            else if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
-                this.SetWinningLine("CrossTopBottom");
+                this.SetWinningLine("CrossTopBottom", null, null);
                 return PlayerX;
             }
             // O
-            if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
+            else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
-                this.SetWinningLine("CrossTopBottom");
+                this.SetWinningLine("CrossTopBottom", null, null);
                 return PlayerO;
             }
 

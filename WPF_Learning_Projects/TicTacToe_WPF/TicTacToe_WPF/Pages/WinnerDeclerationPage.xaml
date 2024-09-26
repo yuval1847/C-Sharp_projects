@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid Background="White">
-        <TextBlock x:Name="winnerTitle" Text="The winner is:" Foreground="Red" FontSize="60"
+        <TextBlock x:Name="winnerTitle" Text="The winner is: " Foreground="Red" FontSize="60"
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

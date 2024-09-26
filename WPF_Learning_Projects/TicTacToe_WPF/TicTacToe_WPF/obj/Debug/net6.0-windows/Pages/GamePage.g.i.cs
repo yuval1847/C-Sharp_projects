@@ -213,7 +213,7 @@ namespace TicTacToe_WPF.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TicTacToe_WPF;V1.0.0.0;component/pages/gamepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TicTacToe_WPF;component/pages/gamepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\GamePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -27,3 +27,5 @@ C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-
 C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\Pages\GamePage.baml
 C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\Pages\UserTypeChoosingPage.g.cs
 C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\Pages\UserTypeChoosingPage.baml
+C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\Pages\WinnerDeclerationPage.g.cs
+C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\obj\Debug\net6.0-windows\Pages\WinnerDeclerationPage.baml

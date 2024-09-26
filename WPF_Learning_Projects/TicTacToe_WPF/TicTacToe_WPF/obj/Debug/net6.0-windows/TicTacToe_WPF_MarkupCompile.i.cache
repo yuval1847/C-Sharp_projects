@@ -16,5 +16,5 @@ C:\Users\yuval\Desktop\C# projects\TicTacToe_WPF\TicTacToe_WPF\App.xaml
 194618410957
 MainWindow.xaml;Pages\GamePage.xaml;Pages\RulesPage.xaml;Pages\StartPage.xaml;Pages\UserTypeChoosingPage.xaml;Pages\WinnerDeclerationPage.xaml;
 
-True
+False
 
