@@ -20,10 +20,17 @@ namespace TicTacToe_WPF.Pages
     /// </summary>
     public partial class WinnerDeclerationPage : UserControl
     {
-        public WinnerDeclerationPage(string winner)
+        public WinnerDeclerationPage(string? winner)
         {
             InitializeComponent();
-            winnerTitle.Text += winner;
+            if (winner == "TIE")
+            {
+                winnerTitle.Text = "TIE!";
+            }
+            else
+            {
+                winnerTitle.Text = $"The winner is: {winner}";
+            }
         }
     }
 }

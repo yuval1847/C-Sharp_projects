@@ -113,10 +113,10 @@ namespace TicTacToe_WPF.Classes
                 return;
             }
         }
-        public Player? CheckBoardStatus()
+        public string? CheckBoardStatus()
         {
             // The function gets nothing.
-            // The function returns the winner player object if there is a winner, otherwise null.
+            // The function returns the winner player type (as a string) if there is a winner, otherwise null.
 
             // Check for winning rows:
 
@@ -125,13 +125,13 @@ namespace TicTacToe_WPF.Classes
             if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[0, 1].Source.ToString().Contains("x.png") && this.BoardImages[0, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Horizontal", "Top", "Center");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Horizontal", "Top", "Center");
-                return PlayerO;
+                return "o";
             }
 
             // Second row
@@ -139,13 +139,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Horizontal", "Center", "Center");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Horizontal", "Center", "Center");
-                return PlayerO;
+                return "o";
             }
 
             // Third row
@@ -153,13 +153,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Horizontal", "Bottom", "Center");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Horizontal", "Bottom", "Center");
-                return PlayerO;
+                return "o";
             }
 
 
@@ -170,13 +170,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 0].Source.ToString().Contains("x.png") && this.BoardImages[2, 0].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Left");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 0].Source.ToString().Contains("o.png") && this.BoardImages[2, 0].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Left");
-                return PlayerO;
+                return "o";
             }
 
             // Second col
@@ -184,13 +184,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[0, 1].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 1].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Center");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[0, 1].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 1].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Center");
-                return PlayerO;
+                return "o";
             }
 
             // Third col
@@ -198,13 +198,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[0, 2].Source.ToString().Contains("x.png") && this.BoardImages[1, 2].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Right");
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[0, 2].Source.ToString().Contains("o.png") && this.BoardImages[1, 2].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("Vertical", "Center", "Right");
-                return PlayerO;
+                return "o";
             }
 
 
@@ -213,13 +213,13 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[2, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[0, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("CrossBottomTop", null, null);
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[2, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[0, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("CrossBottomTop", null, null);
-                return PlayerO;
+                return "o";
             }
 
 
@@ -228,13 +228,30 @@ namespace TicTacToe_WPF.Classes
             else if (this.BoardImages[0, 0].Source.ToString().Contains("x.png") && this.BoardImages[1, 1].Source.ToString().Contains("x.png") && this.BoardImages[2, 2].Source.ToString().Contains("x.png"))
             {
                 this.SetWinningLine("CrossTopBottom", null, null);
-                return PlayerX;
+                return "x";
             }
             // O
             else if (this.BoardImages[0, 0].Source.ToString().Contains("o.png") && this.BoardImages[1, 1].Source.ToString().Contains("o.png") && this.BoardImages[2, 2].Source.ToString().Contains("o.png"))
             {
                 this.SetWinningLine("CrossTopBottom", null, null);
-                return PlayerO;
+                return "o";
+            }
+
+            bool isAllFilled = true;
+            for(int i = 0; i < this.BoardImages.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.BoardImages.GetLength(1); j++)
+                {
+                    if (this.BoardImages[i, j].Source.ToString().Contains("empty_cell.png"))
+                    {
+                        isAllFilled = false;
+                        break;
+                    }
+                }
+                if (isAllFilled)
+                {
+                    return "TIE";
+                }
             }
 
             return null;

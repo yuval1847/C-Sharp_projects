@@ -10,7 +10,9 @@
         <StackPanel>
             <TextBlock Text="Choose your type" Margin="50" FontSize="70" HorizontalAlignment="Center"/>
             <Button x:Name="ServerChoiceBtn" Content="Server - Player X" Width="250" Height="50" FontSize="30" Margin="50" Click="ServerChoiceBtn_Click"/>
-            <Button x:Name="ClientChoiceBtn" Content="Client - Player Y" Width="250" Height="50" FontSize="30" Margin="50" Click="ClientChoiceBtn_Click"/>
+            <Button x:Name="ClientChoiceBtn" Content="Client - Player O" Width="250" Height="50" FontSize="30" Margin="50" Click="ClientChoiceBtn_Click"/>
+            <TextBlock x:Name="WaitingTextBlock" Text="Waiting for client to connect..." FontSize="30" Foreground="Green" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
         </StackPanel>
     </Grid>
 </UserControl>

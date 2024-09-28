@@ -34,8 +34,7 @@ namespace TicTacToe_WPF.Pages
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.mainContentControl.Content = new Pages.GamePage(this.mainContentControl);
-
+            this.mainContentControl.Content = new Pages.UserTypeChoosingPage(this.mainContentControl);
         }
     }
 }

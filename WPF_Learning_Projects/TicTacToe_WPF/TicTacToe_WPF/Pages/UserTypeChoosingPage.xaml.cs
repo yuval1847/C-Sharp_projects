@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TicTacToe_WPF.Classes;
 
 namespace TicTacToe_WPF.Pages
 {
@@ -20,19 +21,27 @@ namespace TicTacToe_WPF.Pages
     /// </summary>
     public partial class UserTypeChoosingPage : UserControl
     {
-        public UserTypeChoosingPage()
+        private ContentControl mainContentControl;
+
+        public UserTypeChoosingPage(ContentControl mainContentControl)
         {
             InitializeComponent();
+            this.mainContentControl = mainContentControl;
         }
 
         private void ServerChoiceBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Classes.Server server = new Classes.Server();
+            WaitingTextBlock.Visibility = Visibility.Visible;
+            server.ListenAndConnect();
+            this.mainContentControl = new Pages.GamePage(this.mainContentControl, server);
         }
 
         private void ClientChoiceBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Classes.Client client = new Classes.Client();
+            client.ConnectToServer();
+            this.mainContentControl = new Pages.GamePage(this.mainContentControl, server);
         }
     }
 }
