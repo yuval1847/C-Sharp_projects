@@ -17,6 +17,7 @@ namespace TicTacToe_WPF.Classes
         private Player playerX, playerO;
         private Player currentPlayer;
         private Image winningLine;
+        private object communicatorSide;
 
         public Button[,] Board
         {
@@ -52,17 +53,23 @@ namespace TicTacToe_WPF.Classes
             get { return this.playerO; }
             set { this.playerO = value; }
         }
+        public object CommunicatorSide
+        {
+            get { return communicatorSide; }
+            set { communicatorSide = value; }
+        }
 
 
-        public Game(Player playerX, Player playerO, Button[,] board, Image[,] boardImages, Image winningLine)
+        public Game(Player playerX, Player playerO, Button[,] board, Image[,] boardImages, Image winningLine, object communicatorSide)
         {
             this.board = board;
             this.BoardImages = boardImages;
             this.winningLine = winningLine;
             this.playerX = playerX;
             this.playerO = playerO;
+            this.CommunicatorSide = communicatorSide;
 
-            currentPlayer = this.PlayerX; 
+            this.CurrentPlayer = this.PlayerX;
         }
 
         public void SwitchUser()
@@ -86,7 +93,6 @@ namespace TicTacToe_WPF.Classes
             {
                 btnImg.Source = new BitmapImage(new Uri($"pack://application:,,,/TicTacToe_WPF;component/Images/{this.CurrentPlayer.Type}.png"));
                 this.SwitchUser();
-
             }
         }
 

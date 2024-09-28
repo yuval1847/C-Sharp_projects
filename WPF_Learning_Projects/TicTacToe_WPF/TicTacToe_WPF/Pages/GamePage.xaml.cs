@@ -39,7 +39,7 @@ namespace TicTacToe_WPF.Pages
             Image[,] boardImages = { { TopLeftImage, TopCenterImage, TopRightImage },
                                      { CenterLeftImage, CenterCenterImage, CenterRightImage},
                                      { BottomLeftImage, BottomCenterImage, BottomRightImage} };
-            game = new Game(new Player("x"), new Player("o"), board, boardImages, winningLine);
+            game = new Game(new Player("x"), new Player("o"), board, boardImages, winningLine, this.communicatorSide);
         }
         public void Pause(int milliseconds)
         {

@@ -41,7 +41,7 @@ namespace TicTacToe_WPF.Pages
         {
             Classes.Client client = new Classes.Client();
             client.ConnectToServer();
-            this.mainContentControl = new Pages.GamePage(this.mainContentControl, server);
+            this.mainContentControl = new Pages.GamePage(this.mainContentControl, client);
         }
     }
 }
