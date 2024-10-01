@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="ExtremLink_Server.Pages.LoginPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Server.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF2C3E50" Offset="0"/>
+                <GradientStop Color="#FF34495E" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Background="#FF344570">
+            <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,0,0,40"/>
+            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Log In" FontSize="24" Foreground="#AAAAAA" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <TextBox x:Name="UsernameTextBox" Height="40" Margin="0,0,0,20" FontSize="16" Padding="10,5" Background="#4A6572" Foreground="White" BorderThickness="0">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <PasswordBox x:Name="PasswordBox" Height="40" Margin="0,0,0,30" FontSize="16" Padding="10,5" Background="#4A6572" Foreground="White" BorderThickness="0">
+                <PasswordBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </PasswordBox.Resources>
+            </PasswordBox>
+
+            <Button Content="Log In" Style="{StaticResource RoundedButtonStyle}" Width="200" Margin="0,0,0,20" Click="LoginButton_Click"/>
+
+            <TextBlock Text="Forgot Password?" Margin ="0,0,0,10" FontSize="14" Foreground="#AAAAAA" HorizontalAlignment="Center" Cursor="Hand" MouseDown="ForgotPassword_MouseDown"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

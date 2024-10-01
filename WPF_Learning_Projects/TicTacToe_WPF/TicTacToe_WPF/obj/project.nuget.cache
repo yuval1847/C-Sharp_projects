@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ZDFuoA8fS9w+SW9bs7fZ8/GOZl2SqkYtos4iwk0Us8pQQ7qKqTkV1OR5klslNDcrufxKWT+moDiWwkPxhLQhxw==",
+  "dgSpecHash": "WqhD2Vr5kMo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\yuval\\Desktop\\C# projects\\TicTacToe_WPF\\TicTacToe_WPF\\TicTacToe_WPF.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\yuval\\Desktop\\C# projects\\C-Sharp_projects\\WPF_Learning_Projects\\TicTacToe_WPF\\TicTacToe_WPF\\TicTacToe_WPF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yuval\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.32\\microsoft.netcore.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\yuval\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.32\\microsoft.windowsdesktop.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\yuval\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.32\\microsoft.aspnetcore.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\yuval\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.32\\microsoft.netcore.app.host.win-x64.6.0.32.nupkg.sha512"
+  ],
   "logs": []
 }
