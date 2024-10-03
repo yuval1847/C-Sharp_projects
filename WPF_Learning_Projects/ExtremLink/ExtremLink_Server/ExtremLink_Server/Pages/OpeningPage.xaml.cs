@@ -34,6 +34,7 @@ namespace ExtremLink_Server.Pages
             "Starting ExtremLink..."
         };
         private int currentStep = 0;
+        private bool initializationCompleted;
 
         public ContentControl ContentMain
         {
@@ -48,6 +49,7 @@ namespace ExtremLink_Server.Pages
             InitializeTimer();
             this.ContentMain = contentMain;
             Loaded += OpeningPageControl_Loaded;
+            this.initializationCompleted = false;
         }
 
         // Opening animation
@@ -71,10 +73,10 @@ namespace ExtremLink_Server.Pages
         private void InitializeTimer()
         {
             // The function gets nothing.
-            // The function creats a timer for the animation with a delay of 1.5 seconds (between each tick)
+            // The function creats a timer for the animation with a delay of 2 seconds (between each tick)
             // and starts it.
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1.5);
+            timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += this.Timer_Tick;
             timer.Start();
         }
@@ -82,7 +84,7 @@ namespace ExtremLink_Server.Pages
         private void Timer_Tick(object sender, EventArgs e)
         {
             // The function gets nothing.
-            // The function perform the animation and change to the next page when done.
+            // The function performs the animation of the change text.
             if (this.currentStep < this.loadingSteps.Length)
             {
                 LoadingText.Text = loadingSteps[currentStep];
@@ -91,7 +93,6 @@ namespace ExtremLink_Server.Pages
             else
             {
                 timer.Stop();
-                
                 this.OnInitializationComplete();
             }
         }
@@ -101,12 +102,17 @@ namespace ExtremLink_Server.Pages
             // The function gets nothing.
             // The function invokes the InitializationComplete event, waits for couple of seconds
             // and moves to the next page.
-            if(InitializationComplete != null)
+            if (!this.initializationCompleted)
             {
-                this.InitializationComplete.Invoke(this, EventArgs.Empty);
+                this.initializationCompleted = true;
+
+                if (InitializationComplete != null)
+                {
+                    this.InitializationComplete.Invoke(this, EventArgs.Empty);
+                }
+
+                this.ContentMain.Content = new LoginPage(this.ContentMain);
             }
-            Thread.Sleep(1000);
-            this.ContentMain.Content = new LoginPage(this.ContentMain);
         }
     }
 }

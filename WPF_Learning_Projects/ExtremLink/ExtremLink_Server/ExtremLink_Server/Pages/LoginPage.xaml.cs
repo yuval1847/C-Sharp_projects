@@ -28,8 +28,7 @@ namespace ExtremLink_Server.Pages
             get { return contentMain; }
             set { this.contentMain = value; }
         }
-        public event EventHandler<LoginEventArgs> LoginAttempted;
-        public event EventHandler ForgotPasswordRequested;
+
 
         public LoginPage(ContentControl contentMain)
         {
@@ -39,29 +38,7 @@ namespace ExtremLink_Server.Pages
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
 
-            // Raise the LoginAttempted event
-            LoginAttempted?.Invoke(this, new LoginEventArgs(username, password));
-        }
-
-        private void ForgotPassword_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // Raise the ForgotPasswordRequested event
-            ForgotPasswordRequested?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    public class LoginEventArgs : EventArgs
-    {
-        public string Username { get; }
-        public string Password { get; }
-
-        public LoginEventArgs(string username, string password)
-        {
-            Username = username;
-            Password = password;
         }
     }
 }

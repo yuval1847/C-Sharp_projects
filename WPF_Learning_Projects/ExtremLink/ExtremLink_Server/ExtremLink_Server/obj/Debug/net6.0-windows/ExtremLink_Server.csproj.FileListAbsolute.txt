@@ -23,3 +23,8 @@ C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\Ext
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\OpeningPage.baml
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\LoginPage.g.cs
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\LoginPage.baml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\CustomWidgets\CustomTextBox.g.cs
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\CustomWidgets\CustomTextBox.baml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\CustomWidgets\CustomButton.g.cs
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\CustomWidgets\CustomButton.baml

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtremLink_Server.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Server.CustomWidgets"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
@@ -28,36 +29,20 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF2C3E50" Offset="0"/>
-                <GradientStop Color="#FF34495E" Offset="1"/>
+                <GradientStop Color="#031019" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Background="#FF344570">
-            <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,0,0,40"/>
-            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBlock Text="Log In" FontSize="24" Foreground="#AAAAAA" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="564" Background="Transparent">
+            <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,0,0,20"/>
+            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#00cec9" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Login" FontSize="24" Foreground="#00cec9" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <TextBox x:Name="UsernameTextBox" Height="40" Margin="0,0,0,20" FontSize="16" Padding="10,5" Background="#4A6572" Foreground="White" BorderThickness="0">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
+            <customWidgets:CustomTextBox x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
+            <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="0,0,0,40" IsHide="True"/>
 
-            <PasswordBox x:Name="PasswordBox" Height="40" Margin="0,0,0,30" FontSize="16" Padding="10,5" Background="#4A6572" Foreground="White" BorderThickness="0">
-                <PasswordBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </PasswordBox.Resources>
-            </PasswordBox>
-
-            <Button Content="Log In" Style="{StaticResource RoundedButtonStyle}" Width="200" Margin="0,0,0,20" Click="LoginButton_Click"/>
-
-            <TextBlock Text="Forgot Password?" Margin ="0,0,0,10" FontSize="14" Foreground="#AAAAAA" HorizontalAlignment="Center" Cursor="Hand" MouseDown="ForgotPassword_MouseDown"/>
+            <customWidgets:CustomButton Width="100" Height="40" Placeholder="Login" Margin="0,0,0,10"/>
+            <TextBlock Text="Forgot Password?" Margin ="0,20,0,0" FontSize="14" Foreground="#00cec9" HorizontalAlignment="Center" Cursor="Hand"/>
         </StackPanel>
-
     </Grid>
 </UserControl>

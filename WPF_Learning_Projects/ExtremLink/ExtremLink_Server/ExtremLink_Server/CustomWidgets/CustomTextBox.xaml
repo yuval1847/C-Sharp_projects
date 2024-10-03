@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="ExtremLink_Server.CustomWidgets.CustomTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Server.CustomWidgets"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="200">
+    <Grid Background="Transparent" MouseDown="Grid_MouseDown">
+        <!-- Placeholder TextBlock -->
+        <TextBlock x:Name="contentHolder" Text="" Foreground="#00908b" FontSize="18" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <!-- Border containing TextBox -->
+        <Border BorderBrush="#00cec9" BorderThickness="0,0,0,1">
+            <TextBox x:Name="customTB" Cursor="IBeam" CaretBrush="#00cec9" BorderThickness="0" Background="Transparent" Foreground="#00cec9" VerticalContentAlignment="Center" FontSize="18" TextChanged="customTB_TextChanged"/>
+        </Border>
+        <!-- Erase Button -->
+        <Button x:Name="eraseBtn" Cursor="Hand" Width="40" BorderThickness="0" HorizontalAlignment="Right" Content="X" Background="Transparent" Foreground="#00cec9" Click="eraseBtn_Click"/>
+    </Grid>
+</UserControl>

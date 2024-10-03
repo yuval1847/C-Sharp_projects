@@ -57,8 +57,8 @@
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF2C3E50" Offset="0"/>
-                <GradientStop Color="#FF34495E" Offset="1"/>
+                <GradientStop Color="#031019" Offset="0"/>
+                <!--<GradientStop Color="#FF34495E" Offset="1"/>-->
             </LinearGradientBrush>
         </Grid.Background>
 
@@ -68,14 +68,14 @@
                     <TranslateTransform x:Name="LogoTransform" Y="0"/>
                 </Image.RenderTransform>
             </Image>
-            <TextBlock x:Name="TitleText" Text="ExtremLink Server" FontSize="60" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Opacity="0"/>
-            <TextBlock x:Name="SubtitleText" Text="Choose, Connect, Control!" FontSize="24" Foreground="#AAAAAA" HorizontalAlignment="Center" Margin="0,0,0,60" Opacity="0"/>
+            <TextBlock x:Name="TitleText" Text="ExtremLink Server" FontSize="60" FontWeight="Bold" Foreground="#00cec9" HorizontalAlignment="Center" Opacity="0"/>
+            <TextBlock x:Name="SubtitleText" Text="Choose, Connect, Control!" FontSize="24" Foreground="#00cec9" HorizontalAlignment="Center" Margin="0,0,0,60" Opacity="0"/>
 
-            <ProgressBar x:Name="LoadingBar" Width="400" Height="8" IsIndeterminate="True" Foreground="#3498DB" Opacity="0"/>
+            <ProgressBar x:Name="LoadingBar" Width="400" Height="8" IsIndeterminate="True" Background="#273c75" Foreground="#00cec9" Opacity="0"/>
 
-            <TextBlock x:Name="LoadingText" Text="Initializing..." FontSize="18" Foreground="#CCCCCC" HorizontalAlignment="Center" Margin="0,30,0,0" Opacity="0"/>
+            <TextBlock x:Name="LoadingText" Text="Initializing..." FontSize="18" Foreground="#00cec9" HorizontalAlignment="Center" Margin="0,30,0,0" Opacity="0"/>
         </StackPanel>
 
-        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#AAAAAA" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
+        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
     </Grid>
 </UserControl>

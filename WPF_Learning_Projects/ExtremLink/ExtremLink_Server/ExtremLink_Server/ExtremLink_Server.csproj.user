@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CustomWidgets\CustomButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomWidgets\CustomTextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\LoginPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,6 +21,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CustomWidgets\CustomButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomWidgets\CustomTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
