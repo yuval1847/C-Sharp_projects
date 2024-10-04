@@ -23,6 +23,7 @@ namespace ExtremLink_Client
         public MainWindow()
         {
             InitializeComponent();
+            ContentMain.Content = new Pages.OpeningPage(ContentMain);
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ExtremLink_Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
-    <Grid>
-
+    <Grid Background="Transparent">
+        <ContentControl x:Name="ContentMain"/>
     </Grid>
 </Window>
