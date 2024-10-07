@@ -47,9 +47,11 @@ namespace ExtremLink_Client.CustomWidgets
             InitializeComponent();
         }
 
-
+        // Basic custom textbox settings
         private void customTB_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // The function gets nothing.
+            // The function called when the textbox's text changed.
             if (string.IsNullOrEmpty(customTB.Text)) { contentHolder.Visibility = Visibility.Visible; }
             else { contentHolder.Visibility = Visibility.Hidden; }
 
@@ -60,7 +62,6 @@ namespace ExtremLink_Client.CustomWidgets
                 this.HideTextWithStars();
             }
         }
-
         private void HideTextWithStars()
         {
             // The function gets nothing.
@@ -69,13 +70,12 @@ namespace ExtremLink_Client.CustomWidgets
             customTB.Text = new string('*', Text.Length);
             customTB.CaretIndex = caretIndex;
         }
-
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // Set focus to the TextBox when the user clicks on the Grid.
+            // The function gets nothing.
+            // The function sets focus to the TextBox when the user clicks on the Grid.
             customTB.Focus();
         }
-
         private void eraseBtn_Click(object sender, RoutedEventArgs e)
         {
             // The function gets nothing.

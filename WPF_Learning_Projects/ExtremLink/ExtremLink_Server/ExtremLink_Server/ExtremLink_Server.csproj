@@ -15,4 +15,8 @@
     <Resource Include="Images\ExtremLink_Icon.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Databases\" />
+  </ItemGroup>
+
 </Project>

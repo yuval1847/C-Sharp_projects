@@ -111,7 +111,8 @@ namespace ExtremLink_Server.Pages
                     this.InitializationComplete.Invoke(this, EventArgs.Empty);
                 }
 
-                this.ContentMain.Content = new LoginPage(this.ContentMain);
+                // Here add a new next page instead of the login page
+                //this.ContentMain.Content = new LoginPage(this.ContentMain);
             }
         }
     }
