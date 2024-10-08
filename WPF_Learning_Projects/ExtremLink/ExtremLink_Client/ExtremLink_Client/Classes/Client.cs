@@ -65,7 +65,20 @@ namespace ExtremLink_Client.Classes
             this.tcpClient.Close();
         }
 
+        // Handeling messages
+        public List<object> GetMessage()
+        {
+            // The function gets a message from the client(not by calling).
+            // The function returns the message in parts as a list object.
 
+        }
+
+        public void SendMsg(string typeOfMessage, string data)
+        {
+            // The function gets 2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
+            // and 'data' which contains the data which have to be transfered.
+            // The function creates a message in a byte array format and send it to the client.
+        }
 
     }
 }

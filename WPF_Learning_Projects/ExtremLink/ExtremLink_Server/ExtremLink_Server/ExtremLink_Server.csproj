@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\ExtremLink_Icon.png" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Databases\" />
+    <Resource Include="Images\ExtremLink_Icon.png" />
   </ItemGroup>
 
 </Project>
