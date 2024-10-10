@@ -61,7 +61,7 @@ namespace ExtremLink_Server.CustomWidgets {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Server;V1.0.0.0;component/customwidgets/custombutton.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Server;component/customwidgets/custombutton.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\CustomWidgets\CustomButton.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

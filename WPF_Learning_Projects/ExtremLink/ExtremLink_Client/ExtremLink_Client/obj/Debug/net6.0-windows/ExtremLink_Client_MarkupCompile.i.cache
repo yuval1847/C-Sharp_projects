@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\App.xaml
-51081373027
+6-1614713882
 
-10-1036120190
+11-179336632
 194618410957
-CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;MainWindow.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;
+CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;
 
-False
+True
 

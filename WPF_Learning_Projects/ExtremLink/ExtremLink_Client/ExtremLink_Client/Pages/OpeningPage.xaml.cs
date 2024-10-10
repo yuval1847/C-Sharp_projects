@@ -110,7 +110,8 @@ namespace ExtremLink_Client.Pages
                     this.InitializationComplete.Invoke(this, EventArgs.Empty);
                 }
 
-                this.ContentMain.Content = new LoginPage(this.ContentMain);
+                //this.ContentMain.Content = new LoginPage(this.ContentMain);
+                this.ContentMain.Content = new ConnectingPage(this.ContentMain);
             }
         }
     }

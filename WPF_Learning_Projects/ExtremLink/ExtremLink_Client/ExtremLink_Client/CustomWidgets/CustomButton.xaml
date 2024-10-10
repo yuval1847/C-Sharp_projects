@@ -12,6 +12,6 @@
         </Style>
     </UserControl.Resources> 
     <Grid Cursor="Hand">
-        <Button x:Name="customBtn" Foreground="#00cec9" FontSize="22" Background="#031019"/>
+        <Button x:Name="customBtn" Foreground="#00cec9" FontSize="22" Background="#031019" />
     </Grid>
 </UserControl>

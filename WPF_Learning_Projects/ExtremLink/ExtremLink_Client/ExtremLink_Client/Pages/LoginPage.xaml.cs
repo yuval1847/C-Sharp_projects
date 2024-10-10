@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ExtremLink_Client.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +23,7 @@ namespace ExtremLink_Client.Pages
     public partial class LoginPage : UserControl
     {
         private ContentControl contentMain;
+        private Client client;
 
         public ContentControl ContentMain
         {
@@ -29,15 +32,22 @@ namespace ExtremLink_Client.Pages
         }
 
 
-        public LoginPage(ContentControl contentMain)
+        public LoginPage(ContentControl contentMain, Client client)
         {
-            InitializeComponent();
             this.ContentMain = contentMain;
+            this.client = client;
+            InitializeComponent();
+
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // The function called by clicking on the login button
+            // The fucntion gets nothing.
+            // The function send a message to the server via the client in order to login 
+            // to the database.
+            Thread clientMessagesHandlingThread = new Thread(this.client.Start);
+            clientMessagesHandlingThread.Start();
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using System.Net.Http;
 using System.IO;
 using System.IO.Compression;
+using System.ComponentModel;
 
 
 namespace ExtremLink_Server.Classes
@@ -43,37 +44,24 @@ namespace ExtremLink_Server.Classes
             // The function gets nothing.
             // The function starts the server communication with the client.
             this.listener.Start();
-            Console.WriteLine("Server started...");
-
+            TcpClient client = this.listener.AcceptTcpClient();
+            this.listener.Stop();
+            NetworkStream stream = client.GetStream();
             while (true)
             {
-                Console.WriteLine("Waiting for client...");
-                TcpClient client = this.listener.AcceptTcpClient();
-                Console.WriteLine("Client connected!");
-
-
-                /*
-                NetworkStream stream = client.GetStream();
-                byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string receivedMessage = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Console.WriteLine($"Received: {receivedMessage}");
-
-                string responseMessage = "Hello from server!";
-                byte[] responseData = Encoding.ASCII.GetBytes(responseMessage);
-                stream.Write(responseData, 0, responseData.Length);
-                Console.WriteLine("Response sent.");
-                */
-                client.Close();
+                this.HandleWithMessages(stream);
             }
+            this.Stop(client);
         }
 
-        public void Stop()
+        public void Stop(TcpClient client)
         {
-            this.listener.Stop();
+            // The function gets a client object.
+            // The function close the socket with the client and stop the listener.
+            client.Close();
         }
 
-
+        // ************************************************************************
         // Messages handle functions
         public byte[] Compress(string data)
         {
@@ -110,7 +98,7 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-        public List<object> GetMessage(NetworkStream stream)
+        public List<object> GetMsg(NetworkStream stream)
         {
             // The function gets a message from the client(not by calling).
             // The function returns the message in parts as a list object.
@@ -137,7 +125,6 @@ namespace ExtremLink_Server.Classes
                 throw new IOException("No data received.");
             }
         }
-
         public void SendMsg(NetworkStream stream, string typeOfMessage, string data)
         {
             // The function gets 2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
@@ -150,6 +137,36 @@ namespace ExtremLink_Server.Classes
             stream.Write(compressedMessage, 0, compressedMessage.Length);
         }
 
+        public void HandleWithMessages(NetworkStream stream)
+        {
+            // The function get a message in a List<object> formet.
+            // The function handle with the message according to the message type according t this protocol:
+            // ! - Database functionality
+            // @ -
+            // # - 
+            List<object> message = this.GetMsg(stream);
+            string data = (string)message[2];
+            switch (message[0])
+            {
+                case "!":
+                    if (data.Contains("username"))
+                    {
+                        string username = data.Split(",")[0].Split("=")[1];
+                        string password = data.Split(",")[1].Split("=")[1];
+                        if (this.IsUserExist(username, password))
+                        {
+                            // Complete if the user exist in the database.
+                            this.SendMsg(stream, "!", "Exist");
+                        }
+                        else
+                        {
+                            // Complete if the user doesn't exist in the database.
+                            this.SendMsg(stream, "!", "NotExist");
+                        }
+                    }
+                    break;
+            }
+        }
 
         // SQL database queries functions
         public static SqlConnection ConnectToDB(string fileName)

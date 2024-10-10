@@ -28,3 +28,5 @@ C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\Ext
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomButton.baml
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomTextBox.baml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\ConnectingPage.g.cs
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\ConnectingPage.baml
