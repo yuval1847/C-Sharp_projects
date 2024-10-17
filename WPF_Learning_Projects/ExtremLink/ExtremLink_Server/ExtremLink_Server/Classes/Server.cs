@@ -19,9 +19,9 @@ using System.ComponentModel;
 
 namespace ExtremLink_Server.Classes
 {
-    internal class Server
+    /*internal class Server
     {
-        /* A class which represent a server */
+        // A class which represent a server
         private int port;
         private TcpListener listener;
         private string databaseFileName;
@@ -193,6 +193,65 @@ namespace ExtremLink_Server.Classes
             bool found = (bool)data.Read();
             conn.Close();
             return found;
+        }
+    }*/
+    internal class Server
+    {
+        // A class which represent a server.
+        // Attributes:
+        private Socket udpSocket;
+        private Socket tcpSocket;
+
+        public Server()
+        {
+            // Create UDP socket
+            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, 1847));
+            // Create TCP socket
+            this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Any, 1234));
+            this.tcpSocket.Listen(1);
+        }
+
+
+        public void Start()
+        {
+            // The function gets nothing.
+            // The function starts the tasks of the functions which handling with packets.
+            Console.WriteLine("Server started on UDP port 1234 and TCP port 1847.");
+
+            Task.Run(() => this.HandleUdpCommunication());
+            Task.Run(() => this.HandleTcpCommunication());
+        }
+
+        private async Task HandleUdpCommunication()
+        {
+            // The function gets nothing.
+            // The fucntion handle with different type of TCP packets which are sent by the client.
+
+            while (true)
+            {
+                // Receive UDP data
+                
+
+                // Respond to the UDP client
+                
+            }
+        }
+
+        private async Task HandleTcpCommunication()
+        {
+            // The function gets nothing.
+            // The fucntion handle with different type of TCP packets which are sent by the client.
+
+            while (true)
+            {
+                // Receive TCP data
+                
+
+                // Respond to the TCP client
+                
+            }
         }
     }
 }

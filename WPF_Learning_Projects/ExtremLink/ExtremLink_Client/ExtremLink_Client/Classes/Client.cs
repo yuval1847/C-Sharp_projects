@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace ExtremLink_Client.Classes
 {
-    public class Client
+    /*public class Client
     {
-        /* A class which represent a client */
+        // A class which represent a client
         private TcpClient tcpClient;
         private string serverIp;
         private int port;
@@ -130,7 +130,7 @@ namespace ExtremLink_Client.Classes
             // The function get a message in a List<object> formet.
             // The function handle with the message according to the message type according to this protocol:
             // ! - Database functionality
-            // @ -
+            // @ - 
             // # - 
             List<object> message = this.GetMsg();
             string data = (string)message[2];
@@ -147,6 +147,32 @@ namespace ExtremLink_Client.Classes
                     }
                     break;
             }
+        }
+    }*/
+
+    internal class Client
+    {
+        // A class which represent a client.
+        // Attributes:
+        private Socket udpSocket;
+        private Socket tcpSocket;
+        private string serverIpAddr;
+
+        public Client(string serverIpAddr)
+        {
+            this.serverIpAddr = serverIpAddr;
+
+            // Create UDP socket
+            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            // Create TCP socket
+            this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        public void ConnectToServer()
+        {
+            // The function gets nothing.
+            // The function connects the TCP socket to the server.
+            this.tcpSocket.Connect(this.serverIpAddr, 1234);
         }
     }
 }

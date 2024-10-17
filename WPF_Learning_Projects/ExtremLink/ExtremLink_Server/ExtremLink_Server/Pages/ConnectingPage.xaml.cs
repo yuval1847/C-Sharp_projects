@@ -22,6 +22,9 @@ namespace ExtremLink_Server.Pages
     {
         public ConnectingPage()
         {
+            Classes.Server server = new Classes.Server(1847);
+
+
             InitializeComponent();
         }
     }
