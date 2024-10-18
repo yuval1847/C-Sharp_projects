@@ -150,13 +150,30 @@ namespace ExtremLink_Client.Classes
         }
     }*/
 
-    internal class Client
+    public class Client
     {
         // A class which represent a client.
         // Attributes:
         private Socket udpSocket;
         private Socket tcpSocket;
         private string serverIpAddr;
+        private string serverReplay;
+
+        public Socket UDPSocket
+        {
+            get { return this.udpSocket; }
+            set { this.udpSocket = value; }
+        }
+        public Socket TCPSocket
+        {
+            get { return this.tcpSocket; }
+            set { this.tcpSocket = value; }
+        }
+        public string ServerReplay
+        {
+            get { return this.serverReplay; }
+            set { this.serverReplay = value; }
+        }
 
         public Client(string serverIpAddr)
         {
@@ -206,11 +223,13 @@ namespace ExtremLink_Client.Classes
                 case "!":
                     if(data == "Exist")
                     {
-
+                        // Important Note: the server replay is a string that is accessible
+                        // out of the class which can be accessible like from the login page.
+                        this.serverReplay = "Exist";
                     }
                     if(data == "NotExist")
                     {
-
+                        this.serverReplay = "NotExist";
                     }
                     break;
             }

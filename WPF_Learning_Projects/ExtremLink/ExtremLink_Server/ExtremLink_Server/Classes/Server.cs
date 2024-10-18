@@ -196,7 +196,7 @@ namespace ExtremLink_Server.Classes
             return found;
         }
     }*/
-    internal class Server
+    public class Server
     {
         // A class which represent a server.
         // Attributes:
@@ -251,12 +251,10 @@ namespace ExtremLink_Server.Classes
                         string password = data.Split(",")[1].Split("=")[1];
                         if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                         {
-                            // Complete if the user exist in the database.
                             this.SendMessage(tcpSocket, "!", "Exist");
                         }
                         else
                         {
-                            // Complete if the user doesn't exist in the database.
                             this.SendMessage(tcpSocket, "!", "NotExist");
                         }
                     }

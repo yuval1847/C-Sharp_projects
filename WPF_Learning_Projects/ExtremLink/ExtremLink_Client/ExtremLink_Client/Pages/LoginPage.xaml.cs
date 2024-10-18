@@ -48,6 +48,8 @@ namespace ExtremLink_Client.Pages
             // to the database.
             Thread clientMessagesHandlingThread = new Thread(this.client.Start);
             clientMessagesHandlingThread.Start();
+            this.client.SendMessage(this.client.TCPSocket, "!", $"username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+
         }
     }
 }
