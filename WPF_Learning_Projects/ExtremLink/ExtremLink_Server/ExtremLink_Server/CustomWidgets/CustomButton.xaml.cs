@@ -21,14 +21,25 @@ namespace ExtremLink_Server.CustomWidgets
     public partial class CustomButton : UserControl
     {
         private string placeholder;
+
         public string Placeholder
         {
-            get { return placeholder; }
-            set { placeholder = value; customBtn.Content = placeholder; }
+            get { return this.placeholder; }
+            set { this.placeholder = value; customBtn.Content = this.placeholder; }
         }
+        public event RoutedEventHandler CustomClick;
+
         public CustomButton()
         {
             InitializeComponent();
+            customBtn.Click += this.customBtn_Click;
+        }
+
+        private void customBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // The function gets nothing.
+            // The function invoke a function to operate when click.
+            CustomClick?.Invoke(this, e);
         }
     }
 }

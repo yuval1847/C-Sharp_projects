@@ -9,6 +9,20 @@
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#031019"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Background" Value="#00cec9"/>
+            <!-- Define trigger for disabled state -->
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#024CAA"/>
+                    <!-- Disabled background -->
+                    <Setter Property="Foreground" Value="#636e72"/>
+                    <!-- Disabled text color -->
+                    <Setter Property="Cursor" Value="Arrow"/>
+                    <!-- Change cursor -->
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid Cursor="Hand">

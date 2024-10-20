@@ -27,8 +27,30 @@ namespace ExtremLink_Server.Pages
         {
             this.contentMain = contentMain;
             InitializeComponent();
+            
+            
+        }
+
+        private void startListenBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // The function got called by clicking on the connect button.
+            // The function gets nothing.
+            // The function creates the server start the server listener.
+            startListenBtn.IsEnabled = false;
+            waitingTextBlock.Visibility = Visibility.Visible;
+            Thread s = new Thread(this.start);
+            s.Start();
+        }
+
+        private void start()
+        {
+            // The function gets nothing.
+            // The function start the connection.
             Classes.Server server = new Classes.Server();
-            waitingTextBlock.Text = "Waiting for client to login...";
+            Dispatcher.Invoke(() =>
+            {
+                waitingTextBlock.Text = "Waiting for client to login...";
+            });
             Thread clientMessagesHandlingThread = new Thread(server.Start);
             clientMessagesHandlingThread.Start();
         }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtremLink_Server.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Server.CustomWidgets"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
@@ -12,6 +13,9 @@
                 <GradientStop Color="#031019" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock x:Name="waitingTextBlock" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock x:Name="waitingTextBlock" Visibility="Visible" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,50"/>
+            <customWidgets:CustomButton x:Name="startListenBtn" Width="180" Height="40" Placeholder="Start Listen" CustomClick="startListenBtn_Click" Margin="0,100,0,0"/>
+        </StackPanel>
     </Grid>
 </UserControl>

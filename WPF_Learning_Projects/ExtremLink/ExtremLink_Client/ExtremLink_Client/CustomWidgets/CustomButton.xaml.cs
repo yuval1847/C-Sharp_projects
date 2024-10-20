@@ -24,8 +24,8 @@ namespace ExtremLink_Client.CustomWidgets
 
         public string Placeholder
         {
-            get { return placeholder; }
-            set { placeholder = value; customBtn.Content = placeholder; }
+            get { return this.placeholder; }
+            set { this.placeholder = value; customBtn.Content = this.placeholder; }
         }
         public event RoutedEventHandler CustomClick;
 

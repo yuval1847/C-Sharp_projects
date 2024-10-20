@@ -15,9 +15,9 @@
         </Grid.Background>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="600" Background="Transparent">
-            <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,0,0,20"/>
+            <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,20,0,0"/>
             <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBlock Text="Login" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <TextBlock Text="Login" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <customWidgets:CustomTextBox x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
             <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="0,0,0,20" IsHide="True"/>
             <TextBlock x:Name="wrongLoginTextBlock" Visibility="Hidden" Text="Error: you entered wrong username or password!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20"/>
