@@ -112,7 +112,7 @@ namespace ExtremLink_Server.Pages
                 }
 
                 // Here add a new next page instead of the login page
-                //this.ContentMain.Content = new LoginPage(this.ContentMain);
+                this.ContentMain.Content = new ConnectingPage(this.ContentMain);
             }
         }
     }

@@ -12,7 +12,6 @@
                 <GradientStop Color="#031019" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-
-        <TextBlock Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="waitingTextBlock" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

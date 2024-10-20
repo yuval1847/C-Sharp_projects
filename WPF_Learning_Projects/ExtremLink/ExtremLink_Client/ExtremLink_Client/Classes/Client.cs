@@ -157,7 +157,7 @@ namespace ExtremLink_Client.Classes
         private Socket udpSocket;
         private Socket tcpSocket;
         private string serverIpAddr;
-        private string serverReplay;
+        private string serverRespond;
 
         public Socket UDPSocket
         {
@@ -169,19 +169,16 @@ namespace ExtremLink_Client.Classes
             get { return this.tcpSocket; }
             set { this.tcpSocket = value; }
         }
-        public string ServerReplay
+        public string ServerRespond
         {
-            get { return this.serverReplay; }
-            set { this.serverReplay = value; }
+            get { return this.serverRespond; }
+            set { this.serverRespond = value; }
         }
 
         public Client(string serverIpAddr)
         {
             this.serverIpAddr = serverIpAddr;
-
-            // Create UDP socket
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            // Create TCP socket
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
@@ -225,11 +222,11 @@ namespace ExtremLink_Client.Classes
                     {
                         // Important Note: the server replay is a string that is accessible
                         // out of the class which can be accessible like from the login page.
-                        this.serverReplay = "Exist";
+                        this.serverRespond = "Exist";
                     }
                     if(data == "NotExist")
                     {
-                        this.serverReplay = "NotExist";
+                        this.serverRespond = "NotExist";
                     }
                     break;
             }

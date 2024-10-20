@@ -38,8 +38,8 @@ namespace ExtremLink_Client.Pages
             // The function create an client instance and connect to the server.
             Console.WriteLine("Click");
             string ServerIpAddr = ServerIpCustomTextBox.Text;
-            this.client = new Client(ServerIpAddr, 1847);
-            this.client.Start();
+            this.client = new Client(ServerIpAddr);
+            this.client.ConnectToServer();
             this.contentMain.Content = new LoginPage(contentMain, client);
             
         }

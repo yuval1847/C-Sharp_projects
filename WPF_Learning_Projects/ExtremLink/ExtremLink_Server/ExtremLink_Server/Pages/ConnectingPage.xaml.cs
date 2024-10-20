@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,12 +21,16 @@ namespace ExtremLink_Server.Pages
     /// </summary>
     public partial class ConnectingPage : UserControl
     {
-        public ConnectingPage()
+        private ContentControl contentMain;
+
+        public ConnectingPage(ContentControl contentMain)
         {
-            Classes.Server server = new Classes.Server(1847);
-
-
+            this.contentMain = contentMain;
             InitializeComponent();
+            Classes.Server server = new Classes.Server();
+            waitingTextBlock.Text = "Waiting for client to login...";
+            Thread clientMessagesHandlingThread = new Thread(server.Start);
+            clientMessagesHandlingThread.Start();
         }
     }
 }

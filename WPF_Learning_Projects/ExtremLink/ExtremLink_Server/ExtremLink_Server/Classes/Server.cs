@@ -202,6 +202,23 @@ namespace ExtremLink_Server.Classes
         // Attributes:
         private Socket udpSocket;
         private Socket tcpSocket;
+        private Socket clientTcpSocket;
+
+        public Socket UdpSocket 
+        { 
+            get { return this.udpSocket; }
+            set { this.udpSocket = value; }
+        }
+        public Socket TcpSocket
+        {
+            get { return this.tcpSocket; }
+            set { this.tcpSocket = value; }
+        }
+        public Socket ClientTcpSocket
+        {
+            get { return this.clientTcpSocket; }
+            set {this.clientTcpSocket = value;}
+        }
 
         public Server()
         {
@@ -212,6 +229,7 @@ namespace ExtremLink_Server.Classes
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.tcpSocket.Bind(new IPEndPoint(IPAddress.Any, 1234));
             this.tcpSocket.Listen(1);
+            this.clientTcpSocket = this.tcpSocket.Accept();
         }
 
 
@@ -220,7 +238,6 @@ namespace ExtremLink_Server.Classes
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
             Console.WriteLine("Server started on UDP port 1234 and TCP port 1847.");
-
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
         }
@@ -251,11 +268,11 @@ namespace ExtremLink_Server.Classes
                         string password = data.Split(",")[1].Split("=")[1];
                         if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                         {
-                            this.SendMessage(tcpSocket, "!", "Exist");
+                            this.SendMessage(this.clientTcpSocket, "!", "Exist");
                         }
                         else
                         {
-                            this.SendMessage(tcpSocket, "!", "NotExist");
+                            this.SendMessage(this.clientTcpSocket, "!", "NotExist");
                         }
                     }
                     break;

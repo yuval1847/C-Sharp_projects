@@ -14,16 +14,16 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="564" Background="Transparent">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="600" Background="Transparent">
             <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,0,0,20"/>
             <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <TextBlock Text="Login" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-
             <customWidgets:CustomTextBox x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
-            <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="0,0,0,40" IsHide="True"/>
-
+            <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="0,0,0,20" IsHide="True"/>
+            <TextBlock x:Name="wrongLoginTextBlock" Visibility="Hidden" Text="Error: you entered wrong username or password!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20"/>
             <customWidgets:CustomButton Width="100" Height="40" Placeholder="Login" Margin="0,0,0,10"/>
-            <TextBlock Text="Forgot Password?" Margin ="0,20,0,0" FontSize="14" Foreground="#031019" HorizontalAlignment="Center" Cursor="Hand"/>
+            <TextBlock Text="Create new user" Margin ="0,3,0,8" FontSize="14" Foreground="#031019" HorizontalAlignment="Center" Cursor="Hand"/>
+            <TextBlock Text="Forgot Password?" Margin ="0,0,0,0" FontSize="14" Foreground="#031019" HorizontalAlignment="Center" Cursor="Hand"/>
         </StackPanel>
     </Grid>
 </UserControl>

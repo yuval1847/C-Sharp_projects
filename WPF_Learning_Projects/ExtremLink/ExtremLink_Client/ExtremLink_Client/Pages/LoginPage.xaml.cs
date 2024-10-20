@@ -49,7 +49,16 @@ namespace ExtremLink_Client.Pages
             Thread clientMessagesHandlingThread = new Thread(this.client.Start);
             clientMessagesHandlingThread.Start();
             this.client.SendMessage(this.client.TCPSocket, "!", $"username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
-
+            if(this.client.ServerRespond == "Exist")
+            {
+                this.wrongLoginTextBlock.Visibility = Visibility.Hidden;
+                this.wrongLoginTextBlock.Text = "User exist";
+                this.wrongLoginTextBlock.Foreground = Brushes.Green;
+            }
+            if(this.client.ServerRespond == "NotExist")
+            {
+                this.wrongLoginTextBlock.Visibility = Visibility.Visible;
+            }
         }
     }
 }
