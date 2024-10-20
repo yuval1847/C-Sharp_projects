@@ -47,6 +47,7 @@ namespace ExtremLink_Server.Pages
             // The function gets nothing.
             // The function start the connection.
             Classes.Server server = new Classes.Server();
+            // execute the text changing on the UI thread because it's a different thread.
             Dispatcher.Invoke(() =>
             {
                 waitingTextBlock.Text = "Waiting for client to login...";
