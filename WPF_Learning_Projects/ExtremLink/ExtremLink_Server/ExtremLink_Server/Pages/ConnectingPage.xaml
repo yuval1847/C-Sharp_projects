@@ -14,7 +14,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center">
-            <TextBlock x:Name="waitingTextBlock" Visibility="Visible" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,50"/>
+            <TextBlock x:Name="waitingTextBlock" Visibility="Hidden" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,50"/>
             <customWidgets:CustomButton x:Name="startListenBtn" Width="180" Height="40" Placeholder="Start Listen" CustomClick="startListenBtn_Click" Margin="0,100,0,0"/>
         </StackPanel>
     </Grid>

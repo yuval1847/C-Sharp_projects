@@ -53,7 +53,9 @@ namespace ExtremLink_Server.Classes
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.tcpSocket.Bind(new IPEndPoint(IPAddress.Any, 1234));
             this.tcpSocket.Listen(1);
+            Console.WriteLine("Waiting for client to connect...");
             this.clientTcpSocket = this.tcpSocket.Accept();
+            Console.WriteLine("Client connected.");
         }
 
 
@@ -81,25 +83,30 @@ namespace ExtremLink_Server.Classes
             // ! - Database functionality
             // @ -
             // # - 
-            List<object> message = GetMessage(tcpSocket);
-            string data = (string)message[2];
-            switch (message[0])
+            while (true)
             {
-                case "!":
-                    if (data.Contains("username"))
-                    {
-                        string username = data.Split(",")[0].Split("=")[1];
-                        string password = data.Split(",")[1].Split("=")[1];
-                        if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
+                Console.WriteLine("Connected");
+                List<object> message = GetMessage(this.tcpSocket);
+                string data = (string)message[2];
+                switch (message[0])
+                {
+                    case "!":
+                        if (data.Contains("username"))
                         {
-                            this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                            string username = data.Split(",")[0].Split("=")[1];
+                            string password = data.Split(",")[1].Split("=")[1];
+                            Console.WriteLine(data);
+                            if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
+                            {
+                                this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                            }
+                            else
+                            {
+                                this.SendMessage(this.clientTcpSocket, "!", "NotExist");
+                            }
                         }
-                        else
-                        {
-                            this.SendMessage(this.clientTcpSocket, "!", "NotExist");
-                        }
-                    }
-                    break;
+                        break;
+                }
             }
         }
 
