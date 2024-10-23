@@ -23,7 +23,7 @@ namespace ExtremLink_Client.Pages
     public partial class ConnectingPage : UserControl
     {
         private ContentControl contentMain;
-        private Client client;
+        private Classes.Client client;
 
         public ConnectingPage(ContentControl contentMain)
         {
@@ -38,7 +38,7 @@ namespace ExtremLink_Client.Pages
             // The function create an client instance and connect to the server.
             Console.WriteLine("Click");
             string ServerIpAddr = ServerIpCustomTextBox.Text;
-            this.client = new Client(ServerIpAddr);
+            this.client = new Classes.Client(ServerIpAddr);
             this.client.ConnectToServer();
             this.contentMain.Content = new LoginPage(contentMain, client);
             

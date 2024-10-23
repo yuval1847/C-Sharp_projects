@@ -27,6 +27,7 @@ namespace ExtremLink_Server.Classes
         private Socket udpSocket;
         private Socket tcpSocket;
         private Socket clientTcpSocket;
+        private List<object> message;
 
         public Socket UdpSocket 
         { 
@@ -86,7 +87,7 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 Console.WriteLine("Connected");
-                List<object> message = GetMessage(this.tcpSocket);
+                List<object> message = await GetMessage(this.tcpSocket);
                 string data = (string)message[2];
                 switch (message[0])
                 {
@@ -98,11 +99,11 @@ namespace ExtremLink_Server.Classes
                             Console.WriteLine(data);
                             if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                             {
-                                this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                                await this.SendMessage(this.clientTcpSocket, "!", "Exist");
                             }
                             else
                             {
-                                this.SendMessage(this.clientTcpSocket, "!", "NotExist");
+                                await this.SendMessage(this.clientTcpSocket, "!", "NotExist");
                             }
                         }
                         break;
@@ -145,7 +146,7 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-        public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
+        public async Task SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
             // The function gets a socket and  2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
             // and 'data' which contains the data which have to be transfered.
@@ -154,14 +155,16 @@ namespace ExtremLink_Server.Classes
             string endOfMessage = "EOM";
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
             byte[] compressedMessage = this.Compress(message);
-            clientSocket.Send(compressedMessage);
+            // clientSocket.Send(compressedMessage);
+            await clientSocket.SendAsync(new ArraySegment<byte>(compressedMessage), SocketFlags.None);
+
         }
-        public List<object> GetMessage(Socket clientSocket)
+        public async Task<List<object>> GetMessage(Socket clientSocket)
         {
             // The function gets a socket.
             // The function recieve a message from the socket and returns the message in parts as a list object.
             byte[] buffer = new byte[4096];
-            int bytesRead = clientSocket.Receive(buffer);
+            int bytesRead = await tcpSocket.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
             string[] messageParts = this.Decompress(buffer).Split('|');
 
             if (messageParts.Length != 4)

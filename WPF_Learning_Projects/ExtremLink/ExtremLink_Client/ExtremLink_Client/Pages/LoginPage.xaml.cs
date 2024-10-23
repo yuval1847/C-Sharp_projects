@@ -23,7 +23,7 @@ namespace ExtremLink_Client.Pages
     public partial class LoginPage : UserControl
     {
         private ContentControl contentMain;
-        private Client client;
+        private Classes.Client client;
 
         public ContentControl ContentMain
         {
@@ -32,7 +32,7 @@ namespace ExtremLink_Client.Pages
         }
 
 
-        public LoginPage(ContentControl contentMain, Client client)
+        public LoginPage(ContentControl contentMain, Classes.Client client)
         {
             this.ContentMain = contentMain;
             this.client = client;
