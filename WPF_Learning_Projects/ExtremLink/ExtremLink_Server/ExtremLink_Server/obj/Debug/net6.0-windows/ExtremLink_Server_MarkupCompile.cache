@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\USER\Desktop\C# projects\C-Sharp_projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\
 ExtremLink_Server
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\USER\Desktop\C# projects\C-Sharp_projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\App.xaml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\App.xaml
 6-1614713882
 
 9-2136402639
-195898785432
+195662046803
 CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;
 
 False
