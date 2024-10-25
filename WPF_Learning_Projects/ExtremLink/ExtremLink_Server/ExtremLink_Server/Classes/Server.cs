@@ -16,7 +16,8 @@ using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
 using System.Windows.Markup;
-
+using System.Threading;
+using System.Windows;
 
 namespace ExtremLink_Server.Classes
 {
@@ -24,11 +25,17 @@ namespace ExtremLink_Server.Classes
     {
         // A class which represent a server.
         // Attributes:
+        private string serverIpAddress;
         private Socket udpSocket;
         private Socket tcpSocket;
         private Socket clientTcpSocket;
         private List<object> message;
 
+        public string ServerIpAddress
+        {
+            get { return this.serverIpAddress; }
+            set { this.serverIpAddress = value; }
+        }
         public Socket UdpSocket 
         { 
             get { return this.udpSocket; }
@@ -47,18 +54,27 @@ namespace ExtremLink_Server.Classes
 
         public Server()
         {
+            FindIpAddress();
             // Create UDP socket
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, 1847));
+            this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), 1847));
             // Create TCP socket
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Any, 1234));
+            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), 1234));
             this.tcpSocket.Listen(1);
             Console.WriteLine("Waiting for client to connect...");
             this.clientTcpSocket = this.tcpSocket.Accept();
             Console.WriteLine("Client connected.");
         }
-
+        
+        public void FindIpAddress()
+        {
+            // The function gets nothing.
+            // The function sets the server's ip address according to the local ip address.
+            IPAddress[] localIpAddr = Dns.GetHostAddresses(Dns.GetHostName());
+            this.serverIpAddress = Convert.ToString(localIpAddr[localIpAddr.Length - 1]);
+            MessageBox.Show($"Server IP: {this.serverIpAddress}", "IP found!");
+        }
 
         public void Start()
         {
@@ -86,27 +102,29 @@ namespace ExtremLink_Server.Classes
             // # - 
             while (true)
             {
-                Console.WriteLine("Connected");
-                List<object> message = GetMessage(this.clientTcpSocket);
-                string data = (string)message[2];
-                switch (message[0])
-                {
-                    case "!":
-                        if (data.Contains("username"))
-                        {
-                            string username = data.Split(",")[0].Split("=")[1];
-                            string password = data.Split(",")[1].Split("=")[1];
-                            Console.WriteLine(data);
-                            if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
+                lock (this){
+                    Console.WriteLine("Connected");
+                    List<object> message = GetMessage(this.clientTcpSocket);
+                    string data = (string)message[2];
+                    switch (message[0])
+                    {
+                        case "!":
+                            if (data.Contains("username"))
                             {
-                                this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                                string username = data.Split(",")[0].Split("=")[1];
+                                string password = data.Split(",")[1].Split("=")[1];
+                                if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
+                                {
+                                    MessageBox.Show(Convert.ToString(message[2]), "the type of message");
+                                    this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                                }
+                                else
+                                {
+                                    this.SendMessage(this.clientTcpSocket, "!", "NotExist");
+                                }
                             }
-                            else
-                            {
-                                this.SendMessage(this.clientTcpSocket, "!", "NotExist");
-                            }
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         }
@@ -164,7 +182,7 @@ namespace ExtremLink_Server.Classes
             // The function recieve a message from the socket and returns the message in parts as a list object.
             byte[] buffer = new byte[4096];
             int bytesRead = clientSocket.Receive(buffer);
-
+            
             byte[] actualData = new byte[bytesRead];
             Array.Copy(buffer, actualData, bytesRead);
 

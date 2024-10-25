@@ -41,7 +41,6 @@ namespace ExtremLink_Client.CustomWidgets
             set { this.isHide = value; }
         }
 
-
         public CustomTextBox()
         {
             InitializeComponent();
@@ -55,21 +54,38 @@ namespace ExtremLink_Client.CustomWidgets
             if (string.IsNullOrEmpty(customTB.Text)) { contentHolder.Visibility = Visibility.Visible; }
             else { contentHolder.Visibility = Visibility.Hidden; }
 
+            /* if (this.IsHide) { this.HideTextWithStars(); }
+            else { this.Text = customTB.Text; } */
             this.Text = customTB.Text;
-
-            if (this.IsHide)
-            {
-                this.HideTextWithStars();
-            }
         }
         private void HideTextWithStars()
         {
             // The function gets nothing.
             // The function change the text of the custom textbox to starts('*' -> shift+8).
             int caretIndex = customTB.CaretIndex;
+
+            // Save the text before starring it
+            // if the current textbox's text length is wider than the previous text length.
+            /* if (customTB.Text != null)
+            {
+                if (customTB.Text.Length < this.text.Length)
+                {
+                    this.text = this.text.Substring(0, this.text.Length - 1);
+                }
+                // if the current textbox's text length is narrower than the previous text length.
+                else if (customTB.Text.Length > this.text.Length)
+                {
+                    this.text += customTB.Text[customTB.Text.Length];
+                }
+                else
+                {
+                    this.text = this.text.Substring(0, this.text.Length - 1) + customTB.Text[customTB.Text.Length - 1];
+                }
+            } */
             customTB.Text = new string('*', Text.Length);
             customTB.CaretIndex = caretIndex;
         }
+
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // The function gets nothing.

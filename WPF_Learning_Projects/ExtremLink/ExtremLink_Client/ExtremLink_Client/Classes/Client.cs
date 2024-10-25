@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ExtremLink_Client.Classes
 {
@@ -75,26 +76,29 @@ namespace ExtremLink_Client.Classes
             // # -
             while (true)
             {
-                List<object> message = GetMessage(this.tcpSocket);
-                string data = (string)message[2];
-                switch (message[0])
+                lock (this)
                 {
-                    case "!":
-                        Console.WriteLine(data);
-                        if (data == "Exist")
-                        {
-                            // Important Note: the server replay is a string that is accessible
-                            // out of the class which can be accessible like from the login page.
-                            this.serverRespond = "Exist";
-                        }
-                        if (data == "NotExist")
-                        {
-                            this.serverRespond = "NotExist";
-                        }
-                        break;
+                    List<object> message = GetMessage(this.tcpSocket);
+                    string data = (string)message[2];
+                    
+                    switch (message[0])
+                    {
+                        case "!":
+                            Console.WriteLine(data);
+                            if (data == "Exist")
+                            {
+                                // Important Note: the server replay is a string that is accessible
+                                // out of the class which can be accessible like from the login page.
+                                this.serverRespond = "Exist";
+                            }
+                            if (data == "NotExist")
+                            {
+                                this.serverRespond = "NotExist";
+                            }
+                            break;
+                    }
                 }
             }
-            
         }
 
         public byte[] Compress(string data)
