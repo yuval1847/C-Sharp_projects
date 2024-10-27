@@ -49,7 +49,7 @@ namespace ExtremLink_Client.Pages
             Thread clientMessagesHandlingThread = new Thread(this.client.Start);
             clientMessagesHandlingThread.Start();
             this.client.SendMessage(this.client.TCPSocket, "!", $"username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
-            MessageBox.Show(this.client.ServerRespond, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            //MessageBox.Show(this.client.ServerRespond, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             if (this.client.ServerRespond == "Exist")
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;

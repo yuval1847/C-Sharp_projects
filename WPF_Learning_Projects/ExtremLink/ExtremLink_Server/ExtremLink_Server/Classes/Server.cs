@@ -103,7 +103,6 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 lock (this){
-                    Console.WriteLine("Connected");
                     List<object> message = GetMessage(this.clientTcpSocket);
                     string data = (string)message[2];
                     switch (message[0])
@@ -113,9 +112,11 @@ namespace ExtremLink_Server.Classes
                             {
                                 string username = data.Split(",")[0].Split("=")[1];
                                 string password = data.Split(",")[1].Split("=")[1];
+                                MessageBox.Show(Convert.ToString($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}"), "the type of message");
+                                // The problem here is in the IsUserExist function! 
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
-                                    MessageBox.Show(Convert.ToString(message[2]), "the type of message");
+                                    
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
                                 }
                                 else
@@ -174,8 +175,8 @@ namespace ExtremLink_Server.Classes
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
             byte[] compressedMessage = this.Compress(message);
             clientSocket.Send(compressedMessage);
-
         }
+
         public List<object> GetMessage(Socket clientSocket)
         {
             // The function gets a socket.
@@ -213,9 +214,9 @@ namespace ExtremLink_Server.Classes
             // The fucntion returns a SqlConnection object which connected to the database.
 
             // The path of the database
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=" + path + "; Integrated Security=True; Connect Timeout=30";
-            SqlConnection conn = new SqlConnection(connString);
+            string path = "Databases/" + fileName;
+            //MessageBox.Show($"The database full path:{path}");
+            SqlConnection conn = new SqlConnection(path);
             return conn;
         }
         public bool IsUserExist(string username, string password, string databaseFileName)
@@ -224,6 +225,7 @@ namespace ExtremLink_Server.Classes
             // The function sends a query to the database and returns true if the user exist, otherwise false.
             string sqlQuery = $"SELECT * FROM [dbo].[Table] WHERE username='{username}' AND password='{password}'";
             SqlConnection conn = ConnectToDB(databaseFileName);
+            MessageBox.Show("Established connection with the database");
             conn.Open();
             SqlCommand com = new SqlCommand(sqlQuery, conn);
             SqlDataReader data = com.ExecuteReader();
