@@ -214,9 +214,10 @@ namespace ExtremLink_Server.Classes
             // The fucntion returns a SqlConnection object which connected to the database.
 
             // The path of the database
-            string path = "Databases/" + fileName;
-            //MessageBox.Show($"The database full path:{path}");
-            SqlConnection conn = new SqlConnection(path);
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='Databases\"+fileName+"';Integrated Security=True";
+            MessageBox.Show($"The database full path:{connectionString}");
+            SqlConnection conn = new SqlConnection(connectionString);
+            MessageBox.Show("Established connection with the database");
             return conn;
         }
         public bool IsUserExist(string username, string password, string databaseFileName)
@@ -225,7 +226,7 @@ namespace ExtremLink_Server.Classes
             // The function sends a query to the database and returns true if the user exist, otherwise false.
             string sqlQuery = $"SELECT * FROM [dbo].[Table] WHERE username='{username}' AND password='{password}'";
             SqlConnection conn = ConnectToDB(databaseFileName);
-            MessageBox.Show("Established connection with the database");
+            //MessageBox.Show("Established connection with the database");
             conn.Open();
             SqlCommand com = new SqlCommand(sqlQuery, conn);
             SqlDataReader data = com.ExecuteReader();
