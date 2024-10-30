@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 
-// SQL modules
+// Data handling modules
+using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
 using System.IO;
@@ -112,11 +112,10 @@ namespace ExtremLink_Server.Classes
                             {
                                 string username = data.Split(",")[0].Split("=")[1];
                                 string password = data.Split(",")[1].Split("=")[1];
-                                MessageBox.Show(Convert.ToString($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}"), "the type of message");
+                                // MessageBox.Show($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}", "the type of message");
                                 // The problem here is in the IsUserExist function! 
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
-                                    
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
                                 }
                                 else
@@ -208,14 +207,14 @@ namespace ExtremLink_Server.Classes
 
 
         // SQL database queries functions
-        public static SqlConnection ConnectToDB(string fileName)
+        /* public static SqlConnection ConnectToDB(string fileName)
         {
             // The function gets a string which represent the file name of the database.
             // The fucntion returns a SqlConnection object which connected to the database.
 
             // The path of the database
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='Databases\"+fileName+"';Integrated Security=True";
-            MessageBox.Show($"The database full path:{connectionString}");
+            // MessageBox.Show($"The database full path:{connectionString}");
             SqlConnection conn = new SqlConnection(connectionString);
             MessageBox.Show("Established connection with the database");
             return conn;
@@ -232,6 +231,42 @@ namespace ExtremLink_Server.Classes
             SqlDataReader data = com.ExecuteReader();
             bool found = (bool)data.Read();
             conn.Close();
+            return found;
+        }*/
+        public static SqlConnection ConnectToDB(string fileName)
+        {
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\Databases\"+fileName+";Integrated Security=True";
+            //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExtremLink_Server", "Databases", fileName)+";Integrated Security=True";
+            SqlConnection conn = new SqlConnection(connectionString);
+            return conn;
+        }
+
+        public bool IsUserExist(string username, string password, string databaseFileName)
+        {
+            string sqlQuery = "SELECT * FROM [dbo].[Table] WHERE username = @username AND password = @password";
+            bool found = false;
+            using (SqlConnection conn = ConnectToDB(databaseFileName))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand com = new SqlCommand(sqlQuery, conn))
+                    {
+                        // Add parameters to the command to avoid SQL injection
+                        com.Parameters.AddWithValue("@username", username);
+                        com.Parameters.AddWithValue("@password", password);
+
+                        int count = (int)com.ExecuteScalar();
+                        // If count is greater than 0, the user exists
+                        found = (count > 0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+            }
+            // MessageBox.Show(Convert.ToString(found));
             return found;
         }
     }

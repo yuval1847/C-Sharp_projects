@@ -87,12 +87,15 @@ namespace ExtremLink_Client.Classes
                             Console.WriteLine(data);
                             if (data == "Exist")
                             {
+                                // MessageBox.Show("Exist", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                                 // Important Note: the server replay is a string that is accessible
                                 // out of the class which can be accessible like from the login page.
                                 this.serverRespond = "Exist";
                             }
                             if (data == "NotExist")
                             {
+                                MessageBox.Show("NotExist", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+
                                 this.serverRespond = "NotExist";
                             }
                             break;
