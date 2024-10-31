@@ -256,7 +256,8 @@ namespace ExtremLink_Server.Classes
                         com.Parameters.AddWithValue("@username", username);
                         com.Parameters.AddWithValue("@password", password);
 
-                        int count = (int)com.ExecuteScalar();
+                        object result = com.ExecuteScalar();
+                        int count = result == null ? 0 : Convert.ToInt32(result);
                         // If count is greater than 0, the user exists
                         found = (count > 0);
                     }

@@ -27,8 +27,6 @@ namespace ExtremLink_Server.Pages
         {
             this.contentMain = contentMain;
             InitializeComponent();
-            
-            
         }
 
         private void startListenBtn_Click(object sender, RoutedEventArgs e)

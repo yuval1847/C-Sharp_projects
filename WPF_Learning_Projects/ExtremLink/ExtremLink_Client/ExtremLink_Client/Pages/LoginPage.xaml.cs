@@ -1,6 +1,7 @@
 ﻿using ExtremLink_Client.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ExtremLink_Client.Pages
 {
@@ -39,7 +41,7 @@ namespace ExtremLink_Client.Pages
             InitializeComponent();
 
         }
-
+        
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             // The function called by clicking on the login button
@@ -49,14 +51,15 @@ namespace ExtremLink_Client.Pages
             Thread clientMessagesHandlingThread = new Thread(this.client.Start);
             clientMessagesHandlingThread.Start();
             this.client.SendMessage(this.client.TCPSocket, "!", $"username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
-            // MessageBox.Show("Hellp");
+            // Waiting for reciving the server respond.
+            Thread.Sleep(500);
             if (this.client.ServerRespond == "Exist")
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
                 this.wrongLoginTextBlock.Text = "successfully connected!";
                 this.wrongLoginTextBlock.Foreground = Brushes.Green;
             }
-            if (this.client.ServerRespond == "NotExist")
+            else if (this.client.ServerRespond == "NotExist")
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
             }

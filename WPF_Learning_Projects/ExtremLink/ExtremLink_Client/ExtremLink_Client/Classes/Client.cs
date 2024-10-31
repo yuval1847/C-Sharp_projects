@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -33,8 +34,12 @@ namespace ExtremLink_Client.Classes
         public string ServerRespond
         {
             get { return this.serverRespond; }
-            set { this.serverRespond = value; }
+            set 
+            {
+                this.serverRespond = value;
+            }
         }
+
 
         public Client(string serverIpAddr)
         {
@@ -85,19 +90,8 @@ namespace ExtremLink_Client.Classes
                     {
                         case "!":
                             Console.WriteLine(data);
-                            if (data == "Exist")
-                            {
-                                // MessageBox.Show("Exist", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                                // Important Note: the server replay is a string that is accessible
-                                // out of the class which can be accessible like from the login page.
-                                this.serverRespond = "Exist";
-                            }
-                            if (data == "NotExist")
-                            {
-                                MessageBox.Show("NotExist", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                                this.serverRespond = "NotExist";
-                            }
+                            if (data == "Exist"){this.serverRespond = "Exist";}
+                            if(data == "NotExist"){this.serverRespond = "NotExist";}
                             break;
                     }
                 }
@@ -179,6 +173,8 @@ namespace ExtremLink_Client.Classes
             messagePartsList.Add(messageParts[3]);
             return messagePartsList;
         }
+
+       
 
     }
 }
