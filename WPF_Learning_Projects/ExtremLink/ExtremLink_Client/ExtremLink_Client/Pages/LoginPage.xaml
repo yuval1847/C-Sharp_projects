@@ -13,6 +13,7 @@
                 <GradientStop Color="#00cec9" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
+        <Image Source="/Images/user_icon.png" Width="55" Height="55" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.37,1.41" Margin="10,10,0,0"/>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="600" Background="Transparent">
             <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,20,0,0"/>

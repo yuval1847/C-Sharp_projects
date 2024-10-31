@@ -13,6 +13,9 @@
     <Compile Update="CustomWidgets\CustomTextBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomWidgets\UserIcon.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ConnectingPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -22,12 +25,18 @@
     <Compile Update="Pages\OpeningPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\SignUpPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomWidgets\CustomButton.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomWidgets\CustomTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomWidgets\UserIcon.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
@@ -40,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\OpeningPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SignUpPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
