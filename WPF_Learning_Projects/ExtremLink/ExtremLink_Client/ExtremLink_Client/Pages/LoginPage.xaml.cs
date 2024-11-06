@@ -50,7 +50,7 @@ namespace ExtremLink_Client.Pages
             // to the database.
             Thread clientMessagesHandlingThread = new Thread(this.client.Start);
             clientMessagesHandlingThread.Start();
-            this.client.SendMessage(this.client.TCPSocket, "!", $"username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+            this.client.SendMessage(this.client.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
             // Waiting for reciving the server respond.
             Thread.Sleep(500);
             if (this.client.ServerRespond == "Exist")

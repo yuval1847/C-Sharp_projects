@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Windows.Markup;
 using System.Threading;
 using System.Windows;
+using System.Collections;
 
 namespace ExtremLink_Server.Classes
 {
@@ -108,8 +109,10 @@ namespace ExtremLink_Server.Classes
                     switch (message[0])
                     {
                         case "!":
-                            if (data.Contains("username"))
+                            if (data.Contains("login"))
                             {
+                                data = data.Replace("login,", "");
+                                // MessageBox.Show(data);
                                 string username = data.Split(",")[0].Split("=")[1];
                                 string password = data.Split(",")[1].Split("=")[1];
                                 // MessageBox.Show($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}", "the type of message");
@@ -123,12 +126,33 @@ namespace ExtremLink_Server.Classes
                                     this.SendMessage(this.clientTcpSocket, "!", "NotExist");
                                 }
                             }
+
+                            else if (data.Contains("signup"))
+                            {
+                                data.Replace("signup,", "");
+                                string[] parametersArr = data.Split(",");
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    parametersArr[i] = parametersArr[i].Split("=")[1];
+                                }
+                                if (this.AddUser(parametersArr, "ExtremLinkDB.mdf"))
+                                {
+                                    this.SendMessage(this.clientTcpSocket, "!", "SuccessfullyAdded");
+                                }
+                                else
+                                {
+                                    this.SendMessage(this.clientTcpSocket, "!", "NotAdded");
+                                }
+
+                            }
                             break;
+
+
                     }
                 }
             }
         }
-
+        // Compress and decompress functions
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -164,6 +188,7 @@ namespace ExtremLink_Server.Classes
             }
         }
 
+        // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
             // The function gets a socket and  2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
@@ -175,7 +200,6 @@ namespace ExtremLink_Server.Classes
             byte[] compressedMessage = this.Compress(message);
             clientSocket.Send(compressedMessage);
         }
-
         public List<object> GetMessage(Socket clientSocket)
         {
             // The function gets a socket.
@@ -207,32 +231,6 @@ namespace ExtremLink_Server.Classes
 
 
         // SQL database queries functions
-        /* public static SqlConnection ConnectToDB(string fileName)
-        {
-            // The function gets a string which represent the file name of the database.
-            // The fucntion returns a SqlConnection object which connected to the database.
-
-            // The path of the database
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='Databases\"+fileName+"';Integrated Security=True";
-            // MessageBox.Show($"The database full path:{connectionString}");
-            SqlConnection conn = new SqlConnection(connectionString);
-            MessageBox.Show("Established connection with the database");
-            return conn;
-        }
-        public bool IsUserExist(string username, string password, string databaseFileName)
-        {
-            // The function gets 2 strings which represent a username and a password.
-            // The function sends a query to the database and returns true if the user exist, otherwise false.
-            string sqlQuery = $"SELECT * FROM [dbo].[Table] WHERE username='{username}' AND password='{password}'";
-            SqlConnection conn = ConnectToDB(databaseFileName);
-            //MessageBox.Show("Established connection with the database");
-            conn.Open();
-            SqlCommand com = new SqlCommand(sqlQuery, conn);
-            SqlDataReader data = com.ExecuteReader();
-            bool found = (bool)data.Read();
-            conn.Close();
-            return found;
-        }*/
         public static SqlConnection ConnectToDB(string fileName)
         {
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\Databases\"+fileName+";Integrated Security=True";
@@ -240,7 +238,6 @@ namespace ExtremLink_Server.Classes
             SqlConnection conn = new SqlConnection(connectionString);
             return conn;
         }
-
         public bool IsUserExist(string username, string password, string databaseFileName)
         {
             string sqlQuery = "SELECT * FROM [dbo].[Table] WHERE username = @username AND password = @password";
@@ -270,5 +267,45 @@ namespace ExtremLink_Server.Classes
             // MessageBox.Show(Convert.ToString(found));
             return found;
         }
+        public bool AddUser(string[] parameters, string databaseFileName)
+        {
+            // The function gets an array of parameters.
+            // The function returns true if the user isn't in the database and creates
+            // a new user according to the paramters, otherwise return false.
+            if (this.IsUserExist(parameters[4], parameters[5], "ExtremLinkDB.mdf")) {return false;}
+            string amoutOfUserSqlQuery = "SELECT COUNT(*) FROM [dbo].[Table]";
+            string addUserSqlQuery = "INSERT INTO [dbo].[Table] (Id, firstName, lastName, city, phone, username, password, email) VALUES (@userID, @firstname, @lastname, @city, @phone, @username, @password, @email)";
+            int amountOfUsers = 0;
+            using (SqlConnection conn = ConnectToDB(databaseFileName))
+            {
+                try
+                {
+                    conn.Open();
+                    // Retrieve the amout of users in the database
+                    using (SqlCommand com1 = new SqlCommand(amoutOfUserSqlQuery, conn))
+                    {
+                        amountOfUsers = (int)com1.ExecuteScalar();
+                    }
+                    using (SqlCommand com2 = new SqlCommand(addUserSqlQuery, conn))
+                    {
+                        // Add parameters to the command to avoid SQL injection
+                        com2.Parameters.AddWithValue("@userID", amountOfUsers+1);
+                        com2.Parameters.AddWithValue("@firstname", parameters[0]);
+                        com2.Parameters.AddWithValue("@lastname", parameters[1]);
+                        com2.Parameters.AddWithValue("@city", parameters[2]);
+                        com2.Parameters.AddWithValue("@phone", parameters[3]);
+                        com2.Parameters.AddWithValue("@username", parameters[4]);
+                        com2.Parameters.AddWithValue("@password", parameters[5]);
+                        com2.Parameters.AddWithValue("@email", parameters[6]);
+                        com2.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+            }
+            return true;
+        }         
     }
 }
