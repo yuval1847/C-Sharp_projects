@@ -65,5 +65,17 @@ namespace ExtremLink_Client.Pages
             }
             // clientMessagesHandlingThread.Abort();
         }
+
+        private void CreateNewUser_Click(object sender, RoutedEventArgs e)
+        {
+            this.contentMain.Content = new SignUpPage(this.contentMain, this.client);
+        }
+
+        private void ForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
     }
 }

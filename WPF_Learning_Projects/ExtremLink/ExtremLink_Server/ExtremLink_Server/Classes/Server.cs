@@ -72,8 +72,8 @@ namespace ExtremLink_Server.Classes
         {
             // The function gets nothing.
             // The function sets the server's ip address according to the local ip address.
-            IPAddress[] localIpAddr = Dns.GetHostAddresses(Dns.GetHostName());
-            this.serverIpAddress = Convert.ToString(localIpAddr[localIpAddr.Length - 1]);
+            IPAddress[] localIpsAddr = Dns.GetHostAddresses(Dns.GetHostName());
+            this.serverIpAddress = Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
             MessageBox.Show($"Server IP: {this.serverIpAddress}", "IP found!");
         }
 
@@ -135,6 +135,10 @@ namespace ExtremLink_Server.Classes
                                 {
                                     parametersArr[i] = parametersArr[i].Split("=")[1];
                                 }
+
+                                MessageBox.Show(parametersArr[0]);
+
+
                                 if (this.AddUser(parametersArr, "ExtremLinkDB.mdf"))
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "SuccessfullyAdded");
@@ -143,11 +147,8 @@ namespace ExtremLink_Server.Classes
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "NotAdded");
                                 }
-
                             }
                             break;
-
-
                     }
                 }
             }

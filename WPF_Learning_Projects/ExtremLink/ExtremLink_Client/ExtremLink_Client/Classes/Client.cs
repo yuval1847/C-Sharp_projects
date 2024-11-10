@@ -92,12 +92,15 @@ namespace ExtremLink_Client.Classes
                             Console.WriteLine(data);
                             if (data == "Exist"){this.serverRespond = "Exist";}
                             if(data == "NotExist"){this.serverRespond = "NotExist";}
+                            if(data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded";}
+                            if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
                     }
                 }
             }
         }
 
+        // Compress and decompress functions
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -133,6 +136,7 @@ namespace ExtremLink_Client.Classes
             }
         }
 
+        // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
             // The function gets a socket and  2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
@@ -173,8 +177,6 @@ namespace ExtremLink_Client.Classes
             messagePartsList.Add(messageParts[3]);
             return messagePartsList;
         }
-
-       
 
     }
 }
