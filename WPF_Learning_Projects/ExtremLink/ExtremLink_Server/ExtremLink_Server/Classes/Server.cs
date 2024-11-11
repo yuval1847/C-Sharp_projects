@@ -112,7 +112,6 @@ namespace ExtremLink_Server.Classes
                             if (data.Contains("login"))
                             {
                                 data = data.Replace("login,", "");
-                                // MessageBox.Show(data);
                                 string username = data.Split(",")[0].Split("=")[1];
                                 string password = data.Split(",")[1].Split("=")[1];
                                 // MessageBox.Show($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}", "the type of message");
@@ -129,15 +128,12 @@ namespace ExtremLink_Server.Classes
 
                             else if (data.Contains("signup"))
                             {
-                                data.Replace("signup,", "");
+                                data = data.Replace("signup,", "");
                                 string[] parametersArr = data.Split(",");
                                 for (int i = 0; i < 7; i++)
                                 {
                                     parametersArr[i] = parametersArr[i].Split("=")[1];
                                 }
-
-                                MessageBox.Show(parametersArr[0]);
-
 
                                 if (this.AddUser(parametersArr, "ExtremLinkDB.mdf"))
                                 {

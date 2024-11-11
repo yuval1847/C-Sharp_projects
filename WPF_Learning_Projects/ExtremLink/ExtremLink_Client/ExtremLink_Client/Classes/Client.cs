@@ -89,11 +89,10 @@ namespace ExtremLink_Client.Classes
                     switch (message[0])
                     {
                         case "!":
-                            Console.WriteLine(data);
                             if (data == "Exist"){this.serverRespond = "Exist";}
-                            if(data == "NotExist"){this.serverRespond = "NotExist";}
-                            if(data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded";}
-                            if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
+                            else if(data == "NotExist"){this.serverRespond = "NotExist";}
+                            else if(data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded";}
+                            else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
                     }
                 }
@@ -177,6 +176,5 @@ namespace ExtremLink_Client.Classes
             messagePartsList.Add(messageParts[3]);
             return messagePartsList;
         }
-
     }
 }

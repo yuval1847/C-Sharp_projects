@@ -46,7 +46,6 @@ namespace ExtremLink_Client.Pages
                 clientMessagesHandlingThread.Start();
                 this.client.SendMessage(this.client.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
                 Thread.Sleep(500);
-                MessageBox.Show(this.client.ServerRespond);
                 if (this.client.ServerRespond == "SuccessfullyAdded")
                 {
                     this.ContentMain.Content = new LoginPage(this.ContentMain, this.client);
