@@ -52,6 +52,10 @@ namespace ExtremLink_Server.Pages
             });
             Thread clientMessagesHandlingThread = new Thread(server.Start);
             clientMessagesHandlingThread.Start();
+            if (server.ClientRespond == "Exist")
+            {
+
+            }
         }
     }
 }

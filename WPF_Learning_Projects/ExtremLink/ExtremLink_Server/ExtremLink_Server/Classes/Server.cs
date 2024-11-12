@@ -31,6 +31,7 @@ namespace ExtremLink_Server.Classes
         private Socket tcpSocket;
         private Socket clientTcpSocket;
         private List<object> message;
+        private string clientRespond;
 
         public string ServerIpAddress
         {
@@ -51,6 +52,11 @@ namespace ExtremLink_Server.Classes
         {
             get { return this.clientTcpSocket; }
             set {this.clientTcpSocket = value;}
+        }
+        public string ClientRespond
+        {
+            get { return this.clientRespond; }
+            set { this.clientRespond = value; }
         }
 
         public Server()
@@ -119,6 +125,7 @@ namespace ExtremLink_Server.Classes
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                                    this.clientRespond = "Exist";
                                 }
                                 else
                                 {
