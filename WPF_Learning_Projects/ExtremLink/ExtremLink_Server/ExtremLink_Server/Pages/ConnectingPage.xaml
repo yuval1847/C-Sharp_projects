@@ -17,5 +17,7 @@
             <TextBlock x:Name="waitingTextBlock" Visibility="Hidden" Text="Waiting for connection..." FontSize="48" FontWeight="Bold" Foreground="#00cec9" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,250,0,50"/>
             <customWidgets:CustomButton x:Name="startListenBtn" Width="180" Height="40" Placeholder="Start Listen" CustomClick="startListenBtn_Click" Margin="0,100,0,0"/>
         </StackPanel>
+        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
+
     </Grid>
 </UserControl>

@@ -31,7 +31,8 @@ namespace ExtremLink_Server.Classes
         private Socket tcpSocket;
         private Socket clientTcpSocket;
         private List<object> message;
-        private string clientRespond;
+        private string respond;
+        private string clientIpAddress;
 
         public string ServerIpAddress
         {
@@ -53,14 +54,20 @@ namespace ExtremLink_Server.Classes
             get { return this.clientTcpSocket; }
             set {this.clientTcpSocket = value;}
         }
-        public string ClientRespond
+        public string Respond
         {
-            get { return this.clientRespond; }
-            set { this.clientRespond = value; }
+            get { return this.respond; }
+            set { this.respond = value; }
+        }
+        public string ClientIpAddress
+        {
+            get { return this.clientIpAddress; }
+            set { this.clientIpAddress = value; }
         }
 
         public Server()
         {
+            this.respond = "";
             FindIpAddress();
             // Create UDP socket
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -72,8 +79,10 @@ namespace ExtremLink_Server.Classes
             Console.WriteLine("Waiting for client to connect...");
             this.clientTcpSocket = this.tcpSocket.Accept();
             Console.WriteLine("Client connected.");
+            this.clientIpAddress = FindClientIpAddress(this.tcpSocket);
+            
         }
-        
+
         public void FindIpAddress()
         {
             // The function gets nothing.
@@ -81,6 +90,22 @@ namespace ExtremLink_Server.Classes
             IPAddress[] localIpsAddr = Dns.GetHostAddresses(Dns.GetHostName());
             this.serverIpAddress = Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
             MessageBox.Show($"Server IP: {this.serverIpAddress}", "IP found!");
+        }
+        public string FindClientIpAddress(Socket clientSocket)
+        {
+            // The function gets a socket.
+            // The function returns the socket's client's ip.
+            EndPoint remoteEndPoint = clientSocket.RemoteEndPoint;
+            if (remoteEndPoint is IPEndPoint ipEndPoint)
+            {
+                return ipEndPoint.Address.ToString();
+            }
+            else
+            {
+                MessageBox.Show("RemoteEndPoint is not an IPEndPoint.");
+            }
+            return "";
+
         }
 
         public void Start()
@@ -125,11 +150,12 @@ namespace ExtremLink_Server.Classes
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
-                                    this.clientRespond = "Exist";
+                                    this.respond = "Exist";
                                 }
                                 else
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "NotExist");
+                                    this.respond = "NotExist";
                                 }
                             }
 

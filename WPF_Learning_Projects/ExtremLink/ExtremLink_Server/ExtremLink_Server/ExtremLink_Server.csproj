@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\default_image.png" />
     <None Remove="Images\ExtremLink_Icon.png" />
+    <None Remove="Images\pause_icon.png" />
+    <None Remove="Images\pc_icon.png" />
+    <None Remove="Images\play_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\default_image.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +25,9 @@
 
   <ItemGroup>
     <Resource Include="Images\ExtremLink_Icon.png" />
+    <Resource Include="Images\pause_icon.png" />
+    <Resource Include="Images\pc_icon.png" />
+    <Resource Include="Images\play_icon.png" />
   </ItemGroup>
 
 </Project>

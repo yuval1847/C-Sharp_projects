@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtremLink_Server.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,14 @@ namespace ExtremLink_Server.Pages
     /// </summary>
     public partial class ConnectingPage : UserControl
     {
+        private Server server;
         private ContentControl contentMain;
+        private AutoResetEvent serverResponseEvent;
+
 
         public ConnectingPage(ContentControl contentMain)
         {
+            this.serverResponseEvent = new AutoResetEvent(false);
             this.contentMain = contentMain;
             InitializeComponent();
         }
@@ -44,18 +49,35 @@ namespace ExtremLink_Server.Pages
         {
             // The function gets nothing.
             // The function start the connection.
-            Classes.Server server = new Classes.Server();
+            this.server = new Server();
             // used to execute the text changing on the UI thread because it's a different thread.
             Dispatcher.Invoke(() =>
             {
                 waitingTextBlock.Text = "Waiting for client to login...";
             });
-            Thread clientMessagesHandlingThread = new Thread(server.Start);
-            clientMessagesHandlingThread.Start();
-            if (server.ClientRespond == "Exist")
+            Thread clientMessagesHandlingThread = new Thread(() =>
             {
+                this.server.Start();
+                // Check for a change in server response (you may need a mechanism to monitor server response change)
+                while (true)
+                {
+                    if (this.server.Respond == "Exist")
+                    {
+                        this.serverResponseEvent.Set();
+                        break;
+                    }
+                    Thread.Sleep(100); // Prevent tight loop
+                }
+            });
+            clientMessagesHandlingThread.Start();
 
-            }
+            // Wait for server response event
+            this.serverResponseEvent.WaitOne();
+
+            Dispatcher.Invoke(() =>
+            {
+                this.contentMain.Content = new ControlPage(this.contentMain, this.server);
+            });
         }
     }
 }
