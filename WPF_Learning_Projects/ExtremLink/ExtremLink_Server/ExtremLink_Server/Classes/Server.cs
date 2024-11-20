@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 // Networking modules
 using System.Net;
@@ -19,6 +21,8 @@ using System.Windows.Markup;
 using System.Threading;
 using System.Windows;
 using System.Collections;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace ExtremLink_Server.Classes
 {
@@ -32,7 +36,9 @@ namespace ExtremLink_Server.Classes
         private Socket clientTcpSocket;
         private List<object> message;
         private string respond;
+        private string udpRespond;
         private string clientIpAddress;
+        private RenderTargetBitmap currentFrame;
 
         public string ServerIpAddress
         {
@@ -59,11 +65,22 @@ namespace ExtremLink_Server.Classes
             get { return this.respond; }
             set { this.respond = value; }
         }
+        public string UdpRespond
+        {
+            get { return this.udpRespond; }
+            set { this.udpRespond = value; }
+        }
         public string ClientIpAddress
         {
             get { return this.clientIpAddress; }
             set { this.clientIpAddress = value; }
         }
+        public RenderTargetBitmap CurrentFrame
+        {
+            get { return this.currentFrame; }
+            set { this.currentFrame = value; }
+        }
+
 
         public Server()
         {
@@ -79,8 +96,7 @@ namespace ExtremLink_Server.Classes
             Console.WriteLine("Waiting for client to connect...");
             this.clientTcpSocket = this.tcpSocket.Accept();
             Console.WriteLine("Client connected.");
-            this.clientIpAddress = FindClientIpAddress(this.tcpSocket);
-            
+            this.clientIpAddress = FindClientIpAddress(this.clientTcpSocket);
         }
 
         public void FindIpAddress()
@@ -95,24 +111,14 @@ namespace ExtremLink_Server.Classes
         {
             // The function gets a socket.
             // The function returns the socket's client's ip.
-            EndPoint remoteEndPoint = clientSocket.RemoteEndPoint;
-            if (remoteEndPoint is IPEndPoint ipEndPoint)
-            {
-                return ipEndPoint.Address.ToString();
-            }
-            else
-            {
-                MessageBox.Show("RemoteEndPoint is not an IPEndPoint.");
-            }
-            return "";
-
+            var remoteEndPoint = clientSocket?.RemoteEndPoint as IPEndPoint;
+            return remoteEndPoint.Address.ToString();
         }
-
         public void Start()
         {
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
-            Console.WriteLine("Server started on UDP port 1234 and TCP port 1847.");
+            Console.WriteLine("Server started on UDP port 1847 and TCP port 1234.");
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
         }
@@ -122,6 +128,22 @@ namespace ExtremLink_Server.Classes
         {
             // The function gets nothing.
             // The fucntion handle with different type of TCP packets which are sent by the client.
+            // & - frames handling.
+            while (true)
+            {
+                List<object> message = GetMessage(this.udpSocket);
+                string data = (string)message[2];
+                switch (message[0])
+                {
+                    case "&":
+                        if (data.Contains("frame_received"))
+                        {
+                            this.udpRespond = "frame_received";
+                            this.currentFrame = this.DecompressRenderTargetBitmap(data);
+                        }
+                        break;
+                }
+            }
         }
 
         private async Task HandleTcpCommunication()
@@ -145,8 +167,7 @@ namespace ExtremLink_Server.Classes
                                 data = data.Replace("login,", "");
                                 string username = data.Split(",")[0].Split("=")[1];
                                 string password = data.Split(",")[1].Split("=")[1];
-                                // MessageBox.Show($"username:{username}, password:{password}, result:{this.IsUserExist(username, password, "ExtremLinkDB.mdf")}", "the type of message");
-                                // The problem here is in the IsUserExist function! 
+
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
@@ -183,6 +204,7 @@ namespace ExtremLink_Server.Classes
             }
         }
         // Compress and decompress functions
+        // Regular string:
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -217,6 +239,70 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
+        // Frames bitmap:
+        public RenderTargetBitmap DecompressRenderTargetBitmap(string compressedData)
+        {
+            // The function takes a Base64 string representing a compressed RenderTargetBitmap
+            // and returns the decompressed RenderTargetBitmap object.
+
+            if (string.IsNullOrEmpty(compressedData))
+                return null;
+
+            try
+            {
+                // Convert the Base64 string back to a compressed byte array
+                byte[] compressedBytes = Convert.FromBase64String(compressedData);
+
+                // Decompress the byte array
+                using (var compressedStream = new MemoryStream(compressedBytes))
+                {
+                    using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
+                    {
+                        using (var decompressedStream = new MemoryStream())
+                        {
+                            // Copy decompressed data to the memory stream
+                            gzipStream.CopyTo(decompressedStream);
+
+                            // Reset the position of the memory stream
+                            decompressedStream.Position = 0;
+
+                            // Decode the decompressed data into a BitmapFrame
+                            BitmapDecoder decoder = BitmapDecoder.Create(
+                                decompressedStream,
+                                BitmapCreateOptions.PreservePixelFormat,
+                                BitmapCacheOption.OnLoad);
+
+                            // Convert the BitmapFrame to a RenderTargetBitmap
+                            BitmapSource bitmapSource = decoder.Frames[0];
+
+                            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
+                                bitmapSource.PixelWidth,
+                                bitmapSource.PixelHeight,
+                                bitmapSource.DpiX,
+                                bitmapSource.DpiY,
+                                PixelFormats.Pbgra32);
+
+                            // Render the BitmapSource into the RenderTargetBitmap
+                            DrawingVisual drawingVisual = new DrawingVisual();
+                            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                            {
+                                drawingContext.DrawImage(bitmapSource, new System.Windows.Rect(0, 0, bitmapSource.PixelWidth, bitmapSource.PixelHeight));
+                            }
+                            renderTargetBitmap.Render(drawingVisual);
+
+                            return renderTargetBitmap;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Handle exceptions (e.g., invalid data format)
+                return null;
+            }
+        }
+
+
 
         // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
@@ -228,7 +314,14 @@ namespace ExtremLink_Server.Classes
             string endOfMessage = "EOM";
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
             byte[] compressedMessage = this.Compress(message);
-            clientSocket.Send(compressedMessage);
+            if (clientSocket.ProtocolType == ProtocolType.Tcp)
+            {
+                clientSocket.Send(compressedMessage);
+            }
+            else
+            {
+                clientSocket.SendTo(compressedMessage, new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847));
+            }
         }
         public List<object> GetMessage(Socket clientSocket)
         {

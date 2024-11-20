@@ -96,3 +96,7 @@ C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\Ext
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SignUpPage.g.cs
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\UserIcon.baml
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SignUpPage.baml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\System.Drawing.Common.dll
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SharingScreenPage.g.cs
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SharingScreenPage.baml
+C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.csproj.CopyComplete

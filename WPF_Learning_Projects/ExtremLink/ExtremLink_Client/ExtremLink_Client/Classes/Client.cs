@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Imaging;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -9,6 +11,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Net;
 
 namespace ExtremLink_Client.Classes
 {
@@ -69,6 +73,8 @@ namespace ExtremLink_Client.Classes
         {
             // The function gets nothing.
             // The fucntion handle with different type of TCP packets which are sent by the server.
+            // & - frames handling.
+
         }
 
         private async Task HandleTcpCommunication()
@@ -94,12 +100,18 @@ namespace ExtremLink_Client.Classes
                             else if(data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded";}
                             else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
+                        case "&":
+                            MessageBox.Show(data);
+                            if(data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
+                            break;
                     }
+                    
                 }
             }
         }
 
         // Compress and decompress functions
+        // Regular strings:
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -134,6 +146,38 @@ namespace ExtremLink_Client.Classes
                 }
             }
         }
+        // Frames bitmap:
+        public string CompressRenderTargetBitmap(RenderTargetBitmap renderTargetBitmap)
+        {
+            // The function gets a RenderTargetBitmap object.
+            // The function returns it compressed as a string.
+            if (renderTargetBitmap == null)
+                return string.Empty;
+
+            // Convert the RenderTargetBitmap to a byte array and compress it in one step
+            using (var memoryStream = new MemoryStream())
+            {
+                // Save the RenderTargetBitmap to the memory stream as PNG
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+                encoder.Save(memoryStream);
+
+                byte[] imageBytes = memoryStream.ToArray();
+
+                // Compress the byte array using GZip
+                using (var compressedStream = new MemoryStream())
+                {
+                    using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Compress))
+                    {
+                        gzipStream.Write(imageBytes, 0, imageBytes.Length);
+                    }
+
+                    // Convert the compressed byte array to a Base64 string
+                    return Convert.ToBase64String(compressedStream.ToArray());
+                }
+            }
+        }
+
 
         // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
@@ -145,7 +189,14 @@ namespace ExtremLink_Client.Classes
             string endOfMessage = "EOM";
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
             byte[] compressedMessage = this.Compress(message);
-            clientSocket.Send(compressedMessage);
+            if (clientSocket.ProtocolType == ProtocolType.Tcp)
+            {
+                clientSocket.Send(compressedMessage);
+            }
+            else
+            {
+                clientSocket.SendTo(compressedMessage, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
+            }
         }
         public List<object> GetMessage(Socket clientSocket)
         {

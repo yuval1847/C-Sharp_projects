@@ -25,6 +25,9 @@
     <Compile Update="Pages\OpeningPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\SharingScreenPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\SignUpPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\OpeningPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SharingScreenPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\SignUpPage.xaml">

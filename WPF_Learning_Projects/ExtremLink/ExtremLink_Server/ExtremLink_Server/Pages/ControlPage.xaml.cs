@@ -27,8 +27,22 @@ namespace ExtremLink_Server.Pages
         {
             this.contentMain = contentMain;
             this.server = server;
-            buttomLabel.Content = (string)this.server.ClientIpAddress;
+            //MessageBox.Show(this.server.ClientIpAddress);
             InitializeComponent();
+            this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
+        }
+
+        private void StartStreamBtnClick(object sender, RoutedEventArgs e)
+        {
+            this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
+            while (true)
+            {
+                if (this.server.Respond == "frame_received")
+                {
+                    frameImg.Source = this.server.CurrentFrame;
+                    this.server.Respond = "";
+                }
+            }
         }
     }
 }

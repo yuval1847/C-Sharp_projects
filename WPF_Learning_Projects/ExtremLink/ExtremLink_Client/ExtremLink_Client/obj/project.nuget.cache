@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wGJk2qLp1d8CzMtVBJLNvFR6edzQ/b5pXMJmiWSoS9nfRYsw/kmPPr7v3JKh9dn33hZNVu+2utgkqYcAoZFoQw==",
+  "dgSpecHash": "GMLb8qamFNQXB/ZR91oSuRPCUs1u3HJntqlmN1bECmPg+9AmvBFAMSpphy6qz14A/yet8sg9KtEcGVMtgAlOtA==",
   "success": true,
   "projectFilePath": "C:\\Users\\yuval\\Desktop\\C# projects\\WPF_Projects\\ExtremLink\\ExtremLink_Client\\ExtremLink_Client\\ExtremLink_Client.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\yuval\\.nuget\\packages\\system.drawing.common\\9.0.0\\system.drawing.common.9.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

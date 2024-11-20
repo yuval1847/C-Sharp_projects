@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ExtremLink_Client.Classes;
+
 
 namespace ExtremLink_Client.Pages
 {
@@ -25,11 +27,11 @@ namespace ExtremLink_Client.Pages
     public partial class LoginPage : UserControl
     {
         private ContentControl contentMain;
-        private Classes.Client client;
+        private Client client;
 
         public ContentControl ContentMain
         {
-            get { return contentMain; }
+            get { return this.contentMain; }
             set { this.contentMain = value; }
         }
 
@@ -52,12 +54,13 @@ namespace ExtremLink_Client.Pages
             clientMessagesHandlingThread.Start();
             this.client.SendMessage(this.client.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
             // Waiting for reciving the server respond.
-            Thread.Sleep(500);
+            Thread.Sleep(750);
             if (this.client.ServerRespond == "Exist")
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
                 this.wrongLoginTextBlock.Text = "successfully connected!";
                 this.wrongLoginTextBlock.Foreground = Brushes.Green;
+                this.contentMain.Content = new SharingScreenPage(this.contentMain, this.client, clientMessagesHandlingThread);
             }
             else if (this.client.ServerRespond == "NotExist")
             {

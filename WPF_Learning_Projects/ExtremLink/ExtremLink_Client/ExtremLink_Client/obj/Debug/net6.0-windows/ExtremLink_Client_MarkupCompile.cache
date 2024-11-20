@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\App.xaml
-8-1339607641
+9400465647
 
-11839154788
-194618410957
-CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;CustomWidgets\UserIcon.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;Pages\SignUpPage.xaml;
+12-37862334
+195-2135476384
+CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;CustomWidgets\UserIcon.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;Pages\SharingScreenPage.xaml;Pages\SignUpPage.xaml;
 
 False
 

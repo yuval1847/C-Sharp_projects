@@ -14,27 +14,32 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel>
-            <Image Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="200"/>
+
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                
-                <Label x:Name="buttomLabel" VerticalContentAlignment="Center" Foreground="#00cec9" FontSize="20" Grid.Column="1"/>
-                <Image Source="/Images/pc_icon.png" Width="40"/>
+
+                <Image Source="/Images/pc_icon.png" Width="25" Height="25" Margin="0,-447,40,467"/>
+                <TextBlock x:Name="clientIpTextBlock" Text="Client's IP:" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-442,10,0"/>
 
                 <!-- Play and Pause button -->
-                <customWidgets:CustomButton x:Name="playAndPauseBtn" Width="50" Height="50" Background="#00cec9"
-                                            Margin="0,5,0,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Image Source="/Images/play_icon.png" />
+                <customWidgets:CustomButton x:Name="playAndPauseBtn" Width="40" Height="40" Background="#00cec9"
+                                            Margin="0,5,0,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                            CustomClick="StartStreamBtnClick">
+                    <!-- <Image Source="/Images/play_icon.png" /> -->
                 </customWidgets:CustomButton>
+
             </Grid>
         </StackPanel>
         <TextBlock Text="Version 1.1" FontSize="14" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
+
     </Grid>
 </UserControl>
