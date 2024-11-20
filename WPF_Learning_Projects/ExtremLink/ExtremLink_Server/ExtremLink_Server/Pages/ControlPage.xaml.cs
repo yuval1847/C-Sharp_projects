@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,25 +24,68 @@ namespace ExtremLink_Server.Pages
     {
         private ContentControl contentMain;
         private Server server;
+        private bool isReceivingFrames;
+        private Thread frameUpdateThread;
+
         public ControlPage(ContentControl contentMain, Server server)
         {
             this.contentMain = contentMain;
             this.server = server;
-            //MessageBox.Show(this.server.ClientIpAddress);
+            this.isReceivingFrames = false;
             InitializeComponent();
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
         }
 
         private void StartStreamBtnClick(object sender, RoutedEventArgs e)
         {
-            this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
-            while (true)
+            if (!isReceivingFrames)
             {
-                if (this.server.Respond == "frame_received")
+                isReceivingFrames = true;
+                this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
+
+                frameUpdateThread = new Thread(UpdateFrame);
+                frameUpdateThread.Start();
+
+                playAndPauseBtn.Content = "Stop Stream";
+            }
+            else
+            {
+                isReceivingFrames = false;
+                this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
+                playAndPauseBtn.Content = "Start Stream";
+            }
+        }
+
+        private void UpdateFrame()
+        {
+            while (isReceivingFrames)
+            {
+                try
                 {
-                    frameImg.Source = this.server.CurrentFrame;
-                    this.server.Respond = "";
+                    if (this.server.UdpRespond == "frame_received" && this.server.CurrentFrame != null)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            frameImg.Source = this.server.CurrentFrame;
+                        });
+                        this.server.UdpRespond = "";
+                    }
+                    Thread.Sleep(16); // ~60 FPS
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error updating frame: {ex.Message}");
+                    isReceivingFrames = false;
+                }
+            }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            isReceivingFrames = false;
+            if (frameUpdateThread != null && frameUpdateThread.IsAlive)
+            {
+                frameUpdateThread.Join(1000);
             }
         }
     }

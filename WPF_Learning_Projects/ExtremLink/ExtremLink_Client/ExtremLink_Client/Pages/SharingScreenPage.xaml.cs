@@ -29,7 +29,7 @@ namespace ExtremLink_Client.Pages
         private Client client;
         private Thread clientMessagesHandlingThread;
         private Thread sharingScreenThread;
-        bool isStreaming;
+        private bool isStreaming;
 
         public ContentControl ContentMain
         {
@@ -39,20 +39,19 @@ namespace ExtremLink_Client.Pages
 
         public SharingScreenPage(ContentControl contentMain, Client client, Thread clientMessagesHandlingThread)
         {
-            this.ContentMain = contentMain;
+            this.contentMain = contentMain;
             this.client = client;
             this.clientMessagesHandlingThread = clientMessagesHandlingThread;
             this.isStreaming = false;
+            InitializeComponent();
+
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
             this.sharingScreenThread.Start();
-            InitializeComponent();
         }
-        
+
         private void StartSharingScreen()
         {
-            // The function gets nothing.
-            // The function sends the client's screenshots to the server.
-            while (this.client.ServerRespond != "StartSendFrames")
+            while (!this.isStreaming)
             {
                 if (this.client.ServerRespond == "StartSendFrames")
                 {
@@ -60,46 +59,64 @@ namespace ExtremLink_Client.Pages
                 }
                 Thread.Sleep(100);
             }
+
             while (this.isStreaming)
             {
-                this.client.SendMessage(this.client.UDPSocket, "&", $"frame_received:{this.client.CompressRenderTargetBitmap(this.CaptureScreen())}");
-                Thread.Sleep(50);
+                try
+                {
+                    var screen = CaptureScreen();
+                    if (screen != null)
+                    {
+                        string compressedFrame = this.client.CompressRenderTargetBitmap(screen);
+                        this.client.SendMessage(this.client.UDPSocket, "&", $"frame_received:{compressedFrame}");
+                    }
+                    Thread.Sleep(50);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error capturing screen: {ex.Message}");
+                    this.isStreaming = false;
+                }
             }
         }
 
-        public RenderTargetBitmap CaptureScreen()
+        private RenderTargetBitmap CaptureScreen()
         {
-            // Get the dimensions of the primary screen
-            int screenWidth = (int)SystemParameters.PrimaryScreenWidth;
-            int screenHeight = (int)SystemParameters.PrimaryScreenHeight;
+            RenderTargetBitmap result = null;
+            var screenWidth = (int)SystemParameters.PrimaryScreenWidth;
+            var screenHeight = (int)SystemParameters.PrimaryScreenHeight;
 
-            // Create a VisualBrush of the screen
-            Dispatcher.Invoke(() =>
+            try
             {
-                VisualBrush visualBrush = new VisualBrush
+                if (!Dispatcher.CheckAccess())
                 {
-                    Visual = new System.Windows.Interop.HwndSource(
-                    new System.Windows.Interop.HwndSourceParameters
-                    {
-                        Width = screenWidth,
-                        Height = screenHeight,
-                    }).RootVisual
-                };
-            
+                    return Dispatcher.Invoke(() => CaptureScreen());
+                }
 
-            DrawingVisual drawingVisual = new DrawingVisual();
-            using (DrawingContext context = drawingVisual.RenderOpen())
+                var drawingVisual = new DrawingVisual();
+                using (var drawingContext = drawingVisual.RenderOpen())
+                {
+                    var screenBrush = new VisualBrush
+                    {
+                        Visual = Application.Current.MainWindow,
+                        Stretch = Stretch.None,
+                        AlignmentX = AlignmentX.Left,
+                        AlignmentY = AlignmentY.Top
+                    };
+
+                    drawingContext.DrawRectangle(screenBrush, null, new Rect(0, 0, screenWidth, screenHeight));
+                }
+
+                result = new RenderTargetBitmap(screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
+                result.Render(drawingVisual);
+                result.Freeze(); // Make it thread-safe
+            }
+            catch (Exception ex)
             {
-                context.DrawRectangle(visualBrush, null, new Rect(0, 0, screenWidth, screenHeight));
+                Dispatcher.Invoke(() => MessageBox.Show($"Screen capture error: {ex.Message}"));
             }
 
-            // Render the screen into a RenderTargetBitmap
-            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
-                screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
-            renderTargetBitmap.Render(drawingVisual);
-            return renderTargetBitmap;
-            });
-            return null;
+            return result;
         }
     }
 }
