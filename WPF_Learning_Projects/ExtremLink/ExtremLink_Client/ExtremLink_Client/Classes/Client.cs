@@ -101,7 +101,7 @@ namespace ExtremLink_Client.Classes
                             else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
                         case "&":
-                            MessageBox.Show(data);
+                            // MessageBox.Show(data);
                             if(data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
                             break;
                     }
@@ -149,32 +149,45 @@ namespace ExtremLink_Client.Classes
         // Frames bitmap:
         public string CompressRenderTargetBitmap(RenderTargetBitmap renderTargetBitmap)
         {
-            // The function gets a RenderTargetBitmap object.
-            // The function returns it compressed as a string.
             if (renderTargetBitmap == null)
                 return string.Empty;
 
-            // Convert the RenderTargetBitmap to a byte array and compress it in one step
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                // Save the RenderTargetBitmap to the memory stream as PNG
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-                encoder.Save(memoryStream);
-
-                byte[] imageBytes = memoryStream.ToArray();
-
-                // Compress the byte array using GZip
-                using (var compressedStream = new MemoryStream())
+                using (var memoryStream = new MemoryStream())
                 {
-                    using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Compress))
-                    {
-                        gzipStream.Write(imageBytes, 0, imageBytes.Length);
-                    }
+                    // Save the RenderTargetBitmap to the memory stream as PNG
+                    PngBitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+                    encoder.Save(memoryStream);
+                    memoryStream.Position = 0;
 
-                    // Convert the compressed byte array to a Base64 string
-                    return Convert.ToBase64String(compressedStream.ToArray());
+                    byte[] imageBytes = memoryStream.ToArray();
+
+                    // Compress the byte array using GZip
+                    using (var compressedStream = new MemoryStream())
+                    {
+                        using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Compress, true))
+                        {
+                            gzipStream.Write(imageBytes, 0, imageBytes.Length);
+                        }
+
+                        // Get the compressed bytes and ensure proper Base64 encoding
+                        byte[] compressedBytes = compressedStream.ToArray();
+                        string base64String = Convert.ToBase64String(compressedBytes);
+
+                        // Clean the string to ensure it's valid Base64
+                        base64String = base64String.TrimEnd('=');
+                        base64String = base64String.Replace('+', '-').Replace('/', '_');
+
+                        return base64String;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Compression error: {ex.Message}");
+                return string.Empty;
             }
         }
 
@@ -182,50 +195,98 @@ namespace ExtremLink_Client.Classes
         // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
-            // The function gets a socket and  2 strings: 'typeOfMessage' which is a symbol which reprsent the type of the message
-            // and 'data' which contains the data which have to be transfered.
+            // The function gets a socket and 2 strings: 'typeOfMessage' which represents the type of the message
+            // and 'data' which contains the data which have to be transferred.
             // The function creates a message in a byte array format and sends it to the client.
             // The message format: Byte{typeOfMessage(string), dataLength(int), data(string), "EOM"}
             string endOfMessage = "EOM";
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
-            byte[] compressedMessage = this.Compress(message);
+            byte[] messageBytes;
+
+            // Only compress if it's TCP
             if (clientSocket.ProtocolType == ProtocolType.Tcp)
             {
-                clientSocket.Send(compressedMessage);
+                messageBytes = this.Compress(message);
+                clientSocket.Send(messageBytes);
             }
             else
             {
-                clientSocket.SendTo(compressedMessage, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
+                // For UDP, send uncompressed data
+                messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
+                clientSocket.SendTo(messageBytes, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
             }
         }
         public List<object> GetMessage(Socket clientSocket)
         {
             // The function gets a socket.
-            // The function recieve a message from the socket and returns the message in parts as a list object.
+            // The function receives a message from the socket and returns the message in parts as a list object.
             byte[] buffer = new byte[4096];
-            int bytesRead = clientSocket.Receive(buffer);
+            int bytesRead;
+            EndPoint remoteEndPoint = null;
 
+            if (clientSocket.ProtocolType == ProtocolType.Udp)
+            {
+                // For UDP, we need to use remoteEndPoint to receive data
+                remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                bytesRead = clientSocket.ReceiveFrom(buffer, ref remoteEndPoint);
+            }
+            else
+            {
+                // For TCP, use regular Receive
+                bytesRead = clientSocket.Receive(buffer);
+            }
+
+            // Process received data
             byte[] actualData = new byte[bytesRead];
             Array.Copy(buffer, actualData, bytesRead);
 
-            string[] messageParts = this.Decompress(actualData).Split('|');
-
-            if (messageParts.Length != 4)
+            try
             {
-                throw new Exception("Error: The message isn't in the right format!");
-            }
+                string decodedMessage;
+                if (clientSocket.ProtocolType == ProtocolType.Tcp)
+                {
+                    // Decompress TCP messages
+                    decodedMessage = this.Decompress(actualData);
+                }
+                else
+                {
+                    // Don't decompress UDP messages
+                    decodedMessage = System.Text.Encoding.UTF8.GetString(actualData);
+                }
 
-            if (messageParts[3] != "EOM")
+                string[] messageParts = decodedMessage.Split('|');
+
+                // Validate message format
+                if (messageParts.Length != 4)
+                {
+                    throw new Exception("Error: The message isn't in the right format!");
+                }
+                if (messageParts[3] != "EOM")
+                {
+                    throw new Exception("End of message not received correctly. The message is cut.");
+                }
+
+                // Create return list
+                List<object> messagePartsList = new List<object>
+        {
+            messageParts[0],                    // Message type
+            int.Parse(messageParts[1]),         // Data length
+            messageParts[2],                    // Data content
+            messageParts[3]                     // End of message marker
+        };
+
+                if (clientSocket.ProtocolType == ProtocolType.Udp)
+                {
+                    // For UDP, also store the sender's endpoint
+                    messagePartsList.Add(remoteEndPoint);
+                }
+
+                return messagePartsList;
+            }
+            catch (Exception ex)
             {
-                throw new Exception("End of message not received correctly. The message is cut.");
+                throw new Exception($"Error processing message: {ex.Message}");
             }
-
-            List<object> messagePartsList = new List<object>();
-            messagePartsList.Add(messageParts[0]);
-            messagePartsList.Add(int.Parse(messageParts[1]));
-            messagePartsList.Add(messageParts[2]);
-            messagePartsList.Add(messageParts[3]);
-            return messagePartsList;
         }
     }
 }

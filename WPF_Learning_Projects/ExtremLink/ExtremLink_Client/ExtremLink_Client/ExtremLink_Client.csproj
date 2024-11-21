@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\default_image.png" />
     <None Remove="Images\ExtremLink_Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\default_image.png" />
   </ItemGroup>
 
   <ItemGroup>

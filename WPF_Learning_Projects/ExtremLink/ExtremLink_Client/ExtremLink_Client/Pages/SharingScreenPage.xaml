@@ -12,6 +12,13 @@
                 <GradientStop Color="#00cec9" Offset="0"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" FontWeight="Bold" Text="Sharing Screen Now"/>
+        <StackPanel>
+            <TextBlock x:Name="sharingScreenTitle" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" FontWeight="Bold" Text="Not Sharing Screen" Margin="0,100,0,0"/>
+
+            <Label Content="Local Share Screen:" HorizontalAlignment="Center" FontSize="20" Margin="0,50,0,0"/>
+            <Border BorderBrush="Black" BorderThickness="1"  Width="400" Height="225">
+                <Image x:Name="frameImg" Width="400" Height="225" />
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

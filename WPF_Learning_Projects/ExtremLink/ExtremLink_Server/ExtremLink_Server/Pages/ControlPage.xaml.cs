@@ -45,14 +45,13 @@ namespace ExtremLink_Server.Pages
 
                 frameUpdateThread = new Thread(UpdateFrame);
                 frameUpdateThread.Start();
-
-                playAndPauseBtn.Content = "Stop Stream";
+                playAndPauseBtn.Content = "Stop";
             }
             else
             {
                 isReceivingFrames = false;
                 this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
-                playAndPauseBtn.Content = "Start Stream";
+                playAndPauseBtn.Content = "Start";
             }
         }
 
@@ -70,7 +69,8 @@ namespace ExtremLink_Server.Pages
                         });
                         this.server.UdpRespond = "";
                     }
-                    Thread.Sleep(16); // ~60 FPS
+                    // Set the sleep function so the frame rate will be around ~60 FPS
+                    Thread.Sleep(16); 
                 }
                 catch (Exception ex)
                 {

@@ -29,6 +29,7 @@ namespace ExtremLink_Client.Pages
         private Client client;
         private Thread clientMessagesHandlingThread;
         private Thread sharingScreenThread;
+        private Thread localSharingScreenThread;
         private bool isStreaming;
 
         public ContentControl ContentMain
@@ -47,6 +48,10 @@ namespace ExtremLink_Client.Pages
 
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
             this.sharingScreenThread.Start();
+
+            // It will be started when the server start ask for sharing screen
+            this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
+            
         }
 
         private void StartSharingScreen()
@@ -56,6 +61,8 @@ namespace ExtremLink_Client.Pages
                 if (this.client.ServerRespond == "StartSendFrames")
                 {
                     this.isStreaming = true;
+                    Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
+                    this.localSharingScreenThread.Start();
                 }
                 Thread.Sleep(100);
             }
@@ -70,13 +77,25 @@ namespace ExtremLink_Client.Pages
                         string compressedFrame = this.client.CompressRenderTargetBitmap(screen);
                         this.client.SendMessage(this.client.UDPSocket, "&", $"frame_received:{compressedFrame}");
                     }
-                    Thread.Sleep(50);
+                    // Around 60 FPS
+                    Thread.Sleep(16);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error capturing screen: {ex.Message}");
                     this.isStreaming = false;
                 }
+            }
+        }
+
+        private void LocalSharingScreen()
+        {
+            while (this.isStreaming)
+            {
+                var screen = CaptureScreen();
+                Dispatcher.Invoke(() => frameImg.Source = screen);
+                // Around 60 FPS
+                Thread.Sleep(16);
             }
         }
 
@@ -113,9 +132,9 @@ namespace ExtremLink_Client.Pages
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() => MessageBox.Show($"Screen capture error: {ex.Message}"));
+                MessageBox.Show($"Screen capture error: {ex.Message}");
             }
-
+            // MessageBox.Show($"Image size is:{this.client.CompressRenderTargetBitmap(result).Length}");
             return result;
         }
     }
