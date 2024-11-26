@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Windows.Interop;
 
 namespace ExtremLink_Client.Pages
 {
@@ -87,7 +88,6 @@ namespace ExtremLink_Client.Pages
                 }
             }
         }
-
         private void LocalSharingScreen()
         {
             while (this.isStreaming)
@@ -115,14 +115,16 @@ namespace ExtremLink_Client.Pages
                 var drawingVisual = new DrawingVisual();
                 using (var drawingContext = drawingVisual.RenderOpen())
                 {
+                    // Create a screen brush that captures the entire desktop
                     var screenBrush = new VisualBrush
                     {
-                        Visual = Application.Current.MainWindow,
+                        Visual = GetDesktopWindow(),
                         Stretch = Stretch.None,
                         AlignmentX = AlignmentX.Left,
                         AlignmentY = AlignmentY.Top
                     };
 
+                    // Draw the entire screen
                     drawingContext.DrawRectangle(screenBrush, null, new Rect(0, 0, screenWidth, screenHeight));
                 }
 
@@ -134,8 +136,30 @@ namespace ExtremLink_Client.Pages
             {
                 MessageBox.Show($"Screen capture error: {ex.Message}");
             }
-            // MessageBox.Show($"Image size is:{this.client.CompressRenderTargetBitmap(result).Length}");
+
             return result;
+        }
+
+        // Add this helper method to get the desktop window
+        private Visual GetDesktopWindow()
+        {
+            try
+            {
+                // Get the desktop window handle
+                var desktopHandle = GetDesktopWindow();
+
+                // Create HwndSource for the desktop window
+                var parameters = new HwndSourceParameters("DesktopCapture");
+                parameters.ParentWindow = desktopHandle;
+                parameters.WindowStyle = 0x40000000; // WS_CHILD
+
+                var source = new HwndSource(parameters);
+                return source.RootVisual;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

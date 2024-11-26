@@ -140,7 +140,7 @@ namespace ExtremLink_Server.Classes
                     case "&":
                         if (data.Contains("frame_received"))
                         {
-                            data = data.Substring("frame_received".Length - 1);
+                            data = data.Substring("frame_received".Length + 1);
                             this.udpRespond = "frame_received";
                             this.currentFrame = this.DecompressRenderTargetBitmap(data);
                         }
@@ -246,9 +246,10 @@ namespace ExtremLink_Server.Classes
         public RenderTargetBitmap DecompressRenderTargetBitmap(string compressedData)
         {
             if (string.IsNullOrEmpty(compressedData))
+            {
                 MessageBox.Show("1");
-            return null;
-
+                return null;
+            }
             try
             {
                 MessageBox.Show("2");

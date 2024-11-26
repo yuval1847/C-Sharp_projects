@@ -220,7 +220,7 @@ namespace ExtremLink_Client.Classes
         {
             // The function gets a socket.
             // The function receives a message from the socket and returns the message in parts as a list object.
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[65536];
             int bytesRead;
             EndPoint remoteEndPoint = null;
 
