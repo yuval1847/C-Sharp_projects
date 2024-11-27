@@ -18,6 +18,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Interop;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace ExtremLink_Client.Pages
 {
@@ -99,66 +101,91 @@ namespace ExtremLink_Client.Pages
             }
         }
 
-        private RenderTargetBitmap CaptureScreen()
+        // Screenshot:
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern bool DeleteObject(IntPtr hObject);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        private static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, uint dwRop);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        private const uint SRCCOPY = 0x00CC0020;
+
+        public RenderTargetBitmap CaptureScreen()
         {
-            RenderTargetBitmap result = null;
-            var screenWidth = (int)SystemParameters.PrimaryScreenWidth;
-            var screenHeight = (int)SystemParameters.PrimaryScreenHeight;
+            if (!Dispatcher.CheckAccess())
+            {
+                return Dispatcher.Invoke(() => CaptureScreen());
+            }
+
+            IntPtr desktopDC = GetDC(IntPtr.Zero);
+            if (desktopDC == IntPtr.Zero)
+                throw new InvalidOperationException("Failed to get DC");
 
             try
             {
-                if (!Dispatcher.CheckAccess())
+                int screenWidth = (int)System.Windows.SystemParameters.VirtualScreenWidth;
+                int screenHeight = (int)System.Windows.SystemParameters.VirtualScreenHeight;
+                int screenLeft = (int)System.Windows.SystemParameters.VirtualScreenLeft;
+                int screenTop = (int)System.Windows.SystemParameters.VirtualScreenTop;
+
+                IntPtr compatibleDC = CreateCompatibleDC(desktopDC);
+                if (compatibleDC == IntPtr.Zero)
+                    throw new InvalidOperationException("Failed to create compatible DC");
+
+                IntPtr hBitmap = CreateCompatibleBitmap(desktopDC, screenWidth, screenHeight);
+                if (hBitmap == IntPtr.Zero)
                 {
-                    return Dispatcher.Invoke(() => CaptureScreen());
+                    DeleteObject(compatibleDC);
+                    throw new InvalidOperationException("Failed to create compatible bitmap");
                 }
 
+                IntPtr oldBitmap = SelectObject(compatibleDC, hBitmap);
+
+                BitBlt(compatibleDC, 0, 0, screenWidth, screenHeight, desktopDC, screenLeft, screenTop, SRCCOPY);
+
+                // Convert to WPF bitmap
+                BitmapSource bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                    hBitmap,
+                    IntPtr.Zero,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions());
+
+                // Cleanup
+                SelectObject(compatibleDC, oldBitmap);
+                DeleteObject(hBitmap);
+                DeleteObject(compatibleDC);
+
+                // Create final RenderTargetBitmap
+                RenderTargetBitmap renderTarget = new RenderTargetBitmap(screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
                 var drawingVisual = new DrawingVisual();
                 using (var drawingContext = drawingVisual.RenderOpen())
                 {
-                    // Create a screen brush that captures the entire desktop
-                    var screenBrush = new VisualBrush
-                    {
-                        Visual = GetDesktopWindow(),
-                        Stretch = Stretch.None,
-                        AlignmentX = AlignmentX.Left,
-                        AlignmentY = AlignmentY.Top
-                    };
-
-                    // Draw the entire screen
-                    drawingContext.DrawRectangle(screenBrush, null, new Rect(0, 0, screenWidth, screenHeight));
+                    drawingContext.DrawImage(bitmapSource, new System.Windows.Rect(0, 0, screenWidth, screenHeight));
                 }
 
-                result = new RenderTargetBitmap(screenWidth, screenHeight, 96, 96, PixelFormats.Pbgra32);
-                result.Render(drawingVisual);
-                result.Freeze(); // Make it thread-safe
+                renderTarget.Render(drawingVisual);
+                renderTarget.Freeze();
+                return renderTarget;
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show($"Screen capture error: {ex.Message}");
-            }
-
-            return result;
-        }
-
-        // Add this helper method to get the desktop window
-        private Visual GetDesktopWindow()
-        {
-            try
-            {
-                // Get the desktop window handle
-                var desktopHandle = GetDesktopWindow();
-
-                // Create HwndSource for the desktop window
-                var parameters = new HwndSourceParameters("DesktopCapture");
-                parameters.ParentWindow = desktopHandle;
-                parameters.WindowStyle = 0x40000000; // WS_CHILD
-
-                var source = new HwndSource(parameters);
-                return source.RootVisual;
-            }
-            catch
-            {
-                return null;
+                ReleaseDC(IntPtr.Zero, desktopDC);
             }
         }
     }

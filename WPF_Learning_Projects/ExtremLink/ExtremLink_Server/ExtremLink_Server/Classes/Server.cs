@@ -247,12 +247,10 @@ namespace ExtremLink_Server.Classes
         {
             if (string.IsNullOrEmpty(compressedData))
             {
-                MessageBox.Show("1");
                 return null;
             }
             try
             {
-                MessageBox.Show("2");
                 // Restore Base64 string to standard format
                 compressedData = compressedData.Replace('-', '+').Replace('_', '/');
 
@@ -308,7 +306,6 @@ namespace ExtremLink_Server.Classes
             }
             catch (Exception ex)
             {
-                MessageBox.Show("3");
                 MessageBox.Show($"Decompression error: {ex.Message}");
                 return null;
             }
