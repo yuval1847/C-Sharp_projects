@@ -414,7 +414,11 @@ namespace ExtremLink_Server.Classes
         // SQL database queries functions
         public static SqlConnection ConnectToDB(string fileName)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\Databases\"+fileName+";Integrated Security=True";
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Navigate up from bin/Debug to the project root
+            string projectRoot = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
+            string dbPath = Path.Combine(projectRoot, "Databases", fileName);
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True";
             //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExtremLink_Server", "Databases", fileName)+";Integrated Security=True";
             SqlConnection conn = new SqlConnection(connectionString);
             return conn;
