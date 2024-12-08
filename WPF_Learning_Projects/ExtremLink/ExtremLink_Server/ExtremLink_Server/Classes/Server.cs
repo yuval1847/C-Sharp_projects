@@ -432,7 +432,7 @@ namespace ExtremLink_Server.Classes
             {
                 finalMessageParts.Add(remoteEndPoint);
             }
-
+            MessageBox.Show(finalMessageParts[finalMessageParts.Count-1].ToString());
             return finalMessageParts;
         }
         private (bool isComplete, List<object> messageParts) ProcessMessageParts(string message, ref string completeMessage)
