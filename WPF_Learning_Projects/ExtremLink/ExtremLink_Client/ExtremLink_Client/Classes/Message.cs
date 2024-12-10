@@ -1,7 +1,9 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExtremLink_Client.Classes
@@ -16,26 +18,42 @@ namespace ExtremLink_Client.Classes
     {
         private TypeOfMessage typeOfMessage;
         private IList<string> content;
-        private const int contentPartsSize = 4096;
-        private const string EOM = "EOM";
+        private const int ContentPartsSize = 4096;
+        // private const string EOM = "EOM";
 
-        public int contentPartsAmount
+        public int ContentPartsAmount
         {
-            get { return this.content.Count / contentPartsSize; }
+            get { return this.content.Count; }
         }
 
         public Message(TypeOfMessage typeOfMessage, string content)
         {
             this.typeOfMessage = typeOfMessage;
 
-            // Fix it by using a round function that round the division for the biggest number
-            int contentPartsAmount = this.content.Count % contentPartsSize == 0 ? this.content.Count / contentPartsSize : ;
-            if (this.content.Count % contentPartsSize != 0)
+            // Create an ilist of the message in segments
+            this.content = new List<string>();
+            int partsAmount = (int)Math.Round((double)this.content.Count/ (double)(ContentPartsSize));
+            string tempPart;
+            for (int i = 0; i < partsAmount-1; i++)
             {
-                contentPartsAmount++;
+                tempPart = content.Substring(i*ContentPartsSize, ContentPartsSize);
+                this.content.Add(tempPart);
             }
-            for (int i = 0; i < )
-        }
+            this.content.Add(content.Substring((partsAmount - 1)*ContentPartsSize, content.Length));
+        } 
+        public Message()
+        {
 
+        }
+        public IList<byte> ConvertToByte()
+        {
+            // The function gets nothing.
+            // The function returns the message in binary.
+            IList<byte> byteContent = new List<byte>();
+            for(int i = 0; i < this.ContentPartsAmount; i++)
+            {
+                byteContent.Add(Encoding.UTF8.GetBytes(this.content[i]));
+            }
+        }
     }
 }
