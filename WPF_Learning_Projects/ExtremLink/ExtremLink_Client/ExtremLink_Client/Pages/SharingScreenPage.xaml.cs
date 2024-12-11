@@ -102,7 +102,7 @@ namespace ExtremLink_Client.Pages
         }
 
         // Screenshot:
-        // Importing ddl libraries of win api 32.
+
         [DllImport("gdi32.dll", SetLastError = true)]
         private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 

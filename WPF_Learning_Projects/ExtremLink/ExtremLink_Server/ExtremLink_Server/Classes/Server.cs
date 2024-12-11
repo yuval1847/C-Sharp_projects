@@ -39,7 +39,6 @@ namespace ExtremLink_Server.Classes
         private string udpRespond;
         private string clientIpAddress;
         private RenderTargetBitmap currentFrame;
-        private const int Segment_Size = 4096;
 
         public string ServerIpAddress
         {
@@ -313,21 +312,13 @@ namespace ExtremLink_Server.Classes
         }
 
 
-        // The send functions: 
+        // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
             // The function gets a socket and 2 strings: 'typeOfMessage' which represents the type of the message
             // and 'data' which contains the data which have to be transferred.
             // The function creates a message in a byte array format and sends it to the client.
             // The message format: Byte{typeOfMessage(string), dataLength(int), data(string), "EOM"}
-
-            // If the data requires segmentation due to it's length
-            if (data.Length > Segment_Size)
-            {
-                this.SendMessage(clientSocket, typeOfMessage, this.SplitStringToSegments(data));
-                return;
-            }
-
             string endOfMessage = "EOM";
             string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
             byte[] messageBytes;
@@ -345,140 +336,85 @@ namespace ExtremLink_Server.Classes
                 clientSocket.SendTo(messageBytes, new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847));
             }
         }
-        private void SendMessage(Socket clientSocket, string typeOfMessage, IList<string> data)
+        public List<object> GetMessage(Socket clientSocket)
         {
-            // The function gets the parameters of the original SendMessage function 
-            // but the data itself divided into parts.
-            // The function call the sending function with all the string one by one.
-            foreach (var message in data)
+            // The function gets a socket.
+            // The function receives a message from the socket and returns the message in parts as a list object.
+            byte[] buffer = new byte[65536];
+            int bytesRead;
+            EndPoint remoteEndPoint = null;
+
+            if (clientSocket.ProtocolType == ProtocolType.Udp)
             {
-                this.SendMessage(clientSocket, typeOfMessage, message);
+                // For UDP, we need to use remoteEndPoint to receive data
+                remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                bytesRead = clientSocket.ReceiveFrom(buffer, ref remoteEndPoint);
             }
-        }
-        public IList<string> SplitStringToSegments(string s)
-        {
-            // The function gets a string.
-            // The function returns an Ilist of sub-strings of the given string
-            // after spliting them ny the size of 4096.
-            string tempString = "";
-            IList<string> segments = new List<string>();
-            for (int i = 0; i < (s.Length / Segment_Size) + 1; i++)
+            else
             {
-                if (s.Length < Segment_Size)
+                // For TCP, use regular Receive
+                bytesRead = clientSocket.Receive(buffer);
+            }
+
+            // Process received data
+            byte[] actualData = new byte[bytesRead];
+            Array.Copy(buffer, actualData, bytesRead);
+
+            try
+            {
+                string decodedMessage;
+                if (clientSocket.ProtocolType == ProtocolType.Tcp)
                 {
-                    segments.Add(tempString);
+                    // Decompress TCP messages
+                    decodedMessage = this.Decompress(actualData);
                 }
                 else
                 {
-                    tempString = s.Substring(0, Segment_Size);
-                    segments.Add(tempString);
-                    s = s.Replace(tempString, "");
+                    // Don't decompress UDP messages
+                    decodedMessage = System.Text.Encoding.UTF8.GetString(actualData);
                 }
-            }
-            return segments;
-        }
 
-        // The get functions:
-        public List<object> GetMessage(Socket clientSocket)
+                string[] messageParts = decodedMessage.Split('|');
+
+                // Validate message format
+                if (messageParts.Length != 4)
+                {
+                    throw new Exception("Error: The message isn't in the right format!");
+                }
+                if (messageParts[3] != "EOM")
+                {
+                    throw new Exception("End of message not received correctly. The message is cut.");
+                }
+
+                // Create return list
+                List<object> messagePartsList = new List<object>
         {
-            string completeMessage = "";
-            bool isComplete = false;
-            List<object> finalMessageParts = null;
-            EndPoint remoteEndPoint = null;
+            messageParts[0],                    // Message type
+            int.Parse(messageParts[1]),         // Data length
+            messageParts[2],                    // Data content
+            messageParts[3]                     // End of message marker
+        };
 
-            while (!isComplete)
-            {
-                // Receive raw data
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-
-                try
+                if (clientSocket.ProtocolType == ProtocolType.Udp)
                 {
-                    if (clientSocket.ProtocolType == ProtocolType.Udp)
-                    {
-                        remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                        bytesRead = clientSocket.ReceiveFrom(buffer, ref remoteEndPoint);
-                    }
-                    else
-                    {
-                        bytesRead = clientSocket.Receive(buffer);
-                    }
-
-                    byte[] actualData = new byte[bytesRead];
-                    Array.Copy(buffer, actualData, bytesRead);
-
-                    // Decode message
-                    string decodedMessage;
-                    if (clientSocket.ProtocolType == ProtocolType.Tcp)
-                    {
-                        decodedMessage = this.Decompress(actualData);
-                    }
-                    else
-                    {
-                        decodedMessage = System.Text.Encoding.UTF8.GetString(actualData);
-                    }
-
-                    // Process message parts
-                    (isComplete, finalMessageParts) = ProcessMessageParts(decodedMessage, ref completeMessage);
+                    // For UDP, also store the sender's endpoint
+                    messagePartsList.Add(remoteEndPoint);
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error processing message: {ex.Message}");
-                }
+
+                return messagePartsList;
             }
-
-            // Add remote endpoint for UDP connections
-            if (clientSocket.ProtocolType == ProtocolType.Udp)
+            catch (Exception ex)
             {
-                finalMessageParts.Add(remoteEndPoint);
+                throw new Exception($"Error processing message: {ex.Message}");
             }
-            MessageBox.Show(finalMessageParts[finalMessageParts.Count-1].ToString());
-            return finalMessageParts;
         }
-        private (bool isComplete, List<object> messageParts) ProcessMessageParts(string message, ref string completeMessage)
-        {
-            string[] parts = message.Split('|');
 
-            if (parts.Length != 4)
-            {
-                throw new Exception("Error: The message isn't in the right format!");
-            }
 
-            if (parts[3] != "EOM")
-            {
-                throw new Exception("End of message not received correctly. The message is cut.");
-            }
 
-            string messageType = parts[0];
-            int dataLength = int.Parse(parts[1]);
-            string data = parts[2];
-            string endMarker = parts[3];
-
-            // Handle segmented messages
-            if (dataLength > Segment_Size)
-            {
-                completeMessage += data;
-
-                if (completeMessage.Length >= dataLength)
-                {
-                    return (true, new List<object> { messageType, dataLength, completeMessage, endMarker });
-                }
-                return (false, null);
-            }
-
-            // Handle single messages
-            return (true, new List<object> { messageType, dataLength, data, endMarker });
-        }
-       
-        
         // SQL database queries functions
-        private static SqlConnection ConnectToDB(string fileName)
+        public static SqlConnection ConnectToDB(string fileName)
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            // Navigate up from bin/Debug to the project root
-            string projectRoot = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
-            string dbPath = Path.Combine(projectRoot, "Databases", fileName);
-            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\Databases\"+fileName+";Integrated Security=True";
             //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExtremLink_Server", "Databases", fileName)+";Integrated Security=True";
             SqlConnection conn = new SqlConnection(connectionString);
             return conn;
