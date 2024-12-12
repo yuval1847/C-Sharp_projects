@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ExtremLink_Client.Classes
 {
@@ -146,51 +147,100 @@ namespace ExtremLink_Client.Classes
                 }
             }
         }
-        // Frames bitmap:
-        public string CompressRenderTargetBitmap(RenderTargetBitmap renderTargetBitmap)
+        public string CompressString(string input)
         {
-            if (renderTargetBitmap == null)
-                return string.Empty;
+            if (string.IsNullOrEmpty(input))
+                throw new ArgumentNullException(nameof(input));
 
-            try
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+            using (MemoryStream outputStream = new MemoryStream())
             {
-                using (var memoryStream = new MemoryStream())
+                using (GZipStream gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
                 {
-                    // Save the RenderTargetBitmap to the memory stream as PNG
-                    PngBitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-                    encoder.Save(memoryStream);
-                    memoryStream.Position = 0;
+                    gzipStream.Write(inputBytes, 0, inputBytes.Length);
+                }
+                return Convert.ToBase64String(outputStream.ToArray());
+            }
+        }
+        public string DecompressString(string compressedInput)
+        {
+            if (string.IsNullOrEmpty(compressedInput))
+                throw new ArgumentNullException(nameof(compressedInput));
 
-                    byte[] imageBytes = memoryStream.ToArray();
-
-                    // Compress the byte array using GZip
-                    using (var compressedStream = new MemoryStream())
+            byte[] compressedBytes = Convert.FromBase64String(compressedInput);
+            using (MemoryStream inputStream = new MemoryStream(compressedBytes))
+            {
+                using (GZipStream gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
+                {
+                    using (MemoryStream outputStream = new MemoryStream())
                     {
-                        using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Compress, true))
-                        {
-                            gzipStream.Write(imageBytes, 0, imageBytes.Length);
-                        }
-
-                        // Get the compressed bytes and ensure proper Base64 encoding
-                        byte[] compressedBytes = compressedStream.ToArray();
-                        string base64String = Convert.ToBase64String(compressedBytes);
-
-                        // Clean the string to ensure it's valid Base64
-                        base64String = base64String.TrimEnd('=');
-                        base64String = base64String.Replace('+', '-').Replace('/', '_');
-
-                        return base64String;
+                        gzipStream.CopyTo(outputStream);
+                        return Encoding.UTF8.GetString(outputStream.ToArray());
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Compression error: {ex.Message}");
-                return string.Empty;
-            }
         }
+        // Frames bitmap:
+        /*public string CompressRenderTargetBitmapToString(RenderTargetBitmap renderTargetBitmap, int qualityPercentage)
+        {
+            // The function gets a RenderTargetBitmap object and a quality presentages as an integer.
+            // The function compress it and returns it as a string.
+            if (renderTargetBitmap == null)
+                throw new ArgumentNullException(nameof(renderTargetBitmap));
+            if (qualityPercentage < 1 || qualityPercentage > 100)
+                throw new ArgumentOutOfRangeException(nameof(qualityPercentage), "Quality percentage must be between 1 and 100.");
 
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                // Use JpegBitmapEncoder to encode the RenderTargetBitmap with quality settings
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = qualityPercentage;
+                encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+                encoder.Save(memoryStream);
+
+                // Convert the byte array to a Base64 string
+                return Convert.ToBase64String(memoryStream.ToArray());
+            }
+        }*/
+        // Create a function that gets a RenderTargetImage save it to a png file and return the file buff:
+        public string ConvertRenderTargetBitmapToString(RenderTargetBitmap renderTargetBitmap, int qualityPercentage, string filePath)
+        {
+            // The function gets a RenderTargetBitmap object, and integet that represent the quality of the image.
+            // The function creates a PNG file that store the image and returns the file's buff as a string.
+            if (renderTargetBitmap == null)
+                throw new ArgumentNullException(nameof(renderTargetBitmap), "RenderTargetBitmap cannot be null.");
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+            if (qualityPercentage < 1 || qualityPercentage > 100)
+                throw new ArgumentOutOfRangeException(nameof(qualityPercentage), "Quality must be between 1 and 100.");
+
+            // Create a PNG encoder
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+
+            // Save the image to the specified file
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                encoder.Save(fileStream);
+            }
+
+            // Read the saved file into a buffer and convert it to a Base64 string
+            byte[] buffer = File.ReadAllBytes(filePath);
+            return Convert.ToBase64String(buffer);
+        }
+        public byte[] GetFileBuff(string filePath) {
+            // The function gets a file path.
+            // The function returns the file buff.
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+
+            // Check if the file exists
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("The specified file does not exist.", filePath);
+
+            // Read and return the file buffer
+            return File.ReadAllBytes(filePath);
+        }
 
         // The send and get message functions
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
@@ -213,6 +263,8 @@ namespace ExtremLink_Client.Classes
             {
                 // For UDP, send uncompressed data
                 messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
+                // A test for analysing the length of the message.
+                MessageBox.Show($"The total length of message: {messageBytes.Length}");
                 clientSocket.SendTo(messageBytes, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
             }
         }
@@ -286,6 +338,31 @@ namespace ExtremLink_Client.Classes
             catch (Exception ex)
             {
                 throw new Exception($"Error processing message: {ex.Message}");
+            }
+        }
+
+        public void SendFrame(RenderTargetBitmap frame)
+        {
+            // The function gets a RednerTargetBitmap object which represent a frame.
+            // The function sends the frame to the server.
+            try
+            {
+                // Convert the RenderTargetBitmap to a byte array
+                byte[] frameBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Encode the RenderTargetBitmap to a PNG format
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(frame));
+                    encoder.Save(ms);
+                    frameBytes = ms.ToArray();
+                }
+                // Send the frame bytes to the server
+                this.udpSocket.SendTo(frameBytes, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while sending the frame: {ex.Message}");
             }
         }
     }

@@ -34,6 +34,7 @@ namespace ExtremLink_Client.Pages
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
         private bool isStreaming;
+        private const string defaultPngFileOfFrame = "tempFrame.png";
 
         public ContentControl ContentMain
         {
@@ -77,11 +78,11 @@ namespace ExtremLink_Client.Pages
                     var screen = CaptureScreen();
                     if (screen != null)
                     {
-                        string compressedFrame = this.client.CompressRenderTargetBitmap(screen);
+                        string compressedFrame = this.client.ConvertRenderTargetBitmapToString(screen, 80, defaultPngFileOfFrame);
                         this.client.SendMessage(this.client.UDPSocket, "&", $"frame_received:{compressedFrame}");
                     }
-                    // Around 60 FPS
-                    Thread.Sleep(16);
+                    // Around 1 FPS
+                    Thread.Sleep(1000);
                 }
                 catch (Exception ex)
                 {
@@ -125,7 +126,7 @@ namespace ExtremLink_Client.Pages
         private static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         private const uint SRCCOPY = 0x00CC0020;
-
+        private System.Windows.Controls.Image img;
         public RenderTargetBitmap CaptureScreen()
         {
             if (!Dispatcher.CheckAccess())
