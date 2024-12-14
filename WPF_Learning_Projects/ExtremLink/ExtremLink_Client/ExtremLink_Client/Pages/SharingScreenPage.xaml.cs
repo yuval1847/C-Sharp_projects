@@ -78,8 +78,7 @@ namespace ExtremLink_Client.Pages
                     var screen = CaptureScreen();
                     if (screen != null)
                     {
-                        string compressedFrame = this.client.ConvertRenderTargetBitmapToString(screen, 80, defaultPngFileOfFrame);
-                        this.client.SendMessage(this.client.UDPSocket, "&", $"frame_received:{compressedFrame}");
+                        this.client.SendFrame(screen);
                     }
                     // Around 1 FPS
                     Thread.Sleep(1000);

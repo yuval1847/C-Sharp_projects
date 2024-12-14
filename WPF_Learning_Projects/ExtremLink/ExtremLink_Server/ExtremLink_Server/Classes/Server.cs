@@ -31,14 +31,16 @@ namespace ExtremLink_Server.Classes
         // A class which represent a server.
         // Attributes:
         private string serverIpAddress;
+        private string clientIpAddress;
         private Socket udpSocket;
         private Socket tcpSocket;
         private Socket clientTcpSocket;
         private List<object> message;
         private string respond;
         private string udpRespond;
-        private string clientIpAddress;
         private RenderTargetBitmap currentFrame;
+        private EndPoint clientEndPoint;
+        private const int SegmentSize = 8192;
 
         public string ServerIpAddress
         {
@@ -97,6 +99,7 @@ namespace ExtremLink_Server.Classes
             this.clientTcpSocket = this.tcpSocket.Accept();
             Console.WriteLine("Client connected.");
             this.clientIpAddress = FindClientIpAddress(this.clientTcpSocket);
+            this.clientEndPoint = new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847);
         }
 
         public void FindIpAddress()
@@ -132,21 +135,8 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 // MessageBox.Show("a udp message was recieved");
-                List<object> message = GetMessage(this.udpSocket);
-                string data = (string)message[2];
+                this.currentFrame = this.GetFrame();
                 // MessageBox.Show("a frame was recieved");
-                switch (message[0])
-                {
-                    case "&":
-                        if (data.Contains("frame_received"))
-                        {
-                            data = data.Substring("frame_received".Length + 1);
-                            this.udpRespond = "frame_received";
-                            this.currentFrame = this.ConvertStringToRenderTargetBitmap(data);
-                            // MessageBox.Show(this.currentFrame.ToString());
-                        }
-                        break;
-                }
             }
         }
 
@@ -207,8 +197,7 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-        // Compress and decompress functions
-        // Regular string:
+        // Compress and decompress functions:
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -243,115 +232,6 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-        public string CompressString(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-                throw new ArgumentNullException(nameof(input));
-
-            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-            using (MemoryStream outputStream = new MemoryStream())
-            {
-                using (GZipStream gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
-                {
-                    gzipStream.Write(inputBytes, 0, inputBytes.Length);
-                }
-                return Convert.ToBase64String(outputStream.ToArray());
-            }
-        }
-        public string DecompressString(string compressedInput)
-        {
-            if (string.IsNullOrEmpty(compressedInput))
-                throw new ArgumentNullException(nameof(compressedInput));
-
-            byte[] compressedBytes = Convert.FromBase64String(compressedInput);
-            using (MemoryStream inputStream = new MemoryStream(compressedBytes))
-            {
-                using (GZipStream gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-                {
-                    using (MemoryStream outputStream = new MemoryStream())
-                    {
-                        gzipStream.CopyTo(outputStream);
-                        return Encoding.UTF8.GetString(outputStream.ToArray());
-                    }
-                }
-            }
-        }
-        // Frames bitmap:
-        /* public RenderTargetBitmap DecompressStringToRenderTargetBitmap(string base64String)
-        {
-            // The function gets a string which is encrypted by base64.
-            // The function returns a RenderTargetBitmap object which represent the decoded string.
-            
-            if (string.IsNullOrEmpty(base64String))
-                throw new ArgumentNullException(nameof(base64String));
-            
-            byte[] imageBytes = Convert.FromBase64String(base64String);
-            using (MemoryStream memoryStream = new MemoryStream(imageBytes))
-            {
-                // Use a BitmapImage to decode the Base64 string
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memoryStream;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-
-                // *********************************************************************
-                // Somewhere here there is a problem that cause the function to stuck (try to use MessageBox.Show(123) to find it)
-                // Convert BitmapImage to RenderTargetBitmap
-                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
-                    bitmapImage.PixelWidth,
-                    bitmapImage.PixelHeight,
-                    bitmapImage.DpiX,
-                    bitmapImage.DpiY,
-                    bitmapImage.Format);
-                // *****************************************************************
-
-                // Draw the BitmapImage onto the RenderTargetBitmap
-                DrawingVisual visual = new DrawingVisual();
-                using (DrawingContext context = visual.RenderOpen())
-                {
-                    context.DrawImage(bitmapImage, new System.Windows.Rect(0, 0, bitmapImage.PixelWidth, bitmapImage.PixelHeight));
-                }
-                renderTargetBitmap.Render(visual);
-                return renderTargetBitmap;
-            }
-        }*/
-
-        public RenderTargetBitmap ConvertStringToRenderTargetBitmap(string base64Image)
-        {
-            // Validate input
-            if (string.IsNullOrWhiteSpace(base64Image))
-                throw new ArgumentException("Image buffer string cannot be null or empty.", nameof(base64Image));
-
-            // Decode the Base64 string to get the image bytes
-            byte[] imageBuffer = Convert.FromBase64String(base64Image);
-
-            // Create a BitmapImage from the byte array
-            BitmapImage bitmapImage = new BitmapImage();
-            using (MemoryStream memoryStream = new MemoryStream(imageBuffer))
-            {
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = memoryStream;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze(); // Freeze for thread safety
-            }
-
-            // Render the BitmapImage to a RenderTargetBitmap
-            int width = bitmapImage.PixelWidth;
-            int height = bitmapImage.PixelHeight;
-            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
-
-            // Draw the BitmapImage onto the RenderTargetBitmap
-            var visual = new System.Windows.Media.DrawingVisual();
-            using (var drawingContext = visual.RenderOpen())
-            {
-                drawingContext.DrawImage(bitmapImage, new Rect(0, 0, width, height));
-            }
-            renderTargetBitmap.Render(visual);
-
-            return renderTargetBitmap;
-        }
 
 
         // The send and get message functions
@@ -382,7 +262,7 @@ namespace ExtremLink_Server.Classes
         {
             // The function gets a socket.
             // The function receives a message from the socket and returns the message in parts as a list object.
-            byte[] buffer = new byte[100000];
+            byte[] buffer = new byte[4096];
             int bytesRead;
             EndPoint remoteEndPoint = null;
 
@@ -445,61 +325,114 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-        public RenderTargetBitmap GetFrame()
+
+        // Getting frame functions
+        private void ClearBuffer(ref byte[] buffer)
         {
-            // The function gets nothing.
-            // The function returns a frame that was passed by the udp socket.
-            byte[] buffer = new byte[100000];
-            int bytesRead;
-            EndPoint remoteEndPoint = null;
-            try
+            // The function gets a byte array object.
+            // The function clear it's content.
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer));
+
+            Array.Clear(buffer, 0, buffer.Length);
+        }
+        private int ExtractSegmentID(ref byte[] buffer)
+        {
+            if (buffer == null || buffer.Length < 4)
+                throw new ArgumentException("Buffer must have at least 4 bytes.");
+
+            // Extract the last 4 bytes
+            byte[] last4Bytes = new byte[4];
+            Array.Copy(buffer, buffer.Length - 4, last4Bytes, 0, 4);
+
+            // Resize the original buffer to remove the last 4 bytes
+            Array.Resize(ref buffer, buffer.Length - 4);
+
+            return BitConverter.ToInt32(last4Bytes, 0); ;
+        }
+        private byte[] JoinByteArrays(byte[][] byteArrays)
+        {
+            // Calculate the total length of the combined array
+            int totalLength = 0;
+            foreach (var byteArray in byteArrays)
             {
-                // Set up the UDP socket to receive data
-                using (this.udpSocket)  // Port should match the sender's port
-                {
-                    remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                    bytesRead = this.udpSocket.ReceiveFrom(buffer, ref remoteEndPoint);  // Receive the data from the socket
-
-                    // Convert the received byte array into a BitmapImage
-                    BitmapImage bitmapImage = new BitmapImage();
-                    using (MemoryStream ms = new MemoryStream(bytesRead))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.DecodePixelWidth = 800;  // Optionally set the width or remove this line if not needed
-                        bitmapImage.DecodePixelHeight = 600; // Optionally set the height or remove this line if not needed
-                        bitmapImage.StreamSource = ms;
-                        bitmapImage.EndInit();
-                    }
-
-                    // Convert the BitmapImage to RenderTargetBitmap
-                    RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
-                        bitmapImage.PixelWidth, bitmapImage.PixelHeight, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
-
-                    // Create a DrawingVisual to render the BitmapImage onto the RenderTargetBitmap
-                    DrawingVisual drawingVisual = new DrawingVisual();
-                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
-                    {
-                        drawingContext.DrawImage(bitmapImage, new System.Windows.Rect(0, 0, bitmapImage.PixelWidth, bitmapImage.PixelHeight));
-                    }
-
-                    renderTargetBitmap.Render(drawingVisual);
-
-                    return renderTargetBitmap;
-                }
+                totalLength += byteArray.Length;
             }
-            catch (Exception ex)
+
+            // Create a new array to hold all the bytes
+            byte[] result = new byte[totalLength];
+
+            // Copy each byte array into the result array
+            int offset = 0;
+            foreach (var byteArray in byteArrays)
             {
-                Console.WriteLine($"An error occurred while receiving the frame: {ex.Message}");
-                return null;
+                Array.Copy(byteArray, 0, result, offset, byteArray.Length);
+                offset += byteArray.Length;
+            }
+
+            return result;
+        }
+        private RenderTargetBitmap ConvertByteArrayToRenderTargetBitmap(byte[] byteArray)
+        {
+            // Create a MemoryStream from the byte array
+            using (MemoryStream ms = new MemoryStream(byteArray))
+            {
+                // Create a BitmapImage from the MemoryStream
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = ms;
+                bitmapImage.EndInit();
+
+                // Create a RenderTargetBitmap from the BitmapImage
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
+                    bitmapImage.PixelWidth,
+                    bitmapImage.PixelHeight,
+                    bitmapImage.DpiX,
+                    bitmapImage.DpiY,
+                    bitmapImage.Format);
+
+                // Draw the BitmapImage onto the RenderTargetBitmap
+                renderTargetBitmap.Render(new System.Windows.Controls.Image { Source = bitmapImage });
+
+                return renderTargetBitmap;
             }
         }
+        public RenderTargetBitmap GetFrame()
+        {
+            // The first message's format is: the amount of segments.
+            // The other messages is: the segment + segment's ID.
+            byte[] buff = new byte[SegmentSize + 4];
+            this.udpSocket.Receive(buff);
+            int amountOfSegments = buff.Length;
+            
+            Dictionary<int, byte[]> segmentsDict = new Dictionary<int, byte[]>();
+            int currentID;
+            for(int i = 0; i < amountOfSegments; i++) 
+            {
+                this.ClearBuffer(ref buff);
+                this.udpSocket.Receive(buff);
+                currentID = this.ExtractSegmentID(ref buff);
+                segmentsDict.Add(currentID, buff);
+            }
+          
+            // Sorting the segments dict by their id
+            var sortedDictionary = segmentsDict.OrderBy(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
+            // Convert the dict's value to array
+            var segmentsArray = this.JoinByteArrays(sortedDictionary.Values.ToArray());
+            // Return the RenderTargetBitmap object after converting it from byte array
+            return this.ConvertByteArrayToRenderTargetBitmap(segmentsArray);
+             
+        }
+
 
         // SQL database queries functions
         public static SqlConnection ConnectToDB(string fileName)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\yuval\Desktop\C# projects\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\Databases\"+fileName+";Integrated Security=True";
-            //string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExtremLink_Server", "Databases", fileName)+";Integrated Security=True";
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Navigate up from bin/Debug to the project root
+            string projectRoot = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
+            string dbPath = Path.Combine(projectRoot, "Databases", fileName);
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True";
             SqlConnection conn = new SqlConnection(connectionString);
             return conn;
         }
