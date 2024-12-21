@@ -68,7 +68,7 @@ namespace ExtremLink_Client.Pages
                     Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
                     this.localSharingScreenThread.Start();
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
 
             while (this.isStreaming)
@@ -81,7 +81,7 @@ namespace ExtremLink_Client.Pages
                         this.client.SendFrame(screen);
                     }
                     // Around 1 FPS
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100000);
                 }
                 catch (Exception ex)
                 {

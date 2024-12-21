@@ -23,6 +23,7 @@ using System.Windows;
 using System.Collections;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Net.NetworkInformation;
 
 namespace ExtremLink_Server.Classes
 {
@@ -327,10 +328,10 @@ namespace ExtremLink_Server.Classes
 
 
         // Getting frame functions
-        private void ClearBuffer(ref byte[] buffer)
+        /* private void ClearBuffer(ref byte[] buffer)
         {
             // The function gets a byte array object.
-            // The function clear it's content.
+            // The function clears its content.
             if (buffer == null)
                 throw new ArgumentNullException(nameof(buffer));
 
@@ -341,14 +342,16 @@ namespace ExtremLink_Server.Classes
             if (buffer == null || buffer.Length < 4)
                 throw new ArgumentException("Buffer must have at least 4 bytes.");
 
-            // Extract the last 4 bytes
+            // Extract the last 4 bytes (segment ID)
             byte[] last4Bytes = new byte[4];
             Array.Copy(buffer, buffer.Length - 4, last4Bytes, 0, 4);
 
-            // Resize the original buffer to remove the last 4 bytes
-            Array.Resize(ref buffer, buffer.Length - 4);
+            // Resize the original buffer to remove the last 4 bytes (segment ID)
+            byte[] dataWithoutID = new byte[buffer.Length - 4];
+            Array.Copy(buffer, 0, dataWithoutID, 0, buffer.Length - 4);
+            buffer = dataWithoutID; // Update the buffer without the segment ID
 
-            return BitConverter.ToInt32(last4Bytes, 0); ;
+            return BitConverter.ToInt32(last4Bytes, 0);
         }
         private byte[] JoinByteArrays(byte[][] byteArrays)
         {
@@ -397,32 +400,150 @@ namespace ExtremLink_Server.Classes
                 return renderTargetBitmap;
             }
         }
+        private void CreatePngImageFile(byte[] fileContent)
+        {
+            string fileName = "tempFrame.png";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            try
+            {
+                // Write the byte array to a file
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    fileStream.Write(fileContent, 0, fileContent.Length);
+                }
+
+                MessageBox.Show($"File created successfully at: {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while creating the PNG file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         public RenderTargetBitmap GetFrame()
         {
             // The first message's format is: the amount of segments.
-            // The other messages is: the segment + segment's ID.
-            byte[] buff = new byte[SegmentSize + 4];
-            this.udpSocket.Receive(buff);
-            int amountOfSegments = buff.Length;
-            
+            // The other messages are: segment + segment's ID.
+
+            byte[] buff = new byte[SegmentSize + 4];  // Buffer for receiving segments
+            byte[] amountBuffer = new byte[1];        // Buffer for receiving the number of segments (1 byte)
+
+            // Receive the first message: number of segments
+            this.udpSocket.Receive(amountBuffer);
+            int amountOfSegments = amountBuffer[0]; // Extract the amount of segments from the first byte
+            MessageBox.Show($"Number of segments: {amountOfSegments}");
+
             Dictionary<int, byte[]> segmentsDict = new Dictionary<int, byte[]>();
-            int currentID;
-            for(int i = 0; i < amountOfSegments; i++) 
+
+            for (int i = 0; i < amountOfSegments; i++)
             {
                 this.ClearBuffer(ref buff);
-                this.udpSocket.Receive(buff);
-                currentID = this.ExtractSegmentID(ref buff);
-                segmentsDict.Add(currentID, buff);
+                this.udpSocket.Receive(buff);  // Receive the next segment
+
+                // Extract the segment ID (first 4 bytes)
+                int currentID = BitConverter.ToInt32(buff, 0);
+                byte[] segmentData = buff.Skip(4).Take(SegmentSize).ToArray();  // Extract the actual segment data
+
+                // Debugging information
+                MessageBox.Show($"Received segment with ID: {currentID}, Size: {segmentData.Length}");
+
+                segmentsDict.Add(currentID, segmentData);  // Store the segment in the dictionary
             }
-          
-            // Sorting the segments dict by their id
+            MessageBox.Show("Finished getting segments");
+            // Sorting the segments dictionary by their ID
             var sortedDictionary = segmentsDict.OrderBy(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
-            // Convert the dict's value to array
+
+            // Combine the byte arrays of the sorted segments into a single byte array
             var segmentsArray = this.JoinByteArrays(sortedDictionary.Values.ToArray());
-            // Return the RenderTargetBitmap object after converting it from byte array
+
+            // Creating a PNG file of the image
+            this.CreatePngImageFile(segmentsArray);
+
+            // Return the RenderTargetBitmap object after converting it from the byte array
             return this.ConvertByteArrayToRenderTargetBitmap(segmentsArray);
-             
+        }*/
+
+        private byte[] GetFileContent(string fileName)
+        {
+            try
+            {
+                // Read all bytes of the file into a byte array
+                byte[] fileContent = File.ReadAllBytes(fileName);
+                return fileContent;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions such as file not found or permission issues
+                throw new IOException($"Failed to read file content: {ex.Message}", ex);
+            }
         }
+        private RenderTargetBitmap GetRenderTargetBitmapFromPng(byte[] fileContent)
+        {
+            try
+            {
+                if (fileContent == null || fileContent.Length == 0)
+                    throw new ArgumentException("File content is null or empty.");
+
+                // Load the PNG data into a BitmapImage
+                BitmapImage bitmapImage = new BitmapImage();
+                using (MemoryStream stream = new MemoryStream(fileContent))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load immediately to avoid memory issues
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze(); // Make it thread-safe
+                }
+
+                // Create a RenderTargetBitmap with the same size as the BitmapImage
+                int pixelWidth = bitmapImage.PixelWidth;
+                int pixelHeight = bitmapImage.PixelHeight;
+                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(pixelWidth, pixelHeight, 96, 96, PixelFormats.Pbgra32);
+
+                // Draw the BitmapImage into the RenderTargetBitmap
+                var visual = new DrawingVisual();
+                using (var drawingContext = visual.RenderOpen())
+                {
+                    drawingContext.DrawImage(bitmapImage, new System.Windows.Rect(0, 0, pixelWidth, pixelHeight));
+                }
+                renderTargetBitmap.Render(visual);
+
+                return renderTargetBitmap;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to create RenderTargetBitmap: {ex.Message}", ex);
+            }
+        }
+        public RenderTargetBitmap GetFrame()
+        {
+            // The first message's format is: the amount of segments.
+            // The other messages are: segment + segment's ID.
+
+            // Receive file size
+            byte[] fileSizeBuffer = new byte[8];
+            this.udpSocket.Receive(fileSizeBuffer);
+            long fileSize = BitConverter.ToInt64(fileSizeBuffer, 0);
+            MessageBox.Show($"File size: {fileSize} bytes");
+
+            // Receive file content
+            using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
+            {
+                byte[] buffer = new byte[4096];
+                long totalBytesReceived = 0;
+                while (totalBytesReceived < fileSize)
+                {
+                    int bytesToRead = (int)Math.Min(buffer.Length, fileSize - totalBytesReceived);
+                    int bytesRead = this.udpSocket.Receive(buffer, 0, bytesToRead, SocketFlags.None);
+                    fileStream.Write(buffer, 0, bytesRead);
+                    totalBytesReceived += bytesRead;
+                }
+            }
+            MessageBox.Show("The file was save!");
+            byte[] fileContent = GetFileContent("tempFrame.png");
+            return GetRenderTargetBitmapFromPng(fileContent);
+        }
+
 
 
         // SQL database queries functions

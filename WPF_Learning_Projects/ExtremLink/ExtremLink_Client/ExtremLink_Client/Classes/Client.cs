@@ -25,7 +25,6 @@ namespace ExtremLink_Client.Classes
         private Socket tcpSocket;
         private string serverIpAddr;
         private string serverRespond;
-        private const int SegmentSize = 8192;
         private EndPoint serverEndPoint;
 
         public Socket UDPSocket
@@ -41,7 +40,7 @@ namespace ExtremLink_Client.Classes
         public string ServerRespond
         {
             get { return this.serverRespond; }
-            set 
+            set
             {
                 this.serverRespond = value;
             }
@@ -95,21 +94,21 @@ namespace ExtremLink_Client.Classes
                 {
                     List<object> message = GetMessage(this.tcpSocket);
                     string data = (string)message[2];
-                    
+
                     switch (message[0])
                     {
                         case "!":
-                            if (data == "Exist"){this.serverRespond = "Exist";}
-                            else if(data == "NotExist"){this.serverRespond = "NotExist";}
-                            else if(data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded";}
+                            if (data == "Exist") { this.serverRespond = "Exist"; }
+                            else if (data == "NotExist") { this.serverRespond = "NotExist"; }
+                            else if (data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
                         case "&":
                             // MessageBox.Show(data);
-                            if(data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
+                            if (data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
                             break;
                     }
-                    
+
                 }
             }
         }
@@ -287,26 +286,118 @@ namespace ExtremLink_Client.Classes
                 return ms.ToArray();
             }
         }
-        public void SendFrame(RenderTargetBitmap renderTarget)
+        private void ClearBuffer(ref byte[] buffer)
+        {
+            // The function gets a byte array object.
+            // The function clears its content.
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer));
+
+            Array.Clear(buffer, 0, buffer.Length);
+        }
+        private void CreatePngImageFile(byte[] fileContent)
+        {
+            string fileName = "tempFrame.png";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            try
+            {
+                // Write the byte array to a file
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    fileStream.Write(fileContent, 0, fileContent.Length);
+                }
+
+                // MessageBox.Show($"File created successfully at: {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while creating the PNG file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private byte[] GetFileContent(string fileName)
+        {
+            try
+            {
+                // Read all bytes of the file into a byte array
+                byte[] fileContent = File.ReadAllBytes(fileName);
+                return fileContent;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions such as file not found or permission issues
+                throw new IOException($"Failed to read file content: {ex.Message}", ex);
+            }
+        }
+        private byte[][] ToSegment(byte[] fileBuffer, int segmentSize)
+        {
+            int totalSegments = (int)Math.Ceiling((double)fileBuffer.Length / segmentSize);
+            byte[][] segments = new byte[totalSegments][];
+
+            for (int i = 0; i < totalSegments; i++)
+            {
+                int currentSegmentSize = Math.Min(segmentSize, fileBuffer.Length - (i * segmentSize));
+                segments[i] = new byte[currentSegmentSize];
+                Array.Copy(fileBuffer, i * segmentSize, segments[i], 0, currentSegmentSize);
+            }
+
+            return segments;
+        }
+
+        /*public void SendFrame(RenderTargetBitmap renderTarget)
         {
             // The first message's format is: amount of segments.
             // The other messages' format is: segment + segment's ID.
 
             byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
+            this.CreatePngImageFile(frameData);
+            // Sending the amount of segments
+            int totalSegments = (int)Math.Ceiling((double)frameData.Length / SegmentSize); // Calculate the number of segments needed
+            byte[] totalSegmentsInByteArray = new byte[] { Convert.ToByte(totalSegments) };
+            this.udpSocket.SendTo(totalSegmentsInByteArray, this.serverEndPoint);  // Send the total number of segments
 
-            int totalSegments = (int)Math.Ceiling((double)frameData.Length / SegmentSize);
+            byte[] segment = new byte[SegmentSize + 4];  // Prepare a buffer to store each segment (size + ID)
+
             for (int i = 0; i < totalSegments; i++)
             {
-                int offset = i * SegmentSize;
-                int length = Math.Min(SegmentSize, frameData.Length - offset);
-                byte[] segment = new byte[length + 4]; // 4 bytes for segment ID
-                
-                // Adding the segment
+                int offset = i * SegmentSize;  // Calculate the offset for each segment
+                int length = Math.Min(SegmentSize, frameData.Length - offset);  // Adjust length if it’s the last segment
+
+                // Add the segment ID at the start of the segment buffer
                 Array.Copy(BitConverter.GetBytes(i), 0, segment, 0, 4);
 
-                // Adding the segment's ID
+                // Add the segment's data starting from the calculated offset
                 Array.Copy(frameData, offset, segment, 4, length);
 
+                // Send the segment via UDP
+                this.udpSocket.SendTo(segment, this.serverEndPoint);
+
+                this.ClearBuffer(ref segment);  // Clear the buffer for the next segment
+            }
+        }
+        */
+        public void SendFrame(RenderTargetBitmap renderTarget)
+        {
+            // The first message's format is: amount of segments.
+            // The other messages' format is: segment + segment's ID.
+
+            // Convert RenderTargetBitmap to byte array
+            byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
+
+            // Create a temporary PNG file for debugging and future use
+            this.CreatePngImageFile(frameData);
+
+            // Get the file content
+            byte[] fileContent = GetFileContent("tempFrame.png");
+
+            // Send file size
+            byte[] fileSizeBytes = BitConverter.GetBytes(fileContent.Length);
+            this.udpSocket.SendTo(fileSizeBytes, this.serverEndPoint);
+
+            // Send file content segment by segment
+            byte[][] fileSegments = ToSegment(fileContent, 4096);
+            foreach (var segment in fileSegments)
+            {
                 this.udpSocket.SendTo(segment, this.serverEndPoint);
             }
         }
