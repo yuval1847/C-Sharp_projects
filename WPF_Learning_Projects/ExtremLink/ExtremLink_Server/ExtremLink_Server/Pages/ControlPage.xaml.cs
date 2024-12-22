@@ -70,7 +70,7 @@ namespace ExtremLink_Server.Pages
                         this.server.UdpRespond = "";
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
-                    Thread.Sleep(1000); 
+                    Thread.Sleep(16); 
                 }
                 catch (Exception ex)
                 {

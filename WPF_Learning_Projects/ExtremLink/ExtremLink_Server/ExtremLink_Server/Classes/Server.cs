@@ -24,6 +24,7 @@ using System.Collections;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Net.NetworkInformation;
+using System.Windows.Controls;
 
 namespace ExtremLink_Server.Classes
 {
@@ -137,8 +138,12 @@ namespace ExtremLink_Server.Classes
             {
                 // MessageBox.Show("a udp message was recieved");
                 this.currentFrame = this.GetFrame();
-                Thread.Sleep(1000);
+                // this.currentFrame = this.GetImageOfPNGFile("tempFrame.png");
+                // MessageBox.Show(this.currentFrame.ToString());
+                // Thread.Sleep(1000);
                 // MessageBox.Show("a frame was recieved");
+
+
             }
         }
 
@@ -327,9 +332,38 @@ namespace ExtremLink_Server.Classes
             }
         }
 
+        public RenderTargetBitmap GetImageOfPNGFile(string fileName)
+        {
+            // Load the PNG file as a BitmapImage
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(fileName, UriKind.Absolute);
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
+
+            // Create a RenderTargetBitmap with the dimensions of the loaded image
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
+                bitmapImage.PixelWidth,
+                bitmapImage.PixelHeight,
+                bitmapImage.DpiX,
+                bitmapImage.DpiY,
+                PixelFormats.Pbgra32);
+
+            // Render the image onto a DrawingVisual
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawImage(bitmapImage, new Rect(0, 0, bitmapImage.PixelWidth, bitmapImage.PixelHeight));
+            }
+
+            // Render the DrawingVisual onto the RenderTargetBitmap
+            renderTargetBitmap.Render(drawingVisual);
+
+            return renderTargetBitmap;
+        }
 
         // Getting frame function
-        public RenderTargetBitmap GetFrame()
+        public BitmapImage GetFrame()
         {
             try
             {
@@ -382,7 +416,7 @@ namespace ExtremLink_Server.Classes
                     }
                 }
 
-                // Load the PNG file and convert it to RenderTargetBitmap
+                // Load the PNG file to a BitmapImage object
                 var bitmap = new BitmapImage();
                 using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
                 {
@@ -391,20 +425,7 @@ namespace ExtremLink_Server.Classes
                     bitmap.StreamSource = stream;
                     bitmap.EndInit();
                 }
-
-                // Convert BitmapImage to RenderTargetBitmap
-                var renderTarget = new RenderTargetBitmap(
-                    bitmap.PixelWidth, bitmap.PixelHeight,
-                    bitmap.DpiX, bitmap.DpiY, PixelFormats.Pbgra32);
-
-                var drawingVisual = new DrawingVisual();
-                using (var drawingContext = drawingVisual.RenderOpen())
-                {
-                    drawingContext.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
-                }
-                renderTarget.Render(drawingVisual);
-                
-                return renderTarget;
+                return bitmap;
 
             }
             catch (Exception ex)
@@ -496,6 +517,7 @@ namespace ExtremLink_Server.Classes
                 }
             }
             return true;
-        }         
+        }
+
     }
 }
