@@ -61,7 +61,7 @@ namespace ExtremLink_Server.Pages
             {
                 try
                 {
-                    if (this.server.UdpRespond == "frame_received" && this.server.CurrentFrame != null)
+                    if (this.server.CurrentFrame != null)
                     {
                         Dispatcher.Invoke(() =>
                         {
@@ -70,7 +70,7 @@ namespace ExtremLink_Server.Pages
                         this.server.UdpRespond = "";
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
-                    Thread.Sleep(16); 
+                    Thread.Sleep(1000); 
                 }
                 catch (Exception ex)
                 {

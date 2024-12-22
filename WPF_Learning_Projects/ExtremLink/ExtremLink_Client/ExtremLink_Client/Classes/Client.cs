@@ -286,15 +286,6 @@ namespace ExtremLink_Client.Classes
                 return ms.ToArray();
             }
         }
-        private void ClearBuffer(ref byte[] buffer)
-        {
-            // The function gets a byte array object.
-            // The function clears its content.
-            if (buffer == null)
-                throw new ArgumentNullException(nameof(buffer));
-
-            Array.Clear(buffer, 0, buffer.Length);
-        }
         private void CreatePngImageFile(byte[] fileContent)
         {
             string fileName = "tempFrame.png";
@@ -329,58 +320,8 @@ namespace ExtremLink_Client.Classes
                 throw new IOException($"Failed to read file content: {ex.Message}", ex);
             }
         }
-        private byte[][] ToSegment(byte[] fileBuffer, int segmentSize)
-        {
-            int totalSegments = (int)Math.Ceiling((double)fileBuffer.Length / segmentSize);
-            byte[][] segments = new byte[totalSegments][];
-
-            for (int i = 0; i < totalSegments; i++)
-            {
-                int currentSegmentSize = Math.Min(segmentSize, fileBuffer.Length - (i * segmentSize));
-                segments[i] = new byte[currentSegmentSize];
-                Array.Copy(fileBuffer, i * segmentSize, segments[i], 0, currentSegmentSize);
-            }
-
-            return segments;
-        }
-
-        /*public void SendFrame(RenderTargetBitmap renderTarget)
-        {
-            // The first message's format is: amount of segments.
-            // The other messages' format is: segment + segment's ID.
-
-            byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
-            this.CreatePngImageFile(frameData);
-            // Sending the amount of segments
-            int totalSegments = (int)Math.Ceiling((double)frameData.Length / SegmentSize); // Calculate the number of segments needed
-            byte[] totalSegmentsInByteArray = new byte[] { Convert.ToByte(totalSegments) };
-            this.udpSocket.SendTo(totalSegmentsInByteArray, this.serverEndPoint);  // Send the total number of segments
-
-            byte[] segment = new byte[SegmentSize + 4];  // Prepare a buffer to store each segment (size + ID)
-
-            for (int i = 0; i < totalSegments; i++)
-            {
-                int offset = i * SegmentSize;  // Calculate the offset for each segment
-                int length = Math.Min(SegmentSize, frameData.Length - offset);  // Adjust length if it’s the last segment
-
-                // Add the segment ID at the start of the segment buffer
-                Array.Copy(BitConverter.GetBytes(i), 0, segment, 0, 4);
-
-                // Add the segment's data starting from the calculated offset
-                Array.Copy(frameData, offset, segment, 4, length);
-
-                // Send the segment via UDP
-                this.udpSocket.SendTo(segment, this.serverEndPoint);
-
-                this.ClearBuffer(ref segment);  // Clear the buffer for the next segment
-            }
-        }
-        */
         public void SendFrame(RenderTargetBitmap renderTarget)
         {
-            // The first message's format is: amount of segments.
-            // The other messages' format is: segment + segment's ID.
-
             // Convert RenderTargetBitmap to byte array
             byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
 
@@ -390,16 +331,31 @@ namespace ExtremLink_Client.Classes
             // Get the file content
             byte[] fileContent = GetFileContent("tempFrame.png");
 
-            // Send file size
-            byte[] fileSizeBytes = BitConverter.GetBytes(fileContent.Length);
-            this.udpSocket.SendTo(fileSizeBytes, this.serverEndPoint);
+            // Define packet size (MTU-safe)
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)fileContent.Length / packetSize);
 
-            // Send file content segment by segment
-            byte[][] fileSegments = ToSegment(fileContent, 4096);
-            foreach (var segment in fileSegments)
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            for (int i = 0; i < totalPackets; i++)
             {
-                this.udpSocket.SendTo(segment, this.serverEndPoint);
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, fileContent.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);          // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
+
+                // Send packet
+                this.udpSocket.SendTo(packet, this.serverEndPoint);
             }
         }
+
     }
 }
