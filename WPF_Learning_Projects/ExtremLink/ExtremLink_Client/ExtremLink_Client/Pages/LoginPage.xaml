@@ -19,8 +19,28 @@
             <Image Source="/Images/ExtremLink_Icon.png" Width="150" Height="150" Margin="0,20,0,0"/>
             <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <TextBlock Text="Login" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <customWidgets:CustomTextBox x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
-            <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="0,0,0,10" IsHide="True"/>
+            <Grid x:Name="username_grid" Width="252">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Images/user_icon.png" HorizontalAlignment="Left" Width="25" Margin="15,30,0,31" Visibility="Visible" RenderTransformOrigin="0.794,0.563"/>
+                <customWidgets:CustomTextBox Grid.Column="1" x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
+            </Grid>
+
+            <Grid x:Name="password_grid" Width="252">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="31*"/>
+                    <RowDefinition Height="19*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Images/lock_icon.png" Width="25" Margin="10,8,5,18" Grid.RowSpan="2"/>
+                <customWidgets:CustomTextBox Grid.Column="1" x:Name="passwordCustomTextBox" Placeholder="Password" Width="200" Height="40" Margin="1,0,1,10" IsHide="True" Grid.RowSpan="2"/>
+            </Grid>
+
             <TextBlock x:Name="wrongLoginTextBlock" Visibility="Hidden" Text="Error: you entered a wrong username or password!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <customWidgets:CustomButton Width="100" Height="40" Placeholder="Login" Margin="0,0,0,10" CustomClick="LoginButton_Click"/>
             <Button Content="Create new user" Margin ="0,3,0,8" FontSize="14" Foreground="#031019" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CreateNewUser_Click"/>

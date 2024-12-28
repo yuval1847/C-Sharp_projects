@@ -26,6 +26,7 @@ namespace ExtremLink_Server.Pages
         private Server server;
         private bool isReceivingFrames;
         private Thread frameUpdateThread;
+        
 
         public ControlPage(ContentControl contentMain, Server server)
         {
@@ -63,11 +64,10 @@ namespace ExtremLink_Server.Pages
                 {
                     if (this.server.CurrentFrame != null)
                     {
-                        Dispatcher.Invoke(() =>
-                        {
-                            frameImg.Source = this.server.CurrentFrame;
+                        Dispatcher.Invoke(() => 
+                        { 
+                            frameImg.Source = this.server.CurrentFrame; 
                         });
-                        this.server.UdpRespond = "";
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
                     Thread.Sleep(16); 

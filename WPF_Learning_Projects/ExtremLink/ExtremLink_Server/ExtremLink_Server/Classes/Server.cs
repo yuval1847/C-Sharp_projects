@@ -40,7 +40,7 @@ namespace ExtremLink_Server.Classes
         private List<object> message;
         private string respond;
         private string udpRespond;
-        private RenderTargetBitmap currentFrame;
+        private BitmapImage currentFrame;
         private EndPoint clientEndPoint;
         private const int SegmentSize = 8192;
 
@@ -79,7 +79,7 @@ namespace ExtremLink_Server.Classes
             get { return this.clientIpAddress; }
             set { this.clientIpAddress = value; }
         }
-        public RenderTargetBitmap CurrentFrame
+        public BitmapImage CurrentFrame
         {
             get { return this.currentFrame; }
             set { this.currentFrame = value; }
@@ -332,6 +332,7 @@ namespace ExtremLink_Server.Classes
             }
         }
 
+        
         public RenderTargetBitmap GetImageOfPNGFile(string fileName)
         {
             // Load the PNG file as a BitmapImage
@@ -361,7 +362,6 @@ namespace ExtremLink_Server.Classes
 
             return renderTargetBitmap;
         }
-
         // Getting frame function
         public BitmapImage GetFrame()
         {
