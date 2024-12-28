@@ -81,7 +81,7 @@ namespace ExtremLink_Client.Pages
                         this.client.SendFrame(screen);
                     }
                     // Around 1 FPS
-                    Thread.Sleep(100000);
+                    Thread.Sleep(1000);
                 }
                 catch (Exception ex)
                 {
@@ -126,7 +126,7 @@ namespace ExtremLink_Client.Pages
 
         private const uint SRCCOPY = 0x00CC0020;
         private System.Windows.Controls.Image img;
-        public RenderTargetBitmap CaptureScreen()
+        public RenderTargetBitmap CaptureScreen() 
         {
             if (!Dispatcher.CheckAccess())
             {

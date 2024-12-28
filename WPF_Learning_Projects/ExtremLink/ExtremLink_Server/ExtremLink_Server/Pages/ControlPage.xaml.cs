@@ -30,6 +30,7 @@ namespace ExtremLink_Server.Pages
         private Thread frameUpdateThread;
         
 
+
         public ControlPage(ContentControl contentMain, Server server)
         {
             this.contentMain = contentMain;
@@ -65,7 +66,7 @@ namespace ExtremLink_Server.Pages
             string tempFramePath = System.IO.Path.Combine(baseDirectory, "tempFrame.png");
             return this.server.GetImageOfPNGFile(tempFramePath);
         }
-
+        
         private async void UpdateFrame()
         {
             while (isReceivingFrames)
@@ -74,11 +75,7 @@ namespace ExtremLink_Server.Pages
                 {
                     if (this.server.CurrentFrame != null)
                     {
-
-                        await frameImg.Dispatcher.InvokeAsync(() =>
-                        {
-                            frameImg.Source = LoadFrameFromFile();
-                        });
+                        await frameImg.Dispatcher.InvokeAsync(() => frameImg.Source = LoadFrameFromFile());
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
                     await Task.Delay(16);

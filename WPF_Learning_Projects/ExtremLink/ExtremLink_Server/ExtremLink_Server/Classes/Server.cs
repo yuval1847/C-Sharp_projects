@@ -42,7 +42,6 @@ namespace ExtremLink_Server.Classes
         private string udpRespond;
         private BitmapImage currentFrame;
         private EndPoint clientEndPoint;
-        private const int SegmentSize = 8192;
 
         public string ServerIpAddress
         {
@@ -136,14 +135,8 @@ namespace ExtremLink_Server.Classes
             // & - frames handling.
             while (true)
             {
-                // MessageBox.Show("a udp message was recieved");
                 this.currentFrame = this.GetFrame();
-                // this.currentFrame = this.GetImageOfPNGFile("tempFrame.png");
-                // MessageBox.Show(this.currentFrame.ToString());
-                // Thread.Sleep(1000);
-                // MessageBox.Show("a frame was recieved");
-
-
+                Thread.Sleep(1000);
             }
         }
 
@@ -337,13 +330,23 @@ namespace ExtremLink_Server.Classes
         {
             // Load the PNG file as a BitmapImage
             BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(fileName, UriKind.Absolute);
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
+            try
+            {
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.None;
+                bitmapImage.UriSource = new Uri(fileName, UriKind.Absolute);
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading frame: {ex.Message}");
+            }
+
             return bitmapImage;
         }
         // Getting frame function
+
         public BitmapImage GetFrame()
         {
             try
@@ -402,7 +405,7 @@ namespace ExtremLink_Server.Classes
                 using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
                 {
                     bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CacheOption = BitmapCacheOption.None;
                     bitmap.StreamSource = stream;
                     bitmap.EndInit();
                 }
