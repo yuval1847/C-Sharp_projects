@@ -132,7 +132,7 @@ namespace ExtremLink_Client.Pages
             {
                 return Dispatcher.Invoke(() => CaptureScreen());
             }
-
+            ;
             IntPtr desktopDC = GetDC(IntPtr.Zero);
             if (desktopDC == IntPtr.Zero)
                 throw new InvalidOperationException("Failed to get DC");

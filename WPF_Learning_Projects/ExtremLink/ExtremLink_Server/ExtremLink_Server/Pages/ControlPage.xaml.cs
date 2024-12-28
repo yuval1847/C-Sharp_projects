@@ -62,11 +62,15 @@ namespace ExtremLink_Server.Pages
         
         private BitmapImage LoadFrameFromFile()
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string tempFramePath = System.IO.Path.Combine(baseDirectory, "tempFrame.png");
-            return this.server.GetImageOfPNGFile(tempFramePath);
+            lock (this.server.fileLock)
+            {
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string tempFramePath = System.IO.Path.Combine(baseDirectory, "tempFrame.png");
+                return this.server.GetImageOfPNGFile(tempFramePath);
+            }
         }
         
+
         private async void UpdateFrame()
         {
             while (isReceivingFrames)

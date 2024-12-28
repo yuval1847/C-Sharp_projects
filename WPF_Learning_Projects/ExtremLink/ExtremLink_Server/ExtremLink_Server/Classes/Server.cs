@@ -42,6 +42,8 @@ namespace ExtremLink_Server.Classes
         private string udpRespond;
         private BitmapImage currentFrame;
         private EndPoint clientEndPoint;
+        public readonly object fileLock = new object();
+
 
         public string ServerIpAddress
         {
@@ -325,18 +327,21 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-        
+
         public BitmapImage GetImageOfPNGFile(string fileName)
         {
             // Load the PNG file as a BitmapImage
             BitmapImage bitmapImage = new BitmapImage();
             try
             {
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.None;
-                bitmapImage.UriSource = new Uri(fileName, UriKind.Absolute);
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
+                using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load the data into memory immediately
+                    bitmapImage.StreamSource = stream; // Use the FileStream as the source
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze(); // Make the BitmapImage thread-safe
+                }
             }
             catch (Exception ex)
             {
@@ -345,77 +350,82 @@ namespace ExtremLink_Server.Classes
 
             return bitmapImage;
         }
+
         // Getting frame function
 
         public BitmapImage GetFrame()
         {
-            try
+            lock (fileLock)
             {
-                // Store received packets
-                Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
-                int streamId = -1;
-                int totalPackets = -1;
-
-                // Receive packets
-                while (receivedPackets.Count < totalPackets || totalPackets == -1)
+                try
                 {
-                    // Buffer size for each packet
-                    byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
-                    int bytesRead = this.udpSocket.Receive(buffer);
+                    // Store received packets
+                    Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+                    int streamId = -1;
+                    int totalPackets = -1;
 
-                    // Extract metadata
-                    int receivedStreamId = BitConverter.ToInt32(buffer, 0);
-                    int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
-                    int packetIndex = BitConverter.ToInt32(buffer, 8);
-
-                    // Ensure packets are part of the same stream
-                    if (streamId == -1) streamId = receivedStreamId;
-                    if (totalPackets == -1) totalPackets = receivedTotalPackets;
-                    if (streamId != receivedStreamId) continue;
-
-                    // Extract segment data
-                    byte[] segmentData = new byte[bytesRead - 12];
-                    Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
-
-                    // Store segment if not already received
-                    if (!receivedPackets.ContainsKey(packetIndex))
+                    // Receive packets
+                    while (receivedPackets.Count < totalPackets || totalPackets == -1)
                     {
-                        receivedPackets[packetIndex] = segmentData;
-                    }
-                }
+                        // Buffer size for each packet
+                        byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                        int bytesRead = this.udpSocket.Receive(buffer);
 
-                // Reassemble the file content
-                using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
-                {
-                    for (int i = 0; i < totalPackets; i++)
-                    {
-                        if (receivedPackets.TryGetValue(i, out var segment))
+                        // Extract metadata
+                        int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                        int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                        int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                        // Ensure packets are part of the same stream
+                        if (streamId == -1) streamId = receivedStreamId;
+                        if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                        if (streamId != receivedStreamId) continue;
+
+                        // Extract segment data
+                        byte[] segmentData = new byte[bytesRead - 12];
+                        Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                        // Store segment if not already received
+                        if (!receivedPackets.ContainsKey(packetIndex))
                         {
-                            fileStream.Write(segment, 0, segment.Length);
-                        }
-                        else
-                        {
-                            throw new Exception($"Missing packet {i}");
+                            receivedPackets[packetIndex] = segmentData;
                         }
                     }
-                }
 
-                // Load the PNG file to a BitmapImage object
-                var bitmap = new BitmapImage();
-                using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
+                    // Reassemble the file content
+                    using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
+                    {
+                        for (int i = 0; i < totalPackets; i++)
+                        {
+                            if (receivedPackets.TryGetValue(i, out var segment))
+                            {
+                                fileStream.Write(segment, 0, segment.Length);
+                            }
+                            else
+                            {
+                                throw new Exception($"Missing packet {i}");
+                            }
+                        }
+                    }
+
+                    // Load the PNG file to a BitmapImage object
+                    var bitmap = new BitmapImage();
+                    using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
+                    {
+                        bitmap.BeginInit();
+                        bitmap.CacheOption = BitmapCacheOption.None;
+                        bitmap.StreamSource = stream;
+                        bitmap.EndInit();
+                    }
+                    bitmap.Freeze();
+                    return bitmap;
+
+                }
+                catch (Exception ex)
                 {
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.None;
-                    bitmap.StreamSource = stream;
-                    bitmap.EndInit();
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                    return null;
                 }
-                return bitmap;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-                return null;
             }
         }
 
