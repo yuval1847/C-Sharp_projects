@@ -333,7 +333,7 @@ namespace ExtremLink_Server.Classes
         }
 
         
-        public RenderTargetBitmap GetImageOfPNGFile(string fileName)
+        public BitmapImage GetImageOfPNGFile(string fileName)
         {
             // Load the PNG file as a BitmapImage
             BitmapImage bitmapImage = new BitmapImage();
@@ -341,26 +341,7 @@ namespace ExtremLink_Server.Classes
             bitmapImage.UriSource = new Uri(fileName, UriKind.Absolute);
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
             bitmapImage.EndInit();
-
-            // Create a RenderTargetBitmap with the dimensions of the loaded image
-            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
-                bitmapImage.PixelWidth,
-                bitmapImage.PixelHeight,
-                bitmapImage.DpiX,
-                bitmapImage.DpiY,
-                PixelFormats.Pbgra32);
-
-            // Render the image onto a DrawingVisual
-            DrawingVisual drawingVisual = new DrawingVisual();
-            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
-            {
-                drawingContext.DrawImage(bitmapImage, new Rect(0, 0, bitmapImage.PixelWidth, bitmapImage.PixelHeight));
-            }
-
-            // Render the DrawingVisual onto the RenderTargetBitmap
-            renderTargetBitmap.Render(drawingVisual);
-
-            return renderTargetBitmap;
+            return bitmapImage;
         }
         // Getting frame function
         public BitmapImage GetFrame()

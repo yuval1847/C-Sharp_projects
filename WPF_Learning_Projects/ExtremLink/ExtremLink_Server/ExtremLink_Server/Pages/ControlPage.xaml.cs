@@ -1,6 +1,8 @@
 ﻿using ExtremLink_Server.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -44,8 +46,9 @@ namespace ExtremLink_Server.Pages
                 isReceivingFrames = true;
                 this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
 
-                frameUpdateThread = new Thread(UpdateFrame);
-                frameUpdateThread.Start();
+                // frameUpdateThread = new Thread(UpdateFrame);
+                // frameUpdateThread.Start();
+                UpdateFrame();
                 playAndPauseBtn.Content = "Stop";
             }
             else
@@ -55,8 +58,15 @@ namespace ExtremLink_Server.Pages
                 playAndPauseBtn.Content = "Start";
             }
         }
+        
+        private BitmapImage LoadFrameFromFile()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string tempFramePath = System.IO.Path.Combine(baseDirectory, "tempFrame.png");
+            return this.server.GetImageOfPNGFile(tempFramePath);
+        }
 
-        private void UpdateFrame()
+        private async void UpdateFrame()
         {
             while (isReceivingFrames)
             {
@@ -64,13 +74,14 @@ namespace ExtremLink_Server.Pages
                 {
                     if (this.server.CurrentFrame != null)
                     {
-                        Dispatcher.Invoke(() => 
-                        { 
-                            frameImg.Source = this.server.CurrentFrame; 
+
+                        await frameImg.Dispatcher.InvokeAsync(() =>
+                        {
+                            frameImg.Source = LoadFrameFromFile();
                         });
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
-                    Thread.Sleep(16); 
+                    await Task.Delay(16);
                 }
                 catch (Exception ex)
                 {
@@ -83,10 +94,6 @@ namespace ExtremLink_Server.Pages
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             isReceivingFrames = false;
-            if (frameUpdateThread != null && frameUpdateThread.IsAlive)
-            {
-                frameUpdateThread.Join(1000);
-            }
         }
     }
 }
