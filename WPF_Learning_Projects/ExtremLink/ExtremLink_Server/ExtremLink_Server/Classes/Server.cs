@@ -148,8 +148,8 @@ namespace ExtremLink_Server.Classes
             // The fucntion handle with different type of TCP packets which are sent by the client.
             // The types of message are:
             // ! - Database functionality
-            // @ -
-            // # - 
+            // & - Frames handling
+            // % - Mouse handling
             while (true)
             {
                 lock (this){

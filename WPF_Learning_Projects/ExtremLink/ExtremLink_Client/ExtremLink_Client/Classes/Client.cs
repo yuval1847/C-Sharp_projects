@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json;
 
 namespace ExtremLink_Client.Classes
 {
@@ -26,6 +27,8 @@ namespace ExtremLink_Client.Classes
         private string serverIpAddr;
         private string serverRespond;
         private EndPoint serverEndPoint;
+        private int mouseX;
+        private int mouseY;
 
         public Socket UDPSocket
         {
@@ -45,6 +48,16 @@ namespace ExtremLink_Client.Classes
                 this.serverRespond = value;
             }
         }
+        public int MouseX
+        {
+            get { return this.mouseX; }
+            set { this.mouseX = value; }
+        }
+        public int MouseY
+        {
+            get { return this.mouseY; }
+            set { this.mouseY = value; }
+        }
 
 
         public Client(string serverIpAddr)
@@ -52,6 +65,8 @@ namespace ExtremLink_Client.Classes
             this.serverIpAddr = serverIpAddr;
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.mouseX = 0;
+            this.mouseY = 0;
         }
 
         public void ConnectToServer()
@@ -86,8 +101,8 @@ namespace ExtremLink_Client.Classes
             // The fucntion handle with different type of TCP packets which are sent by the server.
             // The types of message are:
             // ! - Database functionality
-            // @ -
-            // # -
+            // & - Frames handling
+            // % - Mouse handling
             while (true)
             {
                 lock (this)
@@ -107,9 +122,30 @@ namespace ExtremLink_Client.Classes
                             // MessageBox.Show(data);
                             if (data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
                             break;
+                        case "%":
+                            HandleMouseInput(data);
+                            break;
                     }
 
                 }
+            }
+        }
+
+        public void HandleMouseInput(string message)
+        {
+            dynamic data = JsonConvert.DeserializeObject(message);
+            if (data.type == "mouseMove")
+            {
+                double relativeX = (double)data.x;
+                double relativeY = (double)data.y;
+
+                // Map to client screen size
+                int clientScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
+                int clientScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
+
+                this.mouseX = (int)(relativeX * clientScreenWidth);
+                this.mouseY = (int)(relativeY * clientScreenHeight);
+
             }
         }
 
@@ -356,6 +392,7 @@ namespace ExtremLink_Client.Classes
                 this.udpSocket.SendTo(packet, this.serverEndPoint);
             }
         }
+
 
     }
 }

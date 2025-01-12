@@ -33,6 +33,7 @@ namespace ExtremLink_Client.Pages
         private Thread clientMessagesHandlingThread;
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
+        private Thread mouseControllingThead;
         private bool isStreaming;
         private const string defaultPngFileOfFrame = "tempFrame.png";
 
@@ -55,9 +56,11 @@ namespace ExtremLink_Client.Pages
 
             // It will be started when the server start ask for sharing screen
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
+
+            this.mouseControllingThead = new Thread(this.StartMouseControl);
             
         }
-
+        // Frames handling:
         private void StartSharingScreen()
         {
             while (!this.isStreaming)
@@ -80,7 +83,9 @@ namespace ExtremLink_Client.Pages
                     {
                         this.client.SendFrame(screen);
                     }
+                    // MoveMouseToCoordinates(this.client.MouseX, this.client.MouseY);
                     // Around 1 FPS
+                    // Note: try to use Task.delay intead.
                     Thread.Sleep(1000);
                 }
                 catch (Exception ex)
@@ -98,6 +103,20 @@ namespace ExtremLink_Client.Pages
                 Dispatcher.Invoke(() => frameImg.Source = screen);
                 // Around 60 FPS
                 Thread.Sleep(16);
+            }
+        }
+
+        private void StartMouseControl()
+        {
+            while (!this.isStreaming)
+            {
+                Thread.Sleep(1000);
+            }
+            Thread.Sleep(1000);
+            while (this.isStreaming)
+            {
+                MoveMouseToCoordinates(this.client.MouseX, this.client.MouseY);
+                Thread.Sleep(100);
             }
         }
 
@@ -139,8 +158,8 @@ namespace ExtremLink_Client.Pages
 
             try
             {
-                int screenWidth = (int)System.Windows.SystemParameters.VirtualScreenWidth;
-                int screenHeight = (int)System.Windows.SystemParameters.VirtualScreenHeight;
+                int screenWidth = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
+                int screenHeight = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
                 int screenLeft = (int)System.Windows.SystemParameters.VirtualScreenLeft;
                 int screenTop = (int)System.Windows.SystemParameters.VirtualScreenTop;
 
@@ -187,6 +206,16 @@ namespace ExtremLink_Client.Pages
             {
                 ReleaseDC(IntPtr.Zero, desktopDC);
             }
+        }
+
+
+        // Mouse handling:
+        [DllImport("user32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
+
+        private void MoveMouseToCoordinates(int x, int y)
+        {
+            SetCursorPos(x, y);
         }
     }
 }

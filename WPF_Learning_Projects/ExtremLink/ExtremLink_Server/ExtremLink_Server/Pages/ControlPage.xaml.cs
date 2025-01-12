@@ -1,5 +1,6 @@
 ﻿using ExtremLink_Server.Classes;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,9 +27,7 @@ namespace ExtremLink_Server.Pages
     {
         private ContentControl contentMain;
         private Server server;
-        private bool isReceivingFrames;
-        private Thread frameUpdateThread;
-        
+        private bool isReceivingFrames;        
 
 
         public ControlPage(ContentControl contentMain, Server server)
@@ -39,6 +38,8 @@ namespace ExtremLink_Server.Pages
             InitializeComponent();
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
         }
+
+        // Frames handling:
 
         private void StartStreamBtnClick(object sender, RoutedEventArgs e)
         {
@@ -59,7 +60,6 @@ namespace ExtremLink_Server.Pages
                 playAndPauseBtn.Content = "Start";
             }
         }
-        
         private BitmapImage LoadFrameFromFile()
         {
             lock (this.server.fileLock)
@@ -69,8 +69,6 @@ namespace ExtremLink_Server.Pages
                 return this.server.GetImageOfPNGFile(tempFramePath);
             }
         }
-        
-
         private async void UpdateFrame()
         {
             while (isReceivingFrames)
@@ -91,6 +89,34 @@ namespace ExtremLink_Server.Pages
                 }
             }
         }
+
+        // Mouse handling:
+        private void FrameImgMouseUpOrDown(object sender, MouseButtonEventArgs e)
+        {
+            Point mousePosition = e.GetPosition(frameImg);
+            SendMouseCoordinatesToClient(mousePosition);
+            MessageBox.Show($"Mouse Up or Down ({mousePosition.X}, {mousePosition.Y})");
+        }
+        private void FrameImgMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point mousePosition = e.GetPosition(frameImg);
+                SendMouseCoordinatesToClient(mousePosition);
+                MessageBox.Show("Mouse Pressed");
+            }
+        }
+        private void SendMouseCoordinatesToClient(Point point)
+        {
+            double relativeX = point.X / frameImg.ActualWidth; // Normalize X
+            double relativeY = point.Y / frameImg.ActualHeight; // Normalize Y
+
+            // Json format
+            string message = $"{{\"type\":\"mouseMove\",\"x\":{relativeX},\"y\":{relativeY}}}";
+            server.SendMessage(server.ClientTcpSocket, "&", message);
+        }
+
+
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

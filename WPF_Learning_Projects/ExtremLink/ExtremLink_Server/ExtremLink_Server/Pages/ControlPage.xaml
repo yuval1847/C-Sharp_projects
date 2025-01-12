@@ -17,6 +17,7 @@
         <StackPanel>
             <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <Grid>
+                    <!--MouseMove="FrameImgMouseMove" MouseDown="FrameImgMouseUpOrDown" MouseUp="FrameImgMouseUpOrDown"-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70"/>
                     <ColumnDefinition Width="200"/>

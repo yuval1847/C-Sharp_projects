@@ -180,3 +180,44 @@ C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projec
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.csproj.CopyComplete
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.genruntimeconfig.cache
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ref\ExtremLink_Client.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\ExtremLink_Client.exe
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\ExtremLink_Client.deps.json
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\ExtremLink_Client.runtimeconfig.json
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\ExtremLink_Client.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\ExtremLink_Client.pdb
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\System.Drawing.Common.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.csproj.AssemblyReference.cache
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomButton.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomTextBox.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\UserIcon.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\ConnectingPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\LoginPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\OpeningPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SharingScreenPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SignUpPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client_MarkupCompile.cache
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client_MarkupCompile.lref
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomButton.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\CustomTextBox.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\CustomWidgets\UserIcon.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\ConnectingPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\LoginPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\OpeningPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SharingScreenPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SignUpPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.g.resources
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.AssemblyInfoInputs.cache
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.AssemblyInfo.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.csproj.CoreCompileInputs.cache
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.csproj.CopyComplete
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\refint\ExtremLink_Client.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.pdb
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ExtremLink_Client.genruntimeconfig.cache
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\ref\ExtremLink_Client.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
