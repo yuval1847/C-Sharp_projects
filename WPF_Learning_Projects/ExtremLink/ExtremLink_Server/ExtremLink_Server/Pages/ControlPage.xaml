@@ -15,9 +15,10 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel>
-            <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"
+                   MouseMove="FrameImg_MouseMove" MouseDown="FrameImg_MouseClick"/>
             <Grid>
-                    <!--MouseMove="FrameImgMouseMove" MouseDown="FrameImgMouseUpOrDown" MouseUp="FrameImgMouseUpOrDown"-->
+                    
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70"/>
                     <ColumnDefinition Width="200"/>

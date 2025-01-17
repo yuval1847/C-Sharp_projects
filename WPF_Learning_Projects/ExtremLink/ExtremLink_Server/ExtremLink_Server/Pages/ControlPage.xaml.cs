@@ -39,8 +39,7 @@ namespace ExtremLink_Server.Pages
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
         }
 
-        // Frames handling:
-
+        // Frames functions:
         private void StartStreamBtnClick(object sender, RoutedEventArgs e)
         {
             if (!isReceivingFrames)
@@ -90,29 +89,28 @@ namespace ExtremLink_Server.Pages
             }
         }
 
-        // Mouse handling:
-        private void FrameImgMouseUpOrDown(object sender, MouseButtonEventArgs e)
+        
+        // Mouse functions:
+        private void FrameImg_MouseMove(object sender, MouseEventArgs e)
         {
+            // Input: nothing
+            // Output: The function updates the mouse's coordinates sends them the client as a query.
             this.customMouse.ChangePosition(e.GetPosition(frameImg));
-            this.customMouse.SendMousePosition(this.server);
+            this.customMouse.SendMouseCommands(this.server, MouseCommands.Move);
         }
-        private void FrameImgMouseMove(object sender, MouseEventArgs e)
+        private void FrameImgMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            // Input: nothing
+            // Output: The function sends the client as a query about pressing on one of the mouse buttons(left ot right).
+            this.customMouse.ChangePosition(e.GetPosition(frameImg));
+            if (e.ChangedButton == MouseButton.Left)
             {
-                Point mousePosition = e.GetPosition(frameImg);
-                SendMouseCoordinatesToClient(mousePosition);
-                MessageBox.Show("Mouse Pressed");
+                this.customMouse.SendMouseCommands(this.server, MouseCommands.LeftPress);
             }
-        }
-        private void SendMouseCoordinatesToClient(Point point)
-        {
-            double relativeX = point.X / frameImg.ActualWidth; // Normalize X
-            double relativeY = point.Y / frameImg.ActualHeight; // Normalize Y
-
-            // Json format
-            string message = $"{{\"type\":\"mouseMove\",\"x\":{relativeX},\"y\":{relativeY}}}";
-            server.SendMessage(server.ClientTcpSocket, "&", message);
+            else
+            {
+                this.customMouse.SendMouseCommands(this.server, MouseCommands.RightPress);
+            }
         }
 
 
