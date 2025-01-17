@@ -27,8 +27,8 @@ namespace ExtremLink_Server.Pages
     {
         private ContentControl contentMain;
         private Server server;
-        private bool isReceivingFrames;        
-
+        private bool isReceivingFrames;
+        private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
 
         public ControlPage(ContentControl contentMain, Server server)
         {
@@ -93,9 +93,8 @@ namespace ExtremLink_Server.Pages
         // Mouse handling:
         private void FrameImgMouseUpOrDown(object sender, MouseButtonEventArgs e)
         {
-            Point mousePosition = e.GetPosition(frameImg);
-            SendMouseCoordinatesToClient(mousePosition);
-            MessageBox.Show($"Mouse Up or Down ({mousePosition.X}, {mousePosition.Y})");
+            this.customMouse.ChangePosition(e.GetPosition(frameImg));
+            this.customMouse.SendMousePosition(this.server);
         }
         private void FrameImgMouseMove(object sender, MouseEventArgs e)
         {
