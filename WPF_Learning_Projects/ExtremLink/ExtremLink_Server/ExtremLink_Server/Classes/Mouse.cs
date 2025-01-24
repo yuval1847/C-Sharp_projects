@@ -15,6 +15,7 @@ namespace ExtremLink_Server.Classes
     enum MouseCommands
     // An enum which different input types of the mouse.
     {
+        Commandless,
         Move,
         LeftPress,
         RightPress
@@ -29,6 +30,7 @@ namespace ExtremLink_Server.Classes
         */
 
         // Attributes:
+        // A point object which represent the mouse position
         private Point cursorsPos;
         public Point CursorsPos
         {
@@ -89,13 +91,13 @@ namespace ExtremLink_Server.Classes
         private string GenerateLeftPressingQuery()
         {
             // Input: nothing.
-            // Output: A strong which is a query in a json format which represent a left click of the mouse.
+            // Output: A string which is a query in a json format which represent a left click of the mouse.
             return $"{{\"type\":\"mouseLeftPress\",\"x\":{this.CursorsPos.X},\"y\":{this.CursorsPos.Y}}}";
         }
         private string GenerateRightPressingQuery()
         {
             // Input: nothing.
-            // Output: A strong which is a query in a json format which represent a left click of the mouse.
+            // Output: A string which is a query in a json format which represent a left click of the mouse.
             return $"{{\"type\":\"mouseRightPress\",\"x\":{this.CursorsPos.X},\"y\":{this.CursorsPos.Y}}}";
         }
         

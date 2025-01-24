@@ -98,7 +98,7 @@ namespace ExtremLink_Server.Pages
             this.customMouse.ChangePosition(e.GetPosition(frameImg));
             this.customMouse.SendMouseCommands(this.server, MouseCommands.Move);
         }
-        private void FrameImgMouseDown(object sender, MouseButtonEventArgs e)
+        private void FrameImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // Input: nothing
             // Output: The function sends the client as a query about pressing on one of the mouse buttons(left ot right).

@@ -70,7 +70,7 @@ namespace ExtremLink_Server.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Server;V1.0.0.0;component/pages/connectingpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Server;component/pages/connectingpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\ConnectingPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

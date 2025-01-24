@@ -36,6 +36,7 @@ namespace ExtremLink_Client.Pages
         private Thread mouseControllingThead;
         private bool isStreaming;
         private const string defaultPngFileOfFrame = "tempFrame.png";
+        private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
 
         public ContentControl ContentMain
         {
@@ -106,19 +107,6 @@ namespace ExtremLink_Client.Pages
             }
         }
 
-        private void StartMouseControl()
-        {
-            while (!this.isStreaming)
-            {
-                Thread.Sleep(1000);
-            }
-            Thread.Sleep(1000);
-            while (this.isStreaming)
-            {
-                MoveMouseToCoordinates(this.client.MouseX, this.client.MouseY);
-                Thread.Sleep(100);
-            }
-        }
 
         // Screenshot:
 
@@ -210,12 +198,22 @@ namespace ExtremLink_Client.Pages
 
 
         // Mouse handling:
-        [DllImport("user32.dll")]
-        private static extern bool SetCursorPos(int X, int Y);
-
-        private void MoveMouseToCoordinates(int x, int y)
+        private void StartMouseControl()
         {
-            SetCursorPos(x, y);
+            // Input: nothing
+            // Ouput: The function starting the mouse control over the host itself.
+            while (!this.isStreaming)
+            {
+                Thread.Sleep(1000);
+            }
+            Thread.Sleep(1000);
+            while (this.isStreaming)
+            {
+                this.customMouse.ExecuteCurrentMouseCommand();
+                Thread.Sleep(100);
+            }
         }
+
+        
     }
 }

@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
+using Microsoft.Win32.SafeHandles;
+using Newtonsoft.Json.Linq;
 
 namespace ExtremLink_Client.Classes
 {
@@ -29,7 +31,7 @@ namespace ExtremLink_Client.Classes
         private EndPoint serverEndPoint;
         private int mouseX;
         private int mouseY;
-
+        private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         public Socket UDPSocket
         {
             get { return this.udpSocket; }
@@ -123,29 +125,42 @@ namespace ExtremLink_Client.Classes
                             if (data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
                             break;
                         case "%":
-                            HandleMouseInput(data);
+                            this.HandleMouseInput(data);
                             break;
                     }
-
                 }
             }
         }
 
         public void HandleMouseInput(string message)
         {
+            // Input: string object which represent the message that was given from the server.
+            // Ouput: The function update the CustomMouse object according to the given message's parameters.
+            
+            // Reading the data in json format
             dynamic data = JsonConvert.DeserializeObject(message);
-            if (data.type == "mouseMove")
+
+            // Casting the data dynamic object to JObject
+            JObject jsonData = (JObject)data;
+
+            // Checking if changing position is needed
+            if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                double relativeX = (double)data.x;
-                double relativeY = (double)data.y;
+                this.customMouse.ChangePosition(data.y, data.x);
+            }
 
-                // Map to client screen size
-                int clientScreenWidth = (int)SystemParameters.PrimaryScreenWidth;
-                int clientScreenHeight = (int)SystemParameters.PrimaryScreenHeight;
-
-                this.mouseX = (int)(relativeX * clientScreenWidth);
-                this.mouseY = (int)(relativeY * clientScreenHeight);
-
+            // Updating the mouse parameters according to the given message
+            switch (data.type)
+            {
+                case "mouseMove":
+                    this.customMouse.CurrentCommands = MouseCommands.Move;
+                    break;
+                case "mouseLeftPress":
+                    this.customMouse.CurrentCommands = MouseCommands.LeftPress;
+                    break;
+                case "mouseRightPress":
+                    this.customMouse.CurrentCommands = MouseCommands.RightPress;
+                    break;
             }
         }
 
