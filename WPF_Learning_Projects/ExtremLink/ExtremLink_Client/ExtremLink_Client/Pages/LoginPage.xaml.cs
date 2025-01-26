@@ -60,7 +60,7 @@ namespace ExtremLink_Client.Pages
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
                 this.wrongLoginTextBlock.Text = "successfully connected!";
                 this.wrongLoginTextBlock.Foreground = Brushes.Green;
-                this.contentMain.Content = new SharingScreenPage(this.contentMain, this.client, clientMessagesHandlingThread);
+                this.contentMain.Content = new SharingScreenPage(this.contentMain, this.client);
             }
             else if (this.client.ServerRespond == "NotExist")
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,13 +13,13 @@ namespace ExtremLink_Client.Classes
     enum MouseCommands
     // An enum which different input types of the mouse.
     {
-        Commandless,
+        CommandLess,
         Move,
         LeftPress,
         RightPress
     }
 
-    internal class CustomMouse
+    internal sealed class CustomMouse
     {
         /*
         A class which represents a mouse object.
@@ -51,11 +52,11 @@ namespace ExtremLink_Client.Classes
         }
 
         // A MouseCommands enum which represent the current mouse command
-        private MouseCommands currentCommands;
-        public MouseCommands CurrentCommands
+        private MouseCommands currentCommand;
+        public MouseCommands CurrentCommand
         {
-            get { return this.currentCommands; }
-            set { this.currentCommands = value; }
+            get { return this.currentCommand; }
+            set { this.currentCommand = value; }
         }
 
 
@@ -91,7 +92,7 @@ namespace ExtremLink_Client.Classes
             this.cursorsPos.X = newPos.X;
             this.cursorsPos.Y = newPos.Y;
         }
-        public void ChangePosition(int newXPos, int newYPos)
+        public void ChangePosition(float newXPos, float newYPos)
         {
             // Input: 2 integers which represent the new coordinate.
             // Output: The function set the current position to the new position.
@@ -105,10 +106,10 @@ namespace ExtremLink_Client.Classes
         {
             // Input: nothing.
             // Output: The funcion moves the mouse cruser to the specified position.
-
+            MessageBox.Show("MoveMouseToPosition");
             // Convert screen coordinates to absolute coordinates (0 to 65535)
-            int absoluteX = (int)this.cursorsPos.X * 65535 / GetSystemMetrics(0); // Width
-            int absoluteY = (int)this.cursorsPos.Y * 65535 / GetSystemMetrics(1); // Height
+            int absoluteX = (int)(this.cursorsPos.X * 65535 / GetSystemMetrics(0)); // Width
+            int absoluteY = (int)(this.cursorsPos.Y * 65535 / GetSystemMetrics(1)); // Height
 
             // Move the mouse to the specified position
             mouse_event(MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, absoluteX, absoluteY, 0, UIntPtr.Zero);
@@ -139,9 +140,11 @@ namespace ExtremLink_Client.Classes
         {
             // Input: nothing.
             // Output: The function executes the current mouse funtion.
-            switch (this.currentCommands)
+            MessageBox.Show($"{this.currentCommand}");
+            switch (this.currentCommand)
             {
                 case MouseCommands.Move:
+                    MessageBox.Show("Now it calling the MoveMouseToPosition()");
                     this.MoveMouseToPosition();
                     break;
                 case MouseCommands.LeftPress: 
@@ -151,7 +154,7 @@ namespace ExtremLink_Client.Classes
                     this.RightClick();
                     break;
             }
-            this.currentCommands = MouseCommands.Commandless;
+            this.currentCommand = MouseCommands.CommandLess;
         }
     }
 }

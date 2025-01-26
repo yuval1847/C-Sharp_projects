@@ -15,7 +15,7 @@ namespace ExtremLink_Server.Classes
     enum MouseCommands
     // An enum which different input types of the mouse.
     {
-        Commandless,
+        CommandLess,
         Move,
         LeftPress,
         RightPress
@@ -107,7 +107,7 @@ namespace ExtremLink_Server.Classes
         {
             // Input: The function gets a server object and a string which represent the command.
             // Output: The function sends the command to the client.
-            server.SendMessage(server.ClientTcpSocket, "&", commandQuery);
+            server.SendMessage(server.ClientTcpSocket, "%", commandQuery);
         }
 
 
@@ -130,6 +130,9 @@ namespace ExtremLink_Server.Classes
                     break;
             }
             this.SendCommandQueryToClient(server, commandQuery);
+
+            // A delay between each command message
+            Task.Delay(500).Wait();
         }
     }
 }

@@ -30,7 +30,6 @@ namespace ExtremLink_Client.Pages
     {
         private ContentControl contentMain;
         private Client client;
-        private Thread clientMessagesHandlingThread;
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
         private Thread mouseControllingThead;
@@ -44,11 +43,10 @@ namespace ExtremLink_Client.Pages
             set { this.contentMain = value; }
         }
 
-        public SharingScreenPage(ContentControl contentMain, Client client, Thread clientMessagesHandlingThread)
+        public SharingScreenPage(ContentControl contentMain, Client client)
         {
             this.contentMain = contentMain;
             this.client = client;
-            this.clientMessagesHandlingThread = clientMessagesHandlingThread;
             this.isStreaming = false;
             InitializeComponent();
 
@@ -59,6 +57,7 @@ namespace ExtremLink_Client.Pages
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
 
             this.mouseControllingThead = new Thread(this.StartMouseControl);
+            this.mouseControllingThead.Start();
             
         }
         // Frames handling:
@@ -139,7 +138,7 @@ namespace ExtremLink_Client.Pages
             {
                 return Dispatcher.Invoke(() => CaptureScreen());
             }
-            ;
+            
             IntPtr desktopDC = GetDC(IntPtr.Zero);
             if (desktopDC == IntPtr.Zero)
                 throw new InvalidOperationException("Failed to get DC");
@@ -210,10 +209,8 @@ namespace ExtremLink_Client.Pages
             while (this.isStreaming)
             {
                 this.customMouse.ExecuteCurrentMouseCommand();
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
         }
-
-        
     }
 }

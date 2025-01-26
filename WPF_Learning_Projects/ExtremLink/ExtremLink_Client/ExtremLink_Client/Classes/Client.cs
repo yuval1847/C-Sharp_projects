@@ -17,6 +17,8 @@ using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json.Linq;
+using Point = System.Windows.Point;
+
 
 namespace ExtremLink_Client.Classes
 {
@@ -112,6 +114,8 @@ namespace ExtremLink_Client.Classes
                     List<object> message = GetMessage(this.tcpSocket);
                     string data = (string)message[2];
 
+                    MessageBox.Show((string)message[0]);
+
                     switch (message[0])
                     {
                         case "!":
@@ -121,7 +125,6 @@ namespace ExtremLink_Client.Classes
                             else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
                             break;
                         case "&":
-                            // MessageBox.Show(data);
                             if (data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
                             break;
                         case "%":
@@ -136,7 +139,7 @@ namespace ExtremLink_Client.Classes
         {
             // Input: string object which represent the message that was given from the server.
             // Ouput: The function update the CustomMouse object according to the given message's parameters.
-            
+
             // Reading the data in json format
             dynamic data = JsonConvert.DeserializeObject(message);
 
@@ -146,22 +149,31 @@ namespace ExtremLink_Client.Classes
             // Checking if changing position is needed
             if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                this.customMouse.ChangePosition(data.y, data.x);
+                try
+                {
+                    this.customMouse.ChangePosition((float)data.x, (float)data.y);
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
             }
 
             // Updating the mouse parameters according to the given message
-            switch (data.type)
+            switch ((string)data.type)
             {
                 case "mouseMove":
-                    this.customMouse.CurrentCommands = MouseCommands.Move;
+                    this.customMouse.CurrentCommand = MouseCommands.Move;
                     break;
                 case "mouseLeftPress":
-                    this.customMouse.CurrentCommands = MouseCommands.LeftPress;
+                    this.customMouse.CurrentCommand = MouseCommands.LeftPress;
                     break;
                 case "mouseRightPress":
-                    this.customMouse.CurrentCommands = MouseCommands.RightPress;
+                    this.customMouse.CurrentCommand = MouseCommands.RightPress;
                     break;
             }
+            MessageBox.Show($"Mouse command changed to: {this.customMouse.CurrentCommand}");
+
         }
 
         // Compress and decompress functions

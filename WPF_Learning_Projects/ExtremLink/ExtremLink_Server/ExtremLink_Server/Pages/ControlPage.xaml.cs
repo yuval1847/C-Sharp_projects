@@ -95,21 +95,27 @@ namespace ExtremLink_Server.Pages
         {
             // Input: nothing
             // Output: The function updates the mouse's coordinates sends them the client as a query.
-            this.customMouse.ChangePosition(e.GetPosition(frameImg));
-            this.customMouse.SendMouseCommands(this.server, MouseCommands.Move);
+            if (this.isReceivingFrames)
+            {
+                this.customMouse.ChangePosition(e.GetPosition(frameImg));
+                this.customMouse.SendMouseCommands(this.server, MouseCommands.Move);
+            }
         }
         private void FrameImg_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // Input: nothing
             // Output: The function sends the client as a query about pressing on one of the mouse buttons(left ot right).
-            this.customMouse.ChangePosition(e.GetPosition(frameImg));
-            if (e.ChangedButton == MouseButton.Left)
+            if (this.isReceivingFrames)
             {
-                this.customMouse.SendMouseCommands(this.server, MouseCommands.LeftPress);
-            }
-            else
-            {
-                this.customMouse.SendMouseCommands(this.server, MouseCommands.RightPress);
+                this.customMouse.ChangePosition(e.GetPosition(frameImg));
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    this.customMouse.SendMouseCommands(this.server, MouseCommands.LeftPress);
+                }
+                if (e.ChangedButton == MouseButton.Right)
+                {
+                    this.customMouse.SendMouseCommands(this.server, MouseCommands.RightPress);
+                }
             }
         }
 
