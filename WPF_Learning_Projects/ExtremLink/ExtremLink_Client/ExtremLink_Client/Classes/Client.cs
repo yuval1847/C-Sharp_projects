@@ -114,8 +114,6 @@ namespace ExtremLink_Client.Classes
                     List<object> message = GetMessage(this.tcpSocket);
                     string data = (string)message[2];
 
-                    MessageBox.Show((string)message[0]);
-
                     switch (message[0])
                     {
                         case "!":
@@ -149,14 +147,7 @@ namespace ExtremLink_Client.Classes
             // Checking if changing position is needed
             if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                try
-                {
-                    this.customMouse.ChangePosition((float)data.x, (float)data.y);
-                }
-                catch(Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
+                this.customMouse.ChangePosition((float)data.x, (float)data.y);         
             }
 
             // Updating the mouse parameters according to the given message
@@ -172,8 +163,6 @@ namespace ExtremLink_Client.Classes
                     this.customMouse.CurrentCommand = MouseCommands.RightPress;
                     break;
             }
-            MessageBox.Show($"Mouse command changed to: {this.customMouse.CurrentCommand}");
-
         }
 
         // Compress and decompress functions
