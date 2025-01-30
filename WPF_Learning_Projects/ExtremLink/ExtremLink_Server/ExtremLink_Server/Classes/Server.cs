@@ -138,7 +138,7 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 this.currentFrame = this.GetFrame();
-                Thread.Sleep(1000);
+                Task.Delay(1000).Wait();
             }
         }
 

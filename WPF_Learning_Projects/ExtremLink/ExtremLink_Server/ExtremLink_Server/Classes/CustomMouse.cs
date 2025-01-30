@@ -135,7 +135,7 @@ namespace ExtremLink_Server.Classes
             }
 
             // A delay between each command message
-            Task.Delay(500).Wait();
+            Task.Delay(50).Wait();
         }
     }
 }

@@ -39,7 +39,8 @@ namespace ExtremLink_Client.Classes
         private const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
         private const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
         private const uint MOUSEEVENTF_LEFTUP = 0x0004;
-
+        private const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        private const uint MOUSEEVENTF_RIGHTUP = 0x0010;
 
 
         // Attributes:
@@ -131,8 +132,8 @@ namespace ExtremLink_Client.Classes
             // Input: Nothing.
             // Output: The function simulate a right mouse click.
             this.MoveMouseToPosition();
-            mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
-            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);
+            mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, UIntPtr.Zero);
+            mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, UIntPtr.Zero);
         }
 
         // Executing the current mouse command function:

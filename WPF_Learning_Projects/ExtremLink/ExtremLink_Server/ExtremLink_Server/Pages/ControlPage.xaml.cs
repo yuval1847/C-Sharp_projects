@@ -29,6 +29,7 @@ namespace ExtremLink_Server.Pages
         private Server server;
         private bool isReceivingFrames;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
+        private Thread frameUpdateThread;
 
         public ControlPage(ContentControl contentMain, Server server)
         {
@@ -37,6 +38,7 @@ namespace ExtremLink_Server.Pages
             this.isReceivingFrames = false;
             InitializeComponent();
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
+            frameUpdateThread = new Thread(UpdateFrame);
         }
 
         // Frames functions:
@@ -48,12 +50,13 @@ namespace ExtremLink_Server.Pages
                 this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
 
                 // frameUpdateThread = new Thread(UpdateFrame);
-                // frameUpdateThread.Start();
-                UpdateFrame();
+                frameUpdateThread.Start();
+                // UpdateFrame();
                 playAndPauseBtn.Content = "Stop";
             }
             else
             {
+                frameUpdateThread.Abort();
                 isReceivingFrames = false;
                 this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
                 playAndPauseBtn.Content = "Start";
@@ -74,9 +77,10 @@ namespace ExtremLink_Server.Pages
             {
                 try
                 {
+                    // MessageBox.Show($"{this.server.CurrentFrame != null}");
                     if (this.server.CurrentFrame != null)
                     {
-                        await frameImg.Dispatcher.InvokeAsync(() => frameImg.Source = LoadFrameFromFile());
+                        await frameImg.Dispatcher.InvokeAsync(() => frameImg.Source = this.LoadFrameFromFile());
                     }
                     // Set the sleep function so the frame rate will be around ~60 FPS
                     await Task.Delay(16);
@@ -120,7 +124,6 @@ namespace ExtremLink_Server.Pages
         }
 
         // Keyboard functions:
-        private void 
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
