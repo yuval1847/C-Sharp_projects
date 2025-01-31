@@ -209,7 +209,7 @@ namespace ExtremLink_Client.Pages
             while (this.isStreaming)
             {
                 this.customMouse.ExecuteCurrentMouseCommand();
-                Thread.Sleep(1000);
+                Thread.Sleep(50);
             }
         }
     }
