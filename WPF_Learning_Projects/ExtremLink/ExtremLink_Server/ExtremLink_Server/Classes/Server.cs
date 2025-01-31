@@ -138,7 +138,7 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 this.currentFrame = this.GetFrame();
-                Task.Delay(1000).Wait();
+                Thread.Sleep(1000);
             }
         }
 
@@ -199,8 +199,7 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-
-        // Compress and decompress functions
+        // Compress and decompress functions:
         public byte[] Compress(string data)
         {
             // The function gets a string.
@@ -329,7 +328,6 @@ namespace ExtremLink_Server.Classes
         }
 
 
-        // Frames functions
         public BitmapImage GetImageOfPNGFile(string fileName)
         {
             // Load the PNG file as a BitmapImage
@@ -352,6 +350,9 @@ namespace ExtremLink_Server.Classes
 
             return bitmapImage;
         }
+
+        // Getting frame function
+
         public BitmapImage GetFrame()
         {
             lock (fileLock)
@@ -427,6 +428,8 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
+
+
 
 
         // SQL database queries functions
