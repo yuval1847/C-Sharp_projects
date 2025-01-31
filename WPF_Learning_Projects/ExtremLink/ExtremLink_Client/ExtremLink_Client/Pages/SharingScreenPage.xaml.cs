@@ -57,7 +57,6 @@ namespace ExtremLink_Client.Pages
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
 
             this.mouseControllingThead = new Thread(this.StartMouseControl);
-            this.mouseControllingThead.Start();
             
         }
         // Frames handling:
@@ -70,6 +69,7 @@ namespace ExtremLink_Client.Pages
                     this.isStreaming = true;
                     Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
                     this.localSharingScreenThread.Start();
+                    this.mouseControllingThead.Start();
                 }
                 Thread.Sleep(1000);
             }
