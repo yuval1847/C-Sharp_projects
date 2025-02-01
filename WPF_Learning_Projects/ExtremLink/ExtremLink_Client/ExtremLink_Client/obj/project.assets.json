@@ -15,7 +15,7 @@
           }
         }
       },
-      "System.Drawing.Common/9.0.0": {
+      "System.Drawing.Common/9.0.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/System.Drawing.Common.dll": {
@@ -64,10 +64,10 @@
         "packageIcon.png"
       ]
     },
-    "System.Drawing.Common/9.0.0": {
-      "sha512": "uoozjI3+dlgKh2onFJcz8aNLh6TRCPlLSh8Dbuljc8CdvqXrxHOVysJlrHvlsOCqceqGBR1wrMPxlnzzhynktw==",
+    "System.Drawing.Common/9.0.1": {
+      "sha512": "TTPkCqSMyMaG8BXlBKYTTJFtLV0SvjjsvgUN598hYgHaX/5B7tdUc2JhQF9vwrYmlzxId+gwFnKYuxQ2XsSz2g==",
       "type": "package",
-      "path": "system.drawing.common/9.0.0",
+      "path": "system.drawing.common/9.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -101,7 +101,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "system.drawing.common.9.0.0.nupkg.sha512",
+        "system.drawing.common.9.0.1.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -110,7 +110,7 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "Newtonsoft.Json >= 13.0.3",
-      "System.Drawing.Common >= 9.0.0"
+      "System.Drawing.Common >= 9.0.1"
     ]
   },
   "packageFolders": {
@@ -164,7 +164,7 @@
           },
           "System.Drawing.Common": {
             "target": "Package",
-            "version": "[9.0.0, )"
+            "version": "[9.0.1, )"
           }
         },
         "imports": [

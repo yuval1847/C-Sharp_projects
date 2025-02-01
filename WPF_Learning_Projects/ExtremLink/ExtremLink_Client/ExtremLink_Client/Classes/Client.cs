@@ -19,7 +19,6 @@ using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json.Linq;
 using Point = System.Windows.Point;
 
-
 namespace ExtremLink_Client.Classes
 {
     public class Client
@@ -408,7 +407,6 @@ namespace ExtremLink_Client.Classes
                 this.udpSocket.SendTo(packet, this.serverEndPoint);
             }
         }
-
-
+        
     }
 }

@@ -25,6 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Net.NetworkInformation;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace ExtremLink_Server.Classes
 {
@@ -428,8 +429,6 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-
-
 
 
         // SQL database queries functions

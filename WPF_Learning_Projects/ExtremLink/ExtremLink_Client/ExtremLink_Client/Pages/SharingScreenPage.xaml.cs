@@ -53,11 +53,10 @@ namespace ExtremLink_Client.Pages
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
             this.sharingScreenThread.Start();
 
-            // It will be started when the server start ask for sharing screen
+            // These will be started when the server start ask for sharing screen
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
 
             this.mouseControllingThead = new Thread(this.StartMouseControl);
-            this.mouseControllingThead.Start();
             
         }
         // Frames handling:
@@ -70,6 +69,7 @@ namespace ExtremLink_Client.Pages
                     this.isStreaming = true;
                     Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
                     this.localSharingScreenThread.Start();
+                    // this.mouseControllingThead.Start();
                 }
                 Thread.Sleep(1000);
             }
@@ -132,6 +132,18 @@ namespace ExtremLink_Client.Pages
 
         private const uint SRCCOPY = 0x00CC0020;
         private System.Windows.Controls.Image img;
+
+        // Import GetSystemMetrics from user32.dll
+        [DllImport("user32.dll")]
+        private static extern int GetSystemMetrics(int nIndex);
+
+        // Constants for virtual screen metrics
+        private const int SM_CXVIRTUALSCREEN = 78;  // Virtual screen width
+        private const int SM_CYVIRTUALSCREEN = 79;  // Virtual screen height
+        private const int SM_XVIRTUALSCREEN = 76;   // Virtual screen left
+        private const int SM_YVIRTUALSCREEN = 77;   // Virtual screen top
+
+
         public RenderTargetBitmap CaptureScreen() 
         {
             if (!Dispatcher.CheckAccess())
@@ -145,10 +157,17 @@ namespace ExtremLink_Client.Pages
 
             try
             {
-                int screenWidth = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
-                int screenHeight = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+                int screenWidth = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+                int screenHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+                int screenLeft = GetSystemMetrics(SM_XVIRTUALSCREEN);
+                int screenTop = GetSystemMetrics(SM_YVIRTUALSCREEN);
+                /*
+                int screenWidth = (int)System.Windows.SystemParameters.PrimaryScreenWidth * 2;
+                int screenHeight = (int)System.Windows.SystemParameters.PrimaryScreenHeight * 2;
                 int screenLeft = (int)System.Windows.SystemParameters.VirtualScreenLeft;
                 int screenTop = (int)System.Windows.SystemParameters.VirtualScreenTop;
+                */
+
 
                 IntPtr compatibleDC = CreateCompatibleDC(desktopDC);
                 if (compatibleDC == IntPtr.Zero)
