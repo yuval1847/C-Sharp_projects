@@ -29,6 +29,7 @@ namespace ExtremLink_Server.Pages
         private Server server;
         private bool isReceivingFrames;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
+        private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
         public ControlPage(ContentControl contentMain, Server server)
         {
@@ -119,6 +120,15 @@ namespace ExtremLink_Server.Pages
             }
         }
 
+
+        // Keyboard functions:
+        private void FrameImg_KeyboardKeyDown(object sender, KeyEventArgs e)
+        {
+            // Input: Nothing.
+            // Output: The function getting keyboard key and sending it to the client
+            Key pressedKey = e.Key;
+            this.customKeyboard.SendKeyboardCommands(this.server, pressedKey);
+        }
 
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

@@ -29,8 +29,16 @@ namespace ExtremLink_Server.Classes
         public Key CurrentKey
         {
             get { return this.currentKey; }
+            set { this.currentKey = value; }
         }
 
+        // A KeyboardCommands enum parameter type which indicate the current status of the keyboard.
+        private KeyboardCommands currentKeyboardCommand;
+        public KeyboardCommands CurrentKeyboardCommand
+        {
+            get { return this.currentKeyboardCommand; }
+            set { this.currentKeyboardCommand = value; }
+        }
 
         // Event for key press & release
         public event Action<Key> KeyPressed;
@@ -76,16 +84,8 @@ namespace ExtremLink_Server.Classes
         // Constractor
         private CustomKeyboard()
         {
-
-        }
-
-        
-        // Changing current command function
-        private void ChangeCurrentKey(Key key)
-        {
-            // Input: A key in a type of Key enum as a parameter .
-            // Ouput: The function changes the current key to the given key.
-            this.currentKey = key;
+            this.currentKey = Key.None;
+            this.currentKeyboardCommand = KeyboardCommands.CommandLess;
         }
 
 
@@ -108,21 +108,18 @@ namespace ExtremLink_Server.Classes
 
 
         // Handling mouse commands
-        private void SendKeyboardCommands(Server server, KeyboardCommands keyboardCommand)
+        public void SendKeyboardCommands(Server server, Key key)
         {
-            // Input: Nothing.
+            // Input: A server object and a key value of the enum Key.
             // Output: The function send the commands to the client.
-            string commandQuery = "";
-            switch (keyboardCommand)
-            {
-                case KeyboardCommands.KeyPress:
-                    commandQuery = this.GenerateKeyPressQuery();
-                    break;
-            }
-            if (keyboardCommand != KeyboardCommands.CommandLess)
+            this.currentKey = key;
+            string commandQuery = this.GenerateKeyPressQuery();
+            if (this.currentKeyboardCommand != KeyboardCommands.CommandLess)
             {
                 this.SendCommandQueryToClient(server, commandQuery);
             }
+            this.currentKeyboardCommand = KeyboardCommands.CommandLess;
+            this.currentKey = Key.None;
         }
 
     }

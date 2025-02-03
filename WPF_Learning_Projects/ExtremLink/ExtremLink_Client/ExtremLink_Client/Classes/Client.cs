@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json.Linq;
 using Point = System.Windows.Point;
+using System.Windows.Input;
 
 namespace ExtremLink_Client.Classes
 {
@@ -33,6 +34,7 @@ namespace ExtremLink_Client.Classes
         private int mouseX;
         private int mouseY;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
+        private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
         public Socket UDPSocket
         {
             get { return this.udpSocket; }
@@ -127,11 +129,15 @@ namespace ExtremLink_Client.Classes
                         case "%":
                             this.HandleMouseInput(data);
                             break;
+                        case "^":
+                            this.HandleKeyboardInput(data);
+                            break;
                     }
                 }
             }
         }
 
+        // Handle Input Commands:
         public void HandleMouseInput(string message)
         {
             // Input: string object which represent the message that was given from the server.
@@ -160,6 +166,25 @@ namespace ExtremLink_Client.Classes
                     break;
                 case "mouseRightPress":
                     this.customMouse.CurrentCommand = MouseCommands.RightPress;
+                    break;
+            }
+        }
+        public void HandleKeyboardInput(string message)
+        {
+            // Input: string which represent a keyboard commands query message.
+            // Ouput: The function update the CustomKeyboard object according to the given message's parameters.
+
+            // Reading the data in json format
+            dynamic data = JsonConvert.DeserializeObject(message);
+
+            // Casting the data dynamic object to JObject
+            JObject jsonData = (JObject)data;
+
+            switch ((string)data.type)
+            {
+                case "keyPress":
+                    this.customKeyboard.CurrentKeyboardCommand = KeyboardCommands.KeyPress;
+                    this.customKeyboard.CurrentKey = (Key)Enum.Parse(typeof(Key), data.PressedKey);
                     break;
             }
         }

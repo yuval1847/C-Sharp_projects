@@ -33,9 +33,11 @@ namespace ExtremLink_Client.Pages
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
         private Thread mouseControllingThead;
+        private Thread keyboardControllingThead;
         private bool isStreaming;
         private const string defaultPngFileOfFrame = "tempFrame.png";
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
+        private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
         public ContentControl ContentMain
         {
@@ -69,7 +71,7 @@ namespace ExtremLink_Client.Pages
                     this.isStreaming = true;
                     Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
                     this.localSharingScreenThread.Start();
-                    // this.mouseControllingThead.Start();
+                    this.mouseControllingThead.Start();
                 }
                 Thread.Sleep(1000);
             }
@@ -218,7 +220,7 @@ namespace ExtremLink_Client.Pages
         // Mouse handling:
         private void StartMouseControl()
         {
-            // Input: nothing
+            // Input: Nothing
             // Ouput: The function starting the mouse control over the host itself.
             while (!this.isStreaming)
             {
@@ -229,6 +231,22 @@ namespace ExtremLink_Client.Pages
             {
                 this.customMouse.ExecuteCurrentMouseCommand();
                 Thread.Sleep(50);
+            }
+        }
+
+        private void StartKeyboardControl()
+        {
+            // Input: Nothing.
+            // Output: The function starting the keyboard control over the host itself.
+            while (!this.isStreaming)
+            {
+                Thread.Sleep(1000);
+            }
+            Thread.Sleep(1000);
+            while (this.isStreaming)
+            {
+                this.customKeyboard.ExecuteCurrentKeyboardCommand();
+                Thread.Sleep(20);
             }
         }
     }

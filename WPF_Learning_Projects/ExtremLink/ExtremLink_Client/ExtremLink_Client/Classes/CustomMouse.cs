@@ -80,6 +80,7 @@ namespace ExtremLink_Client.Classes
         private CustomMouse()
         {
             this.cursorsPos = new Point(0, 0);
+            this.currentCommand = MouseCommands.CommandLess;
         }
 
 
