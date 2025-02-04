@@ -57,9 +57,10 @@ namespace ExtremLink_Client.Pages
 
             // These will be started when the server start ask for sharing screen
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
-
             this.mouseControllingThead = new Thread(this.StartMouseControl);
-            
+            this.keyboardControllingThead = new Thread(this.StartKeyboardControl);
+
+
         }
         // Frames handling:
         private void StartSharingScreen()

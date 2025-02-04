@@ -25,6 +25,9 @@
     <Compile Update="Pages\OpeningPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\SessionsRecordsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomWidgets\CustomButton.xaml">
@@ -46,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\OpeningPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SessionsRecordsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
