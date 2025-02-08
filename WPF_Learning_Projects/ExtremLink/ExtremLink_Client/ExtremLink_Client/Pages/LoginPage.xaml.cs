@@ -28,6 +28,7 @@ namespace ExtremLink_Client.Pages
     {
         private ContentControl contentMain;
         private Client client;
+        private User currentUser = User.UserInstance;
 
         public ContentControl ContentMain
         {
@@ -57,6 +58,7 @@ namespace ExtremLink_Client.Pages
             Thread.Sleep(750);
             if (this.client.ServerRespond == "Exist")
             {
+                this.currentUser.UserName = usernameCustomTextBox.customTB.Text;
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
                 this.wrongLoginTextBlock.Text = "successfully connected!";
                 this.wrongLoginTextBlock.Foreground = Brushes.Green;
@@ -79,6 +81,5 @@ namespace ExtremLink_Client.Pages
 
         }
 
-       
     }
 }

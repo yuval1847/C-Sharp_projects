@@ -12,6 +12,7 @@
     <None Remove="Images\ExtremLink_Icon.png" />
     <None Remove="Images\lock_icon.png" />
     <None Remove="Images\user_icon.png" />
+    <None Remove="Images\video_icon_1.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
   <ItemGroup>
     <Resource Include="Images\ExtremLink_Icon.png" />
     <Resource Include="Images\user_icon.png" />
+    <Resource Include="Images\video_icon_1.png" />
   </ItemGroup>
 
 </Project>

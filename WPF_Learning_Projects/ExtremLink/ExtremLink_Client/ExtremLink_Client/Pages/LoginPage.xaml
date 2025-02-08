@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="/Images/user_icon.png" HorizontalAlignment="Left" Width="25" Margin="15,30,0,31" Visibility="Visible" RenderTransformOrigin="0.794,0.563"/>
+                <Image Source="/Images/user_icon_black.png" HorizontalAlignment="Left" Width="25" Margin="15,30,0,31" Visibility="Visible" RenderTransformOrigin="0.794,0.563"/>
                 <customWidgets:CustomTextBox Grid.Column="1" x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
             </Grid>
 

@@ -14,7 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Image Grid.Column="0" Source="/Images/user_icon.png"/>
+        <Image Grid.Column="0" Source="/Images/user_icon_black.png"/>
         <TextBlock x:Name="usernameTextBlock" Grid.Column="1" Text="username" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

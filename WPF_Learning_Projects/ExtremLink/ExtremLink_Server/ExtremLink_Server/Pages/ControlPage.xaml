@@ -36,7 +36,7 @@
                 <TextBlock x:Name="clientIpTextBlock" Text="Client's IP:" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-442,10,0"/>
 
                 <!-- Play and Pause button -->
-                <customWidgets:CustomButton x:Name="playAndPauseBtn" Width="40" Height="40" Background="#00cec9"
+                <customWidgets:CustomButton x:Name="playAndPauseBtn" Width="40" Height="40" Background="#00cec9" Placeholder="▶ Play"
                                             Margin="0,5,0,0" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"
                                             CustomClick="StartStreamBtnClick">
                     <!-- <Image Source="/Images/play_icon.png" /> -->
