@@ -23,15 +23,27 @@ namespace ExtremLink_Client.Pages
     public partial class SessionsRecordsPage : UserControl
     {
         private User currentUser = User.UserInstance;
+        private ContentControl contentMain;
+        private Client client;
 
 
-        public SessionsRecordsPage()
+        public SessionsRecordsPage(ContentControl contentMain, Client client)
         {
+            this.contentMain = contentMain;
+            this.client = client;
             this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
             InitializeComponent();
         }
 
+        private IList<>
 
+
+        private void LoadRecords()
+        {
+            // Input: Nothing.
+            // Output: The function load over the SessionRecordsList the records from the sessions records database.
+
+        }
 
     }
 }

@@ -31,6 +31,7 @@ namespace ExtremLink_Server.Pages
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
+        // Constractor:
         public ControlPage(ContentControl contentMain, Server server)
         {
             this.contentMain = contentMain;
@@ -40,26 +41,42 @@ namespace ExtremLink_Server.Pages
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
         }
 
-        // Frames functions:
+
+        // Frames buttons functions:
+        private void UpdateBasicFramesButtonStatus(bool startBtnState, bool stopBtnState, bool pauseBtnState)
+        {
+            // Input: 3 bool values which represent the status of each button.
+            // Output: The function enable and disable each button according to the given values.
+            startBtn.IsEnabled = startBtnState;
+            stopBtn.IsEnabled = stopBtnState;
+            pauseBtn.IsEnabled = pauseBtnState;
+        }
+        
         private void StartStreamBtnClick(object sender, RoutedEventArgs e)
         {
-            if (!isReceivingFrames)
-            {
-                isReceivingFrames = true;
-                this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
-
-                // frameUpdateThread = new Thread(UpdateFrame);
-                // frameUpdateThread.Start();
-                UpdateFrame();
-                playAndPauseBtn.Content = "Stop";
-            }
-            else
-            {
-                isReceivingFrames = false;
-                this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
-                playAndPauseBtn.Content = "Start";
-            }
+            this.UpdateBasicFramesButtonStatus(false, true, true);
+            isReceivingFrames = true;
+            this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
+            UpdateFrame();
         }
+
+        private void StopStreamBtnClick(object sender, RoutedEventArgs e)
+        {
+            this.UpdateBasicFramesButtonStatus(true, false, false);
+            isReceivingFrames = false;
+            this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
+        }
+
+        private void PauseStreamBtnClick(object sender, RoutedEventArgs e)
+        {
+            this.UpdateBasicFramesButtonStatus(true, true, false);
+            isReceivingFrames = false;
+            this.server.SendMessage(this.server.ClientTcpSocket, "&", "PauseSendFrames");
+        }
+
+
+
+        // Frames functions:
         private BitmapImage LoadFrameFromFile()
         {
             lock (this.server.fileLock)

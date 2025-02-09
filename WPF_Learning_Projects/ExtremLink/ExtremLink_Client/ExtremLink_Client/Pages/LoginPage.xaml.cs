@@ -42,7 +42,6 @@ namespace ExtremLink_Client.Pages
             this.ContentMain = contentMain;
             this.client = client;
             InitializeComponent();
-
         }
         
         private void LoginButton_Click(object sender, RoutedEventArgs e)

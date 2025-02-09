@@ -136,6 +136,23 @@ namespace ExtremLink_Client.Classes
                 }
             }
         }
+        private void HandleFramesCommands(string data)
+        {
+            // Input: a string which represent the given frames command from the server.
+            // Output: The function handles the frames commands.
+            switch (data)
+            {
+                case "StartSendFrames":
+                    this.serverRespond = "StartSendFrames";
+                    break;
+                case "StopSendFrames":
+                    this.serverRespond = "StopSendFrames";
+                    break;
+                case "PauseSendFrames":
+                    this.serverRespond = "PauseSendFrames";
+                    break;
+            }
+        }
 
         // Handle Input Commands:
         public void HandleMouseInput(string message)

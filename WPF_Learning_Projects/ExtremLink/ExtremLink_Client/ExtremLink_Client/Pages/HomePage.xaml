@@ -4,39 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtremLink_Client.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Client.CustomWidgets" 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
-        <!-- Background Gradient -->
+        <!-- Background Gradient with Cyberpunk Colors -->
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#1B1464" Offset="0"/>
-                <GradientStop Color="#8E44AD" Offset="0.5"/>
-                <GradientStop Color="#D980FA" Offset="1"/>
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
-        <!-- Decorative Shapes -->
-        <Canvas>
-            <Ellipse Width="200" Height="200" Fill="#ffffff20" Opacity="0.2" Canvas.Left="60" Canvas.Top="60"/>
-            <Ellipse Width="140" Height="140" Fill="#ffffff15" Opacity="0.3" Canvas.Right="90" Canvas.Bottom="110"/>
-            <Ellipse Width="100" Height="100" Fill="#FFB6C120" Opacity="0.4" Canvas.Left="500" Canvas.Top="300"/>
-            <Polyline Points="0,0 50,50 100,0" Stroke="#ffffff40" StrokeThickness="2" Canvas.Left="280" Canvas.Top="80"/>
-            <Rectangle Width="80" Height="80" Fill="#A29BFE40" Canvas.Left="600" Canvas.Top="150"/>
-            <Path Data="M 20,60 Q 60,20 100,60 T 180,60" Stroke="#FFFA65" StrokeThickness="2" Canvas.Left="400" Canvas.Top="450"/>
-        </Canvas>
+        <!-- Cyberpunk-Style Title -->
+        <TextBlock Text="WELCOME BACK," FontSize="50" Foreground="#00CEC9" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"
+                   FontFamily="Consolas"/>
 
-        <!-- Title -->
-        <TextBlock Text="Welcome Back" FontSize="48" Foreground="White" FontWeight="Bold"
-                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0"/>
+        <!-- Subtitle with Glow -->
+        <TextBlock Text="ExtremLink - Choose, Connect, Control!" FontSize="20" Foreground="#00CECF"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0"
+                   FontFamily="Consolas" Opacity="1"/>
 
-        <!-- Subtitle -->
-        <TextBlock Text="Connect, Control, and Collaborate Effortlessly" FontSize="18" Foreground="#DDDDDD"
-                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,120,0,0"/>
-
-        <!-- Action Button -->
-        <Button Content="Start Now" Width="200" Height="50" Background="#6c5ce7" Foreground="White"
-                FontSize="20" BorderThickness="0" Cursor="Hand"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!-- Action Button with Cyberpunk Glow -->
+        <Button Content="Start Now" Width="220" Height="55" Background="#034045" Foreground="White"
+                FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas">
+            <Button.Effect>
+                <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <Button Content="i" Width="220" Height="55" Background="#034045" Foreground="White"
+        FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+        HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,377,0,0">
+            <Button.Effect>
+                <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
     </Grid>
 </UserControl>
