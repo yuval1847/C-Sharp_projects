@@ -35,8 +35,7 @@ namespace ExtremLink_Client.Classes
             }
         }
 
-
-        public User()
+        private User()
         {
             this.username = "";
         }
