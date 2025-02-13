@@ -224,3 +224,5 @@ C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\Ext
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SessionsRecordsPage.g.cs
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\SessionsRecordsPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\HomePage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Client\ExtremLink_Client\obj\Debug\net6.0-windows\Pages\WatchingVideoPage.g.cs

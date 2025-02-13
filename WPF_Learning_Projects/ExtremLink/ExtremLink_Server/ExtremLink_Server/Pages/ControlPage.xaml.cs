@@ -31,6 +31,7 @@ namespace ExtremLink_Server.Pages
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
+
         // Constractor:
         public ControlPage(ContentControl contentMain, Server server)
         {
@@ -52,28 +53,34 @@ namespace ExtremLink_Server.Pages
             pauseBtn.IsEnabled = pauseBtnState;
         }
         
+        // Clicking the buttons functions:
         private void StartStreamBtnClick(object sender, RoutedEventArgs e)
         {
-            this.UpdateBasicFramesButtonStatus(false, true, true);
+            // Input: Nothing.
+            // Output: The function sends the client the command to start the sharescreen.
             isReceivingFrames = true;
+            this.UpdateBasicFramesButtonStatus(false, true, true);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
             UpdateFrame();
         }
 
         private void StopStreamBtnClick(object sender, RoutedEventArgs e)
         {
-            this.UpdateBasicFramesButtonStatus(true, false, false);
+            // Input: Nothing.
+            // Output: The function sends the client the command to stop the sharescreen.
             isReceivingFrames = false;
+            this.UpdateBasicFramesButtonStatus(true, false, false);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
         }
 
         private void PauseStreamBtnClick(object sender, RoutedEventArgs e)
         {
-            this.UpdateBasicFramesButtonStatus(true, true, false);
+            // Input: Nothing.
+            // Output: The function sends the client the command to pause the sharescreen.
             isReceivingFrames = false;
+            this.UpdateBasicFramesButtonStatus(true, true, false);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "PauseSendFrames");
         }
-
 
 
         // Frames functions:

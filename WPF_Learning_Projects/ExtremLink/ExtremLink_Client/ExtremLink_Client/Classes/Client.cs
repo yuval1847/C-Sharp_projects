@@ -118,13 +118,10 @@ namespace ExtremLink_Client.Classes
                     switch (message[0])
                     {
                         case "!":
-                            if (data == "Exist") { this.serverRespond = "Exist"; }
-                            else if (data == "NotExist") { this.serverRespond = "NotExist"; }
-                            else if (data == "SuccessfullyAdded") { this.serverRespond = "SuccessfullyAdded"; }
-                            else if (data == "NotAdded") { this.serverRespond = "SuccessfullyAdded"; }
+                            this.HandleUsersManagmentCommands(data);
                             break;
                         case "&":
-                            if (data == "StartSendFrames") { this.serverRespond = "StartSendFrames"; }
+                            this.HandleFramesCommands(data);
                             break;
                         case "%":
                             this.HandleMouseInput(data);
@@ -136,10 +133,34 @@ namespace ExtremLink_Client.Classes
                 }
             }
         }
+
+        // Handle with user managment commands:
+        private void HandleUsersManagmentCommands(string data)
+        {
+            // Input: a string which represent a given user managments command from the server.
+            // Output: The function handle with the commands.
+            switch (data)
+            {
+                case "Exist":
+                    this.serverRespond = "Exist";
+                    break;
+                case "NotExist":
+                    this.serverRespond = "NotExist";
+                    break;
+                case "SuccessfullyAdded":
+                    this.serverRespond = "SuccessfullyAdded";
+                    break;
+                case "NotAdded":
+                    this.serverRespond = "NotAdded";
+                    break;
+            }
+        }
+        
+        // Handle with frames commands:
         private void HandleFramesCommands(string data)
         {
-            // Input: a string which represent the given frames command from the server.
-            // Output: The function handles the frames commands.
+            // Input: a string which represent a given frames command from the server.
+            // Output: The function handles with the frames commands.
             switch (data)
             {
                 case "StartSendFrames":
@@ -206,6 +227,8 @@ namespace ExtremLink_Client.Classes
             }
         }
 
+
+
         // Compress and decompress functions
         // Regular strings:
         public byte[] Compress(string data)
@@ -265,7 +288,7 @@ namespace ExtremLink_Client.Classes
             }
         }*/
 
-        // The send and get message functions
+        // The send and get message functions:
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
         {
             // The function gets a socket and 2 strings: 'typeOfMessage' which represents the type of the message
@@ -365,7 +388,7 @@ namespace ExtremLink_Client.Classes
         }
 
 
-        // Sending frame functions
+        // Sending frame functions:
         private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
         {
             // The function gets a RenderTargetBitmap object.

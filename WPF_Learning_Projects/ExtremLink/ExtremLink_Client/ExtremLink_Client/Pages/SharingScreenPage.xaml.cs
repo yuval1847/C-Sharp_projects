@@ -30,6 +30,7 @@ namespace ExtremLink_Client.Pages
     {
         private ContentControl contentMain;
         private Client client;
+        private Thread serverFramesResponds;
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
         private Thread mouseControllingThead;
@@ -50,34 +51,79 @@ namespace ExtremLink_Client.Pages
             this.contentMain = contentMain;
             this.client = client;
             this.isStreaming = false;
-            InitializeComponent();
 
+            this.serverFramesResponds = new Thread(this.HandleServerRespond);
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
-            this.sharingScreenThread.Start();
-
-            // These will be started when the server start ask for sharing screen
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
             this.mouseControllingThead = new Thread(this.StartMouseControl);
             this.keyboardControllingThead = new Thread(this.StartKeyboardControl);
 
-
+            this.serverFramesResponds.Start();
+            InitializeComponent();
         }
+
         // Frames handling:
+        // Controlling control threads.
+        private void StartGettingControlled()
+        {
+            // Input: Nothing.
+            // Output: The function starts all the threads of the controlling.
+            this.sharingScreenThread.Start();
+            this.localSharingScreenThread.Start();
+            this.mouseControllingThead.Start();
+            this.keyboardControllingThead.Start();
+        }
+        private void StopGettingControlled()
+        {
+            // Input: Nothing.
+            // Output: The function kill all the threads of the controlling.
+            this.sharingScreenThread.Join();
+            this.localSharingScreenThread.Join();
+            this.mouseControllingThead.Join();
+            this.keyboardControllingThead.Join();
+        }
+        
+        // Changing sharescreen TextBlock text.
+        private void ChangeSharingScreenTitle(string newText) {
+            // Input: a string which contains a text.
+            // Output: The function changes the sharing screen title according to the given string using the UI thread.
+            Dispatcher.Invoke(() => sharingScreenTitle.Text = newText);
+        }
+
+        // Handle server responds.
+        private void HandleServerRespond()
+        {
+            // Input: Nothing.
+            // Output: The function execute the frame functionality according to the client's server respond.
+            switch (this.client.ServerRespond)
+            {
+                case "StartSendFrames":
+                    this.isStreaming = true;
+                    this.ChangeSharingScreenTitle("Sharing Screen Now");
+                    this.StartGettingControlled();
+                    break;
+
+                case "StopSendFrames":
+                    this.isStreaming = false;
+                    this.StopGettingControlled();
+                    this.ChangeSharingScreenTitle("Sharing Screen Stoped");
+                    // Note: Here in this case change the page to the home page.
+                    break;
+
+                case "PauseSendFrames":
+                    this.isStreaming = false;
+                    this.ChangeSharingScreenTitle("Sharing Screen Puased");
+                    this.StopGettingControlled();
+                    break;
+            }
+        }
+
+
         private void StartSharingScreen()
         {
-            while (!this.isStreaming)
-            {
-                if (this.client.ServerRespond == "StartSendFrames")
-                {
-                    this.isStreaming = true;
-                    Dispatcher.Invoke(() => sharingScreenTitle.Text = "Sharing Screen Now");
-                    this.localSharingScreenThread.Start();
-                    this.mouseControllingThead.Start();
-                }
-                Thread.Sleep(1000);
-            }
-
-            while (this.isStreaming)
+            // Input: Nothing.
+            // Output: The function sending the frames of the shared screen to the server.
+            while (true)
             {
                 try
                 {
@@ -94,24 +140,31 @@ namespace ExtremLink_Client.Pages
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error capturing screen: {ex.Message}");
-                    this.isStreaming = false;
                 }
             }
         }
         private void LocalSharingScreen()
         {
-            while (this.isStreaming)
+            // Input: Nothing.
+            // Output: The function show
+            while (true)
             {
-                var screen = CaptureScreen();
-                Dispatcher.Invoke(() => frameImg.Source = screen);
-                // Around 60 FPS
-                Thread.Sleep(16);
+                try
+                {
+                    var screen = CaptureScreen();
+                    Dispatcher.Invoke(() => frameImg.Source = screen);
+                    // Around 60 FPS
+                    Thread.Sleep(16);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error local sharing screen: {ex.Message}");
+                }
             }
         }
 
 
         // Screenshot:
-
         [DllImport("gdi32.dll", SetLastError = true)]
         private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 
@@ -146,7 +199,7 @@ namespace ExtremLink_Client.Pages
         private const int SM_XVIRTUALSCREEN = 76;   // Virtual screen left
         private const int SM_YVIRTUALSCREEN = 77;   // Virtual screen top
 
-
+        // Taking screenshots:
         public RenderTargetBitmap CaptureScreen() 
         {
             if (!Dispatcher.CheckAccess())
@@ -223,28 +276,19 @@ namespace ExtremLink_Client.Pages
         {
             // Input: Nothing
             // Ouput: The function starting the mouse control over the host itself.
-            while (!this.isStreaming)
-            {
-                Thread.Sleep(1000);
-            }
-            Thread.Sleep(1000);
-            while (this.isStreaming)
+            while (true)
             {
                 this.customMouse.ExecuteCurrentMouseCommand();
                 Thread.Sleep(50);
             }
         }
 
+        // Keyboard handling:
         private void StartKeyboardControl()
         {
             // Input: Nothing.
             // Output: The function starting the keyboard control over the host itself.
-            while (!this.isStreaming)
-            {
-                Thread.Sleep(1000);
-            }
-            Thread.Sleep(1000);
-            while (this.isStreaming)
+            while (true)
             {
                 this.customKeyboard.ExecuteCurrentKeyboardCommand();
                 Thread.Sleep(20);
