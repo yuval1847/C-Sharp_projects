@@ -61,6 +61,10 @@
         <!-- Back to home page button -->
         <Button x:Name="BackHomeBtn" Content="🏠 Back Home" Width="220" Height="55" Background="#034045" Foreground="White"
                 FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,25"/>
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,25" Click="BackHomeBtn_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+        </Button>
     </Grid>
 </UserControl>

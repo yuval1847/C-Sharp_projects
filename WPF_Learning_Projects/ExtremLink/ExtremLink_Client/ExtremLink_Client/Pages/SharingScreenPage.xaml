@@ -8,15 +8,20 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#00cec9" Offset="0"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
+        
         <StackPanel>
-            <TextBlock x:Name="sharingScreenTitle" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="70" FontWeight="Bold" Text="Not Sharing Screen" Margin="0,100,0,0"/>
+            <TextBlock x:Name="sharingScreenTitle" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Foreground = "#00CEC9" FontSize="70" FontWeight="Bold" Text="Not Sharing Screen" Margin="0,100,0,0"/>
 
-            <Label Content="Local Share Screen:" HorizontalAlignment="Center" FontSize="20" Margin="0,50,0,0"/>
-            <Border BorderBrush="Black" BorderThickness="1"  Width="400" Height="225">
+            <Label Content="Local Share Screen:" HorizontalAlignment="Center" FontSize="20" Margin="0,50,0,0"
+                   Foreground="#00CEC9"/>
+            <Border BorderBrush="#00CEC9" BorderThickness="1"  Width="400" Height="225">
                 <Image x:Name="frameImg" Width="400" Height="225" />
             </Border>
         </StackPanel>

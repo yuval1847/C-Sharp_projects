@@ -61,7 +61,7 @@ namespace ExtremLink_Client.CustomWidgets {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client;V1.0.0.0;component/customwidgets/usericon.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client;component/customwidgets/usericon.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\CustomWidgets\UserIcon.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

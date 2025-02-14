@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtremLink_Client.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,26 @@ namespace ExtremLink_Client.Pages
     /// </summary>
     public partial class InstructionsPage : UserControl
     {
-        public InstructionsPage()
+        // Attirbutes:
+        private ContentControl contentMain;
+        private Client client;
+
+
+        // Constractor:
+        public InstructionsPage(ContentControl contentMain, Client client)
         {
+            this.contentMain = contentMain;
+            this.client = client;
             InitializeComponent();
+        }
+
+
+        // The back home button click function:
+        private void BackHomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Input: Nothing.
+            // Output: The function changes the current page to the home page.
+            this.contentMain.Content = new HomePage(this.contentMain, this.client);
         }
     }
 }

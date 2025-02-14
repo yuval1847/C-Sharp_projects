@@ -53,7 +53,7 @@ namespace ExtremLink_Client.Pages
         {
             // Input: Nothing.
             // Output: The function changes the current page from the home page to the instructions page.
-            this.contentMain.Content = new InstructionsPage();
+            this.contentMain.Content = new InstructionsPage(this.contentMain, this.client);
         }
     }
 }

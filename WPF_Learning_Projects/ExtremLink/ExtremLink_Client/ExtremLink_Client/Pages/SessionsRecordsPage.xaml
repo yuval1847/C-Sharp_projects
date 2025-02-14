@@ -7,12 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
 
-    <Grid Background="#00cec9">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        
         <StackPanel Margin="20">
 
             <!-- Title Section -->
             <Grid>
-                <TextBlock Text="Sessions Records" FontSize="50" FontWeight="Bold" Foreground="#031019" 
+                <TextBlock Text="Sessions Records" FontSize="50" FontWeight="Bold" Foreground="#00CEC9" 
                            HorizontalAlignment="Center" Margin="0,5,0,0"/>
                 <Image Source="/Images/video_icon_1.png" Height="50" Width="55" Margin="0,13,114,9" HorizontalAlignment="Right"/>
             </Grid>
@@ -81,7 +89,7 @@
         </StackPanel>
 
         <!-- Version Info -->
-        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#031019" VerticalAlignment="Bottom" 
+        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#00CEC9" VerticalAlignment="Bottom" 
                    HorizontalAlignment="Right" Margin="0,0,20,10"/>
     </Grid>
 </UserControl>
