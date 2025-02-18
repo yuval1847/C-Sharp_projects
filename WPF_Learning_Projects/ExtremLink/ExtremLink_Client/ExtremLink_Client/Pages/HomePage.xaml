@@ -18,7 +18,7 @@
         </Grid.Background>
 
         <!-- Cyberpunk-Style Title -->
-        <TextBlock x:Name = "MainTitleTextBlock" Text="WELCOME BACK," FontSize="50" Foreground="#00CEC9" FontWeight="Bold"
+        <TextBlock Text="WELCOME BACK," FontSize="50" Foreground="#00CEC9" FontWeight="Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"
                    FontFamily="Consolas"/>
 
@@ -28,18 +28,16 @@
                    FontFamily="Consolas" Opacity="1"/>
 
         <!-- Action Button with Cyberpunk Glow -->
-        <Button x:Name="StartNowBtn" Content="Start Now" Width="220" Height="55" Background="#034045" Foreground="White"
+        <Button Content="Start Now" Width="220" Height="55" Background="#034045" Foreground="White"
                 FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas"
-                Click="StartNowBtn_Click">
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas">
             <Button.Effect>
                 <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
-        <Button x:Name="InstructionsBtn" Content="Instructions" Width="220" Height="55" Background="#034045" Foreground="White"
-                FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,377,0,0"
-                Click="InstructionsBtn_Click">
+        <Button Content="i" Width="220" Height="55" Background="#034045" Foreground="White"
+        FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+        HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,377,0,0">
             <Button.Effect>
                 <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
             </Button.Effect>

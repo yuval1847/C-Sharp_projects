@@ -31,6 +31,12 @@ namespace ExtremLink_Server.Pages
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
+        // A thread which operate the recording
+        private Thread recordingThread;
+
+        // A bool parameter which state the status of the recording(if the program is in recording mode or not).
+        private bool isRecording;
+
 
         // Constractor:
         public ControlPage(ContentControl contentMain, Server server)
@@ -38,19 +44,22 @@ namespace ExtremLink_Server.Pages
             this.contentMain = contentMain;
             this.server = server;
             this.isReceivingFrames = false;
+            this.isRecording = false;
+            this.recordingThread = new Thread(this.RecordSession);
             InitializeComponent();
             this.clientIpTextBlock.Text = $"Client's IP: {this.server.ClientIpAddress}";
         }
 
 
         // Frames buttons functions:
-        private void UpdateBasicFramesButtonStatus(bool startBtnState, bool stopBtnState, bool pauseBtnState)
+        private void UpdateBasicFramesButtonStatus(bool startBtnState, bool stopBtnState, bool pauseBtnState, bool recordBtnState)
         {
             // Input: 3 bool values which represent the status of each button.
             // Output: The function enable and disable each button according to the given values.
             startBtn.IsEnabled = startBtnState;
             stopBtn.IsEnabled = stopBtnState;
             pauseBtn.IsEnabled = pauseBtnState;
+            recordBtn.IsEnabled = recordBtnState;
         }
         
         // Clicking the buttons functions:
@@ -58,30 +67,35 @@ namespace ExtremLink_Server.Pages
         {
             // Input: Nothing.
             // Output: The function sends the client the command to start the sharescreen.
-            isReceivingFrames = true;
-            this.UpdateBasicFramesButtonStatus(false, true, true);
+            this.isReceivingFrames = true;
+            this.UpdateBasicFramesButtonStatus(false, true, true, true);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
             UpdateFrame();
         }
-
         private void StopStreamBtnClick(object sender, RoutedEventArgs e)
         {
             // Input: Nothing.
             // Output: The function sends the client the command to stop the sharescreen.
-            isReceivingFrames = false;
-            this.UpdateBasicFramesButtonStatus(true, false, false);
+            this.isReceivingFrames = false;
+            this.UpdateBasicFramesButtonStatus(true, false, false, false);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
         }
-
         private void PauseStreamBtnClick(object sender, RoutedEventArgs e)
         {
             // Input: Nothing.
             // Output: The function sends the client the command to pause the sharescreen.
-            isReceivingFrames = false;
-            this.UpdateBasicFramesButtonStatus(true, true, false);
+            this.isReceivingFrames = false;
+            this.UpdateBasicFramesButtonStatus(true, true, false, false);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "PauseSendFrames");
         }
-
+        private void RecordBtnCustomClick(object sender, RoutedEventArgs e)
+        {
+            // Input: Nothing.
+            // Output: The function starts the recording of the sharing screen.
+            this.isRecording = true;
+            this.UpdateBasicFramesButtonStatus(false, true, true, false);
+            this.recordingThread.Start();
+        }
 
         // Frames functions:
         private BitmapImage LoadFrameFromFile()
@@ -155,9 +169,21 @@ namespace ExtremLink_Server.Pages
         }
 
 
+        // Recording functions:
+        // Note: You should kill the recording thread when the session stopped or paused
+        private void RecordSession()
+        {
+            // Input: The function gets nothing.
+            // Output: The function records the current controlling session.
+            
+        }
+
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             isReceivingFrames = false;
         }
+
+        
     }
 }

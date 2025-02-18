@@ -8,12 +8,12 @@
              d:DesignHeight="40" d:DesignWidth="200">
     <Grid Background="Transparent" MouseDown="Grid_MouseDown">
         <!-- Placeholder TextBlock -->
-        <TextBlock x:Name="contentHolder" Text="" Foreground="#00CEC9" FontSize="18" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <TextBlock x:Name="contentHolder" Text="" Foreground="#12303B" FontSize="18" VerticalAlignment="Center" Margin="5,0,0,0"/>
         <!-- Border containing TextBox -->
-        <Border BorderBrush="#00CEC9" BorderThickness="0,0,0,1">
-            <TextBox x:Name="customTB" Cursor="IBeam" CaretBrush="#00CEC9" BorderThickness="0" Background="Transparent" Foreground="#00CEC9" VerticalContentAlignment="Center" FontSize="18" TextChanged="customTB_TextChanged"/>
+        <Border BorderBrush="#031019" BorderThickness="0,0,0,1">
+            <TextBox x:Name="customTB" Cursor="IBeam" CaretBrush="#031019" BorderThickness="0" Background="Transparent" Foreground="#031019" VerticalContentAlignment="Center" FontSize="18" TextChanged="customTB_TextChanged"/>
         </Border>
         <!-- Erase Button -->
-        <Button x:Name="eraseBtn" Cursor="Hand" Width="40" BorderThickness="0" HorizontalAlignment="Right" Content="X" Background="Transparent" Foreground="#00CEC9" Click="eraseBtn_Click"/>
+        <Button x:Name="eraseBtn" Cursor="Hand" Width="40" BorderThickness="0" HorizontalAlignment="Right" Content="X" Background="Transparent" Foreground="#031019" Click="eraseBtn_Click"/>
     </Grid>
 </UserControl>

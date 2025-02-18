@@ -24,6 +24,7 @@
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -47,8 +48,13 @@
 
                 <!-- Stop button -->
                 <customWidgets:CustomButton x:Name="pauseBtn" Width="120" Height="40" Placeholder="⏸ Pause"
-                            Margin="10,0,0,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Margin="10,0,10,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                             CustomClick="PauseStreamBtnClick" IsEnabled="False"/>
+
+                <!-- Record button -->
+                <customWidgets:CustomButton x:Name="recordBtn" Width="120" Height="40" Placeholder="⚫ REC"
+                            Margin="10,0,10,0" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            CustomClick="RecordBtnCustomClick" IsEnabled="False"/>
 
             </Grid>
         </StackPanel>

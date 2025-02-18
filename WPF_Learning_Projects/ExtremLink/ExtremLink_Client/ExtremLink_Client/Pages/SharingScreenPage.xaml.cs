@@ -106,8 +106,8 @@ namespace ExtremLink_Client.Pages
                 case "StopSendFrames":
                     this.isStreaming = false;
                     this.StopGettingControlled();
-                    this.ChangeSharingScreenTitle("Sharing Screen Stopped");
-                    this.contentMain.Content = new HomePage(this.contentMain, this.client);
+                    this.ChangeSharingScreenTitle("Sharing Screen Stoped");
+                    // Note: Here in this case change the page to the home page.
                     break;
 
                 case "PauseSendFrames":
