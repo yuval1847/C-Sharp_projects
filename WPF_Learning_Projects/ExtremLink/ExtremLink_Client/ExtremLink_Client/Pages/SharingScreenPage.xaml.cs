@@ -95,6 +95,7 @@ namespace ExtremLink_Client.Pages
         {
             // Input: Nothing.
             // Output: The function execute the frame functionality according to the client's server respond.
+            // MessageBox.Show("A frames command was received!");
             switch (this.client.ServerRespond)
             {
                 case "StartSendFrames":

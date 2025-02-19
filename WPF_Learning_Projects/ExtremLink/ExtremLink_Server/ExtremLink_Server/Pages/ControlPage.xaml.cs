@@ -71,6 +71,7 @@ namespace ExtremLink_Server.Pages
             this.UpdateBasicFramesButtonStatus(false, true, true, true);
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StartSendFrames");
             UpdateFrame();
+            // MessageBox.Show("The start send frame command was sent!");
         }
         private void StopStreamBtnClick(object sender, RoutedEventArgs e)
         {
