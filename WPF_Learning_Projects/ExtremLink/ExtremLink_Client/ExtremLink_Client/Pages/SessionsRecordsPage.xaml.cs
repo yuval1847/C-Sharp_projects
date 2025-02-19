@@ -35,8 +35,6 @@ namespace ExtremLink_Client.Pages
             InitializeComponent();
         }
 
-        private IList<>
-
 
         private void LoadRecords()
         {

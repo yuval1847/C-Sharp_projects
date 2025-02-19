@@ -31,15 +31,15 @@
 
                 <!-- Play -->
                 <customWidgets:CustomButton Width="120" Height="45" Placeholder="▶ Play" 
-                                            CustomClick="" Margin="10" Grid.Column="0"/>
+                                             Margin="10" Grid.Column="0"/>
 
                 <!-- Pause -->
                 <customWidgets:CustomButton Width="120" Height="45" Placeholder="⏸ Pause" 
-                                            CustomClick="" Margin="10" Grid.Column="1"/>
+                                             Margin="10" Grid.Column="1"/>
 
                 <!-- Stop -->
                 <customWidgets:CustomButton Width="120" Height="45" Placeholder="⏹ Stop" 
-                                            CustomClick="" Margin="10" Grid.Column="2"/>
+                                             Margin="10" Grid.Column="2"/>
             </Grid>
         </StackPanel>
 

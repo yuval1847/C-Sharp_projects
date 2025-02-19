@@ -24,5 +24,10 @@ namespace ExtremLink_Server.Pages
         {
             InitializeComponent();
         }
+
+        private void SearchBtnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

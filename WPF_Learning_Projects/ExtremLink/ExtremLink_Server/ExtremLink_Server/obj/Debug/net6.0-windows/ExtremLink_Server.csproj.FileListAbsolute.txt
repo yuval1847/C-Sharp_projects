@@ -244,3 +244,11 @@ C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\Ext
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\ExtremLink_Server.pdb
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\ExtremLink_Server.genruntimeconfig.cache
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\ref\ExtremLink_Server.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\SessionsRecordsPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\FFmpeg.AutoGen.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\SkiaSharp.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\osx\native\libSkiaSharp.dylib
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-arm64\native\libSkiaSharp.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x64\native\libSkiaSharp.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x86\native\libSkiaSharp.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\SessionsRecordsPage.baml

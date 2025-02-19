@@ -33,7 +33,7 @@
                         <DatePicker x:Name="DatePicker" Grid.Column="3" Width="150" Margin="5"
                                     Background="#11232D" Foreground="#00cec9" BorderBrush="#008B8B"/>
 
-                        <Button Content="Search" Grid.Column="4" Width="100" Margin="10,0,0,0" Click="SearchButton_Click"
+                        <Button Content="Search" Grid.Column="4" Width="100" Margin="10,0,0,0" Click="SearchBtnClick"
                                 Background="#00cec9" Foreground="#031019" BorderBrush="#008B8B" FontWeight="Bold">
                             <Button.Style>
                                 <Style TargetType="Button">

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExtremLink_Client.Classes;
 
 namespace ExtremLink_Client.Pages
 {
@@ -20,8 +21,16 @@ namespace ExtremLink_Client.Pages
     /// </summary>
     public partial class HomePage : UserControl
     {
-        public HomePage()
+
+        // Attirbutes:
+        private ContentControl contentMain;
+        private Client client;
+
+
+        public HomePage(ContentControl contentMain, Client client)
         {
+            this.contentMain = contentMain;
+            this.client = client;
             InitializeComponent();
         }
     }
