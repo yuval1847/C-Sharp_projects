@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ExtremLink_Server.Pages
 {
     /// <summary>
@@ -176,7 +177,6 @@ namespace ExtremLink_Server.Pages
         {
             // Input: The function gets nothing.
             // Output: The function records the current controlling session.
-            
         }
 
 

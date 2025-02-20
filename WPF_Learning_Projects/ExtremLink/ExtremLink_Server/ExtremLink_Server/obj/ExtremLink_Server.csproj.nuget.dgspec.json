@@ -49,6 +49,22 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "MediaInfo.Wrapper": {
+              "target": "Package",
+              "version": "[21.9.3, )"
+            },
+            "OpenCvSharp4": {
+              "target": "Package",
+              "version": "[4.10.0.20241108, )"
+            },
+            "OpenCvSharp4.Extensions": {
+              "target": "Package",
+              "version": "[4.10.0.20241108, )"
+            },
+            "OpenCvSharp4.Windows": {
+              "target": "Package",
+              "version": "[4.10.0.20241108, )"
+            },
             "SkiaSharp": {
               "target": "Package",
               "version": "[3.116.1, )"

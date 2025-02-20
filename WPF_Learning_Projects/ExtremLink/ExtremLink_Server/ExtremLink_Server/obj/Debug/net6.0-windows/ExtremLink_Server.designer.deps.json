@@ -14,6 +14,20 @@
           }
         }
       },
+      "MediaInfo.Native/21.9.1": {},
+      "MediaInfo.Wrapper/21.9.3": {
+        "dependencies": {
+          "MediaInfo.Native": "21.9.1",
+          "System.Memory": "4.5.5",
+          "System.ValueTuple": "4.5.0"
+        },
+        "runtime": {
+          "lib/net45/MediaInfo.Wrapper.dll": {
+            "assemblyVersion": "21.9.3.0",
+            "fileVersion": "21.9.3.0"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.Win32.Registry/4.7.0": {
         "dependencies": {
@@ -39,6 +53,60 @@
             "assemblyVersion": "4.1.3.0",
             "fileVersion": "4.700.19.56404"
           }
+        }
+      },
+      "OpenCvSharp4/4.10.0.20241108": {
+        "dependencies": {
+          "System.Memory": "4.5.5",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/OpenCvSharp.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "OpenCvSharp4.Extensions/4.10.0.20241108": {
+        "dependencies": {
+          "OpenCvSharp4": "4.10.0.20241108",
+          "System.Drawing.Common": "9.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/OpenCvSharp.Extensions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "OpenCvSharp4.runtime.win/4.10.0.20241108": {
+        "runtimeTargets": {
+          "runtimes/win-x64/native/OpenCvSharpExtern.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/opencv_videoio_ffmpeg4100_64.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "2024.5.0.0"
+          },
+          "runtimes/win-x86/native/OpenCvSharpExtern.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/opencv_videoio_ffmpeg4100.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "2024.5.0.0"
+          }
+        }
+      },
+      "OpenCvSharp4.Windows/4.10.0.20241108": {
+        "dependencies": {
+          "OpenCvSharp4": "4.10.0.20241108",
+          "OpenCvSharp4.runtime.win": "4.10.0.20241108"
         }
       },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
@@ -150,6 +218,15 @@
           }
         }
       },
+      "System.Memory/4.5.5": {},
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+        "runtime": {
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
       "System.Security.AccessControl/4.7.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -191,7 +268,8 @@
             "fileVersion": "4.700.19.56404"
           }
         }
-      }
+      },
+      "System.ValueTuple/4.5.0": {}
     }
   },
   "libraries": {
@@ -201,6 +279,20 @@
       "sha512": "sha512-RzSgOmHWzEpYzA3zl2Ac3iOdkk1ZCDgJBlRjHBIlaXHJg9aWEmPCzo0qDgEESZDNA7RaD2g4xn7yrKvT1q0Paw==",
       "path": "ffmpeg.autogen/7.0.0",
       "hashPath": "ffmpeg.autogen.7.0.0.nupkg.sha512"
+    },
+    "MediaInfo.Native/21.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bBYJ9o91fqCknO4LJMnWu6H0eQMDgg9Yz1l9dbfSWEfS87Gkw5uYX4iJgyUPDhnjor101gnu3YXTRTv4c9vCzA==",
+      "path": "mediainfo.native/21.9.1",
+      "hashPath": "mediainfo.native.21.9.1.nupkg.sha512"
+    },
+    "MediaInfo.Wrapper/21.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AZlz+r/NcLf5hFYC8ygGGOD9u5qpln9jusLqbNvmxWACekozaXrqXZT7gA/HzytagwDPNCEQvkfMJHfiVtKeMQ==",
+      "path": "mediainfo.wrapper/21.9.3",
+      "hashPath": "mediainfo.wrapper.21.9.3.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",
@@ -215,6 +307,34 @@
       "sha512": "sha512-KSrRMb5vNi0CWSGG1++id2ZOs/1QhRqROt+qgbEAdQuGjGrFcl4AOl4/exGPUYz2wUnU42nvJqon1T3U0kPXLA==",
       "path": "microsoft.win32.registry/4.7.0",
       "hashPath": "microsoft.win32.registry.4.7.0.nupkg.sha512"
+    },
+    "OpenCvSharp4/4.10.0.20241108": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4Lw57NQzOaR0fi9et7GMWB1rpdGzGuNgXHXy45Gltvt8SizQLOGufUonNF9Z+9mo3dcwGC/mL4w5NBgJCqZdHQ==",
+      "path": "opencvsharp4/4.10.0.20241108",
+      "hashPath": "opencvsharp4.4.10.0.20241108.nupkg.sha512"
+    },
+    "OpenCvSharp4.Extensions/4.10.0.20241108": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-H7mnUi9K9CIW5D4Mj0ycxlWRWjyz6mQSdXRpN2HNVtg6vfbKEsaRflYjWDupOK47+hRDDxS2+G5Imzhb2Xk4Tw==",
+      "path": "opencvsharp4.extensions/4.10.0.20241108",
+      "hashPath": "opencvsharp4.extensions.4.10.0.20241108.nupkg.sha512"
+    },
+    "OpenCvSharp4.runtime.win/4.10.0.20241108": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0ae2dwel83tqKlAs45D3KYncoJHRzj1ArEESa6wz7FS3tYu37JDIb5yoMIZPzlkx3Gx2S1BjUrClfXbBHmVh5g==",
+      "path": "opencvsharp4.runtime.win/4.10.0.20241108",
+      "hashPath": "opencvsharp4.runtime.win.4.10.0.20241108.nupkg.sha512"
+    },
+    "OpenCvSharp4.Windows/4.10.0.20241108": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-icKN1+zHQdKY/yTKgd4o2dN3eCF6hq174/mu2+vrwcwOVg+3gT0egNAVaQqc58xNQRp04cBgR1yOD3rchG+U/A==",
+      "path": "opencvsharp4.windows/4.10.0.20241108",
+      "hashPath": "opencvsharp4.windows.4.10.0.20241108.nupkg.sha512"
     },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
@@ -279,6 +399,20 @@
       "path": "system.drawing.common/9.0.0",
       "hashPath": "system.drawing.common.9.0.0.nupkg.sha512"
     },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
+      "path": "system.runtime.compilerservices.unsafe/6.0.0",
+      "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
     "System.Security.AccessControl/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -292,6 +426,13 @@
       "sha512": "sha512-ojD0PX0XhneCsUbAZVKdb7h/70vyYMDYs85lwEI+LngEONe/17A0cFaRFqZU+sOEidcVswYWikYOQ9PPfjlbtQ==",
       "path": "system.security.principal.windows/4.7.0",
       "hashPath": "system.security.principal.windows.4.7.0.nupkg.sha512"
+    },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     }
   }
 }

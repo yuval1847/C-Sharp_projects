@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using MediaInfo;
+
 
 namespace ExtremLink_Server.Classes
 {
@@ -14,24 +18,22 @@ namespace ExtremLink_Server.Classes
     internal class Session
     {
         /*
-        A class which represent a session 
+        A class which represent a session.
         */
 
         // Attributes:
         // A parameter which represent the recording date of the session's video.
-        private string recordedTime;
-        public string RecordedTime
+        private DateTime recordedTime;
+        public DateTime RecordedTime
         {
             get { return this.recordedTime; }
-            set { this.recordedTime = value; }
         }
 
         // A parameter which indicate the duration of the video
-        private string videoDuration;
-        public string VideoDuration
+        private TimeSpan videoDuration;
+        public TimeSpan VideoDuration
         {
             get { return this.videoDuration; }
-            set { this.videoDuration = value; }
         }
 
         // A parameter which contain the video itself as a byte array.
@@ -39,50 +41,86 @@ namespace ExtremLink_Server.Classes
         public byte[] VideoContent
         {
             get { return this.videoContent; }
-            set { this.videoContent = value; }
         }
+
+        // OpenCv VideoWriter
+        private VideoWriter videoWriter;
+        private string tempVideoPath; // Temporary file path for video writing
+        private int width, height, fps;
+
 
         // A constructor
-        public Session(string recordedTime, string videoDuration, byte[] videoContent)
+        public Session(DateTime recordedTime, int width, int height, int fps)
         {
             this.recordedTime = recordedTime;
-            this.videoDuration = videoDuration;
-            this.videoContent = videoContent;
+            this.videoDuration = new TimeSpan();
+            this.width = width;
+            this.height = height;
+            this.fps = fps;
         }
-
+        
+        // A function which start the recoding by init the 
+        public void StartRecording()
+        {
+            // Input: Nothing.
+            // Output: The function create a temp mp4 file to store the frames as a video and
+            // initializes the video writer which makes it able to start getting frames.
+            tempVideoPath = Path.Combine(Path.GetTempPath(), $"session_{this.recordedTime.ToString()}.mp4");
+            videoWriter = new VideoWriter(tempVideoPath, FourCC.MP4V, fps, new OpenCvSharp.Size(width, height));
+        }
 
         // A function which add a frame to the entire session's video.
         public void AddFrame(BitmapImage frame)
         {
             // Input: The function gets a bitmap object.
-            // Output: The function add the frame to the video content.
-            byte[] byteFrame = this.ConvertBitmapImageToByteArray(frame);
-            if (this.videoContent == null)
-            {
-                this.videoContent = byteFrame;
-            }
-            else
-            {
-                byte[] newVideoContent = new byte[this.videoContent.Length + byteFrame.Length];
-                Buffer.BlockCopy(this.videoContent, 0, newVideoContent, 0, this.videoContent.Length);
-                Buffer.BlockCopy(byteFrame, 0, newVideoContent, this.videoContent.Length, byteFrame.Length);
-                this.videoContent = newVideoContent;
-            }
+            // Output: The function add the frame to the videoWriter
+            Bitmap bitmapFrame = ConvertBitmapImageToBitmap(frame);
+            Mat matFrame = BitmapConverter.ToMat(bitmapFrame);
+            Cv2.Resize(matFrame, matFrame, new OpenCvSharp.Size(this.width, this.height));
+            videoWriter.Write(matFrame);
         }
 
-
-        // A function which convert frames to byte array.
-        private byte[] ConvertBitmapImageToByteArray(BitmapImage frame)
+        // A function which converts BitmapImage to Bitmap
+        private Bitmap ConvertBitmapImageToBitmap(BitmapImage bitmapImage)
         {
-            // Input: The function gets a BitmapImage object.
-            // Output: The function converts the given BitmapImage
-            using (MemoryStream ms = new MemoryStream())
+            // Input: A bitmap image object.
+            // Output: The given BitmapImage object as a Bitmap object.
+            using (MemoryStream outStream = new MemoryStream())
             {
-                BitmapEncoder encoder = new PngBitmapEncoder(); // You can use JpegBitmapEncoder, etc.
-                encoder.Frames.Add(BitmapFrame.Create(frame));
-                encoder.Save(ms);
-                return ms.ToArray();
+                BitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                encoder.Save(outStream);
+                return new Bitmap(outStream);
             }
         }
+
+        // A function which return the duration of an mp4 video
+        private TimeSpan GetVideoDuration(string filePath)
+        {
+            // Input: A path which represent the path of the mp4 file.
+            // Output: A TimeSpan object which represent the duration time of the video.
+            var mediaInfo = new MediaInfo.MediaInfo();
+            mediaInfo.Open(filePath);
+            string durationStr = mediaInfo.Get(StreamKind.Video, 0, "Duration");
+            mediaInfo.Close();
+            if (double.TryParse(durationStr, out double durationMs))
+            {
+                return TimeSpan.FromMilliseconds(durationMs);
+            }
+            throw new Exception("Could not determine video duration");
+        }
+
+        // A function which stops recording and store video in byte array
+        public void StopRecording()
+        {
+            // Input: Nothing.
+            // Output: The function stops the recording by stop adding frames,
+            // saves the video duration, store the video content and deletes the temp video file.
+            this.videoWriter.Release();
+            this.videoContent = File.ReadAllBytes(this.tempVideoPath);
+            this.videoDuration = this.GetVideoDuration(this.tempVideoPath);
+            File.Delete(this.tempVideoPath);
+        }
+
     }
 }
