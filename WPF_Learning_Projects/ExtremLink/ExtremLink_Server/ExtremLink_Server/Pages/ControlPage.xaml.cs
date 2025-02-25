@@ -177,7 +177,11 @@ namespace ExtremLink_Server.Pages
         {
             // Input: The function gets nothing.
             // Output: The function records the current controlling session.
-        }
+            Session session = new Session(DateTime.Now, (int)frameImg.Width, (int)frameImg.Height, 24);
+            session.StartRecording();
+            BitmapImage currentFrame = LoadFrameFromFile();
+            session.AddFrame(currentFrame);
+s        }
 
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

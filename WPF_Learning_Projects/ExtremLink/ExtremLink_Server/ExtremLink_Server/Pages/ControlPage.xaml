@@ -33,7 +33,7 @@
                 </Grid.RowDefinitions>
 
                 <Rectangle Grid.ColumnSpan="2" Margin="2,-444,40,470" Fill="Gray"/>
-                <Image Source="/Images/pc_icon.png" Grid.ColumnSpan="1" Width="25" Height="25" Margin="0,-447,85,467"/>
+                <Image  Source="/Images/pc_icon.png" Grid.ColumnSpan="1" Width="25" Height="25" Margin="0,-447,85,467"/>
                 <TextBlock x:Name="clientIpTextBlock" Text="Client's IP:" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-442,10,0"/>
 
                 <!-- Play button -->
