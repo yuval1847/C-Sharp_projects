@@ -31,6 +31,7 @@ namespace ExtremLink_Server.Pages
         private bool isReceivingFrames;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
+        private Session currentSession;
 
         // A thread which operate the recording
         private Thread recordingThread;
@@ -80,6 +81,7 @@ namespace ExtremLink_Server.Pages
             // Output: The function sends the client the command to stop the sharescreen.
             this.isReceivingFrames = false;
             this.UpdateBasicFramesButtonStatus(true, false, false, false);
+            this.StopRecordSession();
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "StopSendFrames");
         }
         private void PauseStreamBtnClick(object sender, RoutedEventArgs e)
@@ -88,6 +90,7 @@ namespace ExtremLink_Server.Pages
             // Output: The function sends the client the command to pause the sharescreen.
             this.isReceivingFrames = false;
             this.UpdateBasicFramesButtonStatus(true, true, false, false);
+            this.StopRecordSession();
             this.server.SendMessage(this.server.ClientTcpSocket, "&", "PauseSendFrames");
         }
         private void RecordBtnCustomClick(object sender, RoutedEventArgs e)
@@ -96,7 +99,7 @@ namespace ExtremLink_Server.Pages
             // Output: The function starts the recording of the sharing screen.
             this.isRecording = true;
             this.UpdateBasicFramesButtonStatus(false, true, true, false);
-            this.recordingThread.Start();
+            this.StartRecordSession();
         }
 
         // Frames functions:
@@ -177,18 +180,35 @@ namespace ExtremLink_Server.Pages
         {
             // Input: The function gets nothing.
             // Output: The function records the current controlling session.
-            Session session = new Session(DateTime.Now, (int)frameImg.Width, (int)frameImg.Height, 24);
-            session.StartRecording();
+            this.currentSession = new Session(DateTime.Now, (int)frameImg.Width, (int)frameImg.Height, 24);
+            this.currentSession.StartRecording();
             BitmapImage currentFrame = LoadFrameFromFile();
-            session.AddFrame(currentFrame);
-s        }
-
+            this.currentSession.AddFrame(currentFrame);
+        }
+        private void StartRecordSession()
+        {
+            // Input: Nothing.
+            // Output: The function starts the recordingThread and start the recording of the current session.
+            if (!this.recordingThread.IsAlive)
+            {
+                this.recordingThread.Start();
+            }
+        }
+        private void StopRecordSession()
+        {
+            // Input: Nothing.
+            // Output: The function kills the recordingThread, stop the recording of the current session
+            // and upload the session to the database.
+            if (this.recordingThread.IsAlive)
+            {
+                this.recordingThread.Abort();
+            }
+            this.currentSession.UploadSessionToDatabase();
+        }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             isReceivingFrames = false;
         }
-
-        
     }
 }

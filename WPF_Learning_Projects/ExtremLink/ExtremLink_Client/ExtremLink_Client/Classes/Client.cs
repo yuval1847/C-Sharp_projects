@@ -107,6 +107,7 @@ namespace ExtremLink_Client.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
+            // $ - Sessions handling
             while (true)
             {
                 lock (this)
@@ -127,6 +128,9 @@ namespace ExtremLink_Client.Classes
                             break;
                         case "^":
                             this.HandleKeyboardInput(data);
+                            break;
+                        case "$":
+                            this.HandleSessionsCommands(data);
                             break;
                     }
                 }
@@ -174,7 +178,7 @@ namespace ExtremLink_Client.Classes
             }
         }
 
-        // Handle Input Commands:
+        // Handle Input commands:
         public void HandleMouseInput(string message)
         {
             // Input: string object which represent the message that was given from the server.
@@ -224,6 +228,20 @@ namespace ExtremLink_Client.Classes
                     this.customKeyboard.CurrentKey = (Key)Enum.Parse(typeof(Key), data.PressedKey);
                     break;
             }
+        }
+
+        // Handle Sessions commands:
+        public void HandleSessionsCommands(string message)
+        {
+            // Input: A string which represent the server message.
+            // Output: The function handles which the sessions message.
+
+            // Reading the data in json format
+            dynamic data = JsonConvert.DeserializeObject(message);
+
+            // Casting the data dynamic object to JObject
+            JObject jsonData = (JObject)data;
+            
         }
 
 

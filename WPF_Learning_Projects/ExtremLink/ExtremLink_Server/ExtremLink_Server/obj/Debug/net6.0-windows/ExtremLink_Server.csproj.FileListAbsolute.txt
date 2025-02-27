@@ -252,3 +252,10 @@ C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\Ext
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x64\native\libSkiaSharp.dll
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x86\native\libSkiaSharp.dll
 C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\Pages\SessionsRecordsPage.baml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\MediaInfo.Wrapper.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\OpenCvSharp.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\OpenCvSharp.Extensions.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x64\native\OpenCvSharpExtern.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x64\native\opencv_videoio_ffmpeg4100_64.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x86\native\OpenCvSharpExtern.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\bin\Debug\net6.0-windows\runtimes\win-x86\native\opencv_videoio_ffmpeg4100.dll

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Drawing;
@@ -10,6 +11,7 @@ using System.Windows.Media.Imaging;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using MediaInfo;
+using System.Data.SqlClient;
 
 
 namespace ExtremLink_Server.Classes
@@ -122,5 +124,55 @@ namespace ExtremLink_Server.Classes
             File.Delete(this.tempVideoPath);
         }
 
+        // A function which upload the session to database
+        private SqlConnection ConnectToDB()
+        {
+            // Input: Nothing.
+            // Output: An SqlConnection object which connected to the sessions database.
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Navigate up from bin/Debug to the project root
+            string projectRoot = Directory.GetParent(baseDirectory).Parent.Parent.Parent.FullName;
+            string dbPath = Path.Combine(projectRoot, "Databases", "SessionRecordsDB");
+            string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True";
+            SqlConnection conn = new SqlConnection(connectionString);
+            return conn;
+        }
+        public void UploadSessionToDatabase()
+        {
+            // Input: Nothing.
+            // Output: The function uploads the session to the database.
+            string amoutOfSessionsSqlQuery = "SELECT COUNT(*) FROM [dbo].[Table]";
+            string sessionUploadQuery = "INSERT INTO [dbo].[Table] (Id, Username, VideoData, RecordedTime, Duration) VALUES (@Id, @Username, @VideoData, @RecordedTime, @Duration)";
+            int amountOfSessions;
+            using (SqlConnection conn = this.ConnectToDB())
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand com2 = new SqlCommand(sessionUploadQuery, conn))
+                    {
+                        // Retrieve the amout of users in the database
+                        using (SqlCommand com1 = new SqlCommand(amoutOfSessionsSqlQuery, conn))
+                        {
+                            amountOfSessions = (int)com1.ExecuteScalar();
+                        }
+                        // Add parameters to the command to avoid SQL injection
+                        com2.Parameters.AddWithValue("@Id", amountOfSessions+1);
+                        com2.Parameters.AddWithValue("@Username", User.UserInstance.UserName);
+                        com2.Parameters.AddWithValue("@VideoData", this.videoContent);
+                        com2.Parameters.AddWithValue("@RecordedTime", this.recordedTime.ToString());
+                        com2.Parameters.AddWithValue("@Duration", this.videoDuration.ToString());
+                        com2.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+            }
+        }
+
+        // Sending client sessions functions:
+        
     }
 }

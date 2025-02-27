@@ -26,6 +26,7 @@ using System.Windows.Media;
 using System.Net.NetworkInformation;
 using System.Windows.Controls;
 using System.Diagnostics;
+using ExtremLink_Server.Classes;
 
 namespace ExtremLink_Server.Classes
 {
@@ -151,6 +152,7 @@ namespace ExtremLink_Server.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
+            // $ - Sessions handling
             while (true)
             {
                 lock (this){
@@ -168,6 +170,7 @@ namespace ExtremLink_Server.Classes
                                 if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
                                 {
                                     this.SendMessage(this.clientTcpSocket, "!", "Exist");
+                                    User.UserInstance.UserName = username;
                                     this.respond = "Exist";
                                 }
                                 else

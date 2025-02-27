@@ -40,7 +40,7 @@ namespace ExtremLink_Client.Pages
         {
             // Input: Nothing.
             // Output: The function load over the SessionRecordsList the records from the sessions records database.
-
+            Session.
         }
 
     }
