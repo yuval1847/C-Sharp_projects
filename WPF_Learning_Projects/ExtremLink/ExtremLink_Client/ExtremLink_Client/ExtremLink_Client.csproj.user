@@ -16,7 +16,13 @@
     <Compile Update="CustomWidgets\UserIcon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\ChoosingRulePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ConnectingPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ControlPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\HomePage.xaml.cs">
@@ -54,7 +60,13 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\ChoosingRulePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\ConnectingPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ControlPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\HomePage.xaml">

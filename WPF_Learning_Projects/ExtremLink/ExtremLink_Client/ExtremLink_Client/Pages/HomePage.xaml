@@ -30,12 +30,13 @@
         <!-- Action Button with Cyberpunk Glow -->
         <Button Content="Start Now" Width="220" Height="55" Background="#034045" Foreground="White"
                 FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas">
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas"
+                Click="StartNowBtn_Click">
             <Button.Effect>
                 <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
-        <Button Content="i" Width="220" Height="55" Background="#034045" Foreground="White"
+        <Button Content="instructions" Width="220" Height="55" Background="#034045" Foreground="White"
         FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
         HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,377,0,0">
             <Button.Effect>

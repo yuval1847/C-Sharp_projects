@@ -8,15 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\attacker_icon.png" />
     <None Remove="Images\default_image.png" />
     <None Remove="Images\ExtremLink_Icon.png" />
     <None Remove="Images\lock_icon.png" />
+    <None Remove="Images\pc_icon.png" />
     <None Remove="Images\user_icon.png" />
     <None Remove="Images\user_icon_black.png" />
+    <None Remove="Images\victim_icon.png" />
     <None Remove="Images\video_icon_1.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\attacker_icon.png" />
     <Resource Include="Images\lock_icon.png" />
   </ItemGroup>
 
@@ -31,8 +35,10 @@
 
   <ItemGroup>
     <Resource Include="Images\ExtremLink_Icon.png" />
+    <Resource Include="Images\pc_icon.png" />
     <Resource Include="Images\user_icon.png" />
     <Resource Include="Images\user_icon_black.png" />
+    <Resource Include="Images\victim_icon.png" />
     <Resource Include="Images\video_icon_1.png" />
   </ItemGroup>
 

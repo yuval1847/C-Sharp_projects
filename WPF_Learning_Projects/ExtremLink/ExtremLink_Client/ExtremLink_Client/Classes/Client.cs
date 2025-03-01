@@ -22,10 +22,20 @@ using System.Windows.Input;
 
 namespace ExtremLink_Client.Classes
 {
+    
+    public enum ClientTypes
+    {
+        Attacker,
+        Victim
+    }
+
     public class Client
     {
         // A class which represent a client.
         // Attributes:
+        private const int TCP_PORT = 1234;
+        private const int UDP_PORT = 1847;
+
         private Socket udpSocket;
         private Socket tcpSocket;
         private string serverIpAddr;
@@ -35,6 +45,7 @@ namespace ExtremLink_Client.Classes
         private int mouseY;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
+        private ClientTypes clientType;
         public Socket UDPSocket
         {
             get { return this.udpSocket; }
@@ -63,11 +74,16 @@ namespace ExtremLink_Client.Classes
             get { return this.mouseY; }
             set { this.mouseY = value; }
         }
+        public ClientTypes ClientType
+        {
+            get { return this.clientType;}
+        }
 
 
-        public Client(string serverIpAddr)
+        public Client(string serverIpAddr, ClientTypes clientType)
         {
             this.serverIpAddr = serverIpAddr;
+            this.clientType = clientType;
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.mouseX = 0;
@@ -78,15 +94,15 @@ namespace ExtremLink_Client.Classes
         {
             // The function gets nothing.
             // The function connects the TCP socket to the server.
-            this.tcpSocket.Connect(this.serverIpAddr, 1234);
-            this.serverEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847);
+            this.tcpSocket.Connect(this.serverIpAddr, TCP_PORT);
+            this.serverEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), UDP_PORT);
         }
 
         public void Start()
         {
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
-            Console.WriteLine("Server started on UDP port 1234 and TCP port 1847.");
+            Console.WriteLine("Server started on TCP port 1234 and UDP port 1847.");
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
         }
