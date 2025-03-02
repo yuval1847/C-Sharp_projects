@@ -24,13 +24,11 @@ namespace ExtremLink_Client.Pages
     {
         private User currentUser = User.UserInstance;
         private ContentControl contentMain;
-        private Client client;
 
 
-        public SessionsRecordsPage(ContentControl contentMain, Client client)
+        public SessionsRecordsPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
             this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
             InitializeComponent();
         }

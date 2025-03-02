@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtremLink_Client.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,6 @@ namespace ExtremLink_Client.Pages
     public partial class SignUpPage : UserControl
     {
         private ContentControl contentMain;
-        private Classes.Client client;
-
         public ContentControl ContentMain
         {
             get { return contentMain; }
@@ -31,10 +30,9 @@ namespace ExtremLink_Client.Pages
         }
 
 
-        public SignUpPage(ContentControl contentMain, Classes.Client client)
+        public SignUpPage(ContentControl contentMain)
         {
             this.ContentMain = contentMain;
-            this.client = client;
             InitializeComponent();
         }
 
@@ -42,15 +40,25 @@ namespace ExtremLink_Client.Pages
         {
             if (this.IsAllParametersRight())
             {
-                Thread clientMessagesHandlingThread = new Thread(this.client.Start);
-                clientMessagesHandlingThread.Start();
-                this.client.SendMessage(this.client.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
-                Thread.Sleep(500);
-                if (this.client.ServerRespond == "SuccessfullyAdded")
+                switch (User.UserInstance.TypeOfClient)
                 {
-                    this.ContentMain.Content = new LoginPage(this.ContentMain, this.client);
+                    case TypeOfClient.Attacker:
+                        Attacker.AttackerInstance.SendMessage(Attacker.AttackerInstance.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
+                        break;
+
+                    case TypeOfClient.Victim:
+                        Victim.VictimInstance.SendMessage(Victim.VictimInstance.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
+                        break;
                 }
-                //else if (this.client.ServerRespond == "NotAdded"){}
+                Thread.Sleep(500);
+                if (Attacker.AttackerInstance.ServerRespond == "SuccessfullyAdded" || Victim.VictimInstance.ServerRespond == "SuccessfullyAdded")
+                {
+                    this.ContentMain.Content = new LoginPage(this.ContentMain);
+                }
+                else if (Attacker.AttackerInstance.ServerRespond == "NotAdded" || Victim.VictimInstance.ServerRespond == "NotAdded") 
+                {
+                    errorSignUpTextBlock.Visibility = Visibility.Visible;
+                }
             }
         }
         private bool IsAllParametersRight()

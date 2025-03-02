@@ -22,80 +22,66 @@ using System.Windows.Input;
 
 namespace ExtremLink_Client.Classes
 {
-    
-    public enum ClientTypes
-    {
-        Attacker,
-        Victim
-    }
-
     public class Client
     {
+        // *********************************
         // A class which represent a client.
-        // Attributes:
-        private const int TCP_PORT = 1234;
-        private const int UDP_PORT = 1847;
+        // *********************************
 
-        private Socket udpSocket;
-        private Socket tcpSocket;
-        private string serverIpAddr;
-        private string serverRespond;
-        private EndPoint serverEndPoint;
-        private int mouseX;
-        private int mouseY;
-        private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
-        private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
-        private ClientTypes clientType;
-        public Socket UDPSocket
-        {
-            get { return this.udpSocket; }
-            set { this.udpSocket = value; }
-        }
+        // Attributes:
+
+        // Integer constants which represent the sockets' ports:
+        protected readonly int TCP_PORT = 1234;
+        protected readonly int UDP_PORT = 1847;
+
+        // The tcp socket:
+        protected Socket tcpSocket;
         public Socket TCPSocket
         {
             get { return this.tcpSocket; }
             set { this.tcpSocket = value; }
         }
+
+        // The udp socket:
+        protected Socket udpSocket;
+        public Socket UDPSocket
+        {
+            get { return this.udpSocket; }
+            set { this.udpSocket = value; }
+        }
+
+        // A string which represent the ip address of the server:
+        protected string serverIpAddr;
+
+        // A string which represent the respond of the server:
+        protected string serverRespond;
         public string ServerRespond
         {
             get { return this.serverRespond; }
-            set
-            {
-                this.serverRespond = value;
-            }
-        }
-        public int MouseX
-        {
-            get { return this.mouseX; }
-            set { this.mouseX = value; }
-        }
-        public int MouseY
-        {
-            get { return this.mouseY; }
-            set { this.mouseY = value; }
-        }
-        public ClientTypes ClientType
-        {
-            get { return this.clientType;}
         }
 
+        // An Endpoint Object which contains the server's ip and port:
+        protected EndPoint serverUdpEndPoint;
 
-        public Client(string serverIpAddr, ClientTypes clientType)
+        // Objects of mouse and keyboard:
+        protected CustomMouse customMouse = CustomMouse.CustomMouseInstance;
+        protected CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
+
+
+        public Client()
         {
-            this.serverIpAddr = serverIpAddr;
-            this.clientType = clientType;
+            // Note: The server IP address you will change in the implementation of the classes of attacker and victim themself.
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.mouseX = 0;
-            this.mouseY = 0;
         }
 
-        public void ConnectToServer()
+        public void ConnectToServer(string serverIpAddr)
         {
-            // The function gets nothing.
+            // Input: A string which represent the server ip address.
             // The function connects the TCP socket to the server.
+            this.serverIpAddr = serverIpAddr;
             this.tcpSocket.Connect(this.serverIpAddr, TCP_PORT);
-            this.serverEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), UDP_PORT);
+            this.serverUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), UDP_PORT);
         }
 
         public void Start()
@@ -107,15 +93,9 @@ namespace ExtremLink_Client.Classes
             Task.Run(() => this.HandleTcpCommunication());
         }
 
-        private async Task HandleUdpCommunication()
-        {
-            // The function gets nothing.
-            // The fucntion handle with different type of TCP packets which are sent by the server.
-            // & - frames handling.
-
-        }
-
-        private async Task HandleTcpCommunication()
+        
+        // Note: After finishing the attacker and victim, delete the handle functions
+        protected async Task HandleTcpCommunication()
         {
             // The function gets nothing.
             // The fucntion handle with different type of TCP packets which are sent by the server.
@@ -151,6 +131,13 @@ namespace ExtremLink_Client.Classes
                     }
                 }
             }
+        }
+        protected async Task HandleUdpCommunication()
+        {
+            // The function gets nothing.
+            // The fucntion handle with different type of TCP packets which are sent by the server.
+            // & - frames handling.
+
         }
 
         // Handle with user managment commands:
@@ -195,7 +182,7 @@ namespace ExtremLink_Client.Classes
         }
 
         // Handle Input commands:
-        public void HandleMouseInput(string message)
+        private void HandleMouseInput(string message)
         {
             // Input: string object which represent the message that was given from the server.
             // Ouput: The function update the CustomMouse object according to the given message's parameters.
@@ -226,7 +213,7 @@ namespace ExtremLink_Client.Classes
                     break;
             }
         }
-        public void HandleKeyboardInput(string message)
+        private void HandleKeyboardInput(string message)
         {
             // Input: string which represent a keyboard commands query message.
             // Ouput: The function update the CustomKeyboard object according to the given message's parameters.
@@ -247,7 +234,7 @@ namespace ExtremLink_Client.Classes
         }
 
         // Handle Sessions commands:
-        public void HandleSessionsCommands(string message)
+        private void HandleSessionsCommands(string message)
         {
             // Input: A string which represent the server message.
             // Output: The function handles which the sessions message.
@@ -298,28 +285,6 @@ namespace ExtremLink_Client.Classes
                 }
             }
         }
-        // Frames bitmap:
-        /*public string CompressRenderTargetBitmapToString(RenderTargetBitmap renderTargetBitmap, int qualityPercentage)
-        {
-            // The function gets a RenderTargetBitmap object and a quality presentages as an integer.
-            // The function compress it and returns it as a string.
-            if (renderTargetBitmap == null)
-                throw new ArgumentNullException(nameof(renderTargetBitmap));
-            if (qualityPercentage < 1 || qualityPercentage > 100)
-                throw new ArgumentOutOfRangeException(nameof(qualityPercentage), "Quality percentage must be between 1 and 100.");
-
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                // Use JpegBitmapEncoder to encode the RenderTargetBitmap with quality settings
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.QualityLevel = qualityPercentage;
-                encoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-                encoder.Save(memoryStream);
-
-                // Convert the byte array to a Base64 string
-                return Convert.ToBase64String(memoryStream.ToArray());
-            }
-        }*/
 
         // The send and get message functions:
         public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
@@ -344,7 +309,7 @@ namespace ExtremLink_Client.Classes
                 messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
                 // A test for analysing the length of the message.
                 MessageBox.Show($"The total length of message: {messageBytes.Length}");
-                clientSocket.SendTo(messageBytes, this.serverEndPoint);
+                clientSocket.SendTo(messageBytes, this.serverUdpEndPoint);
             }
         }
         public List<object> GetMessage(Socket clientSocket)
@@ -502,7 +467,7 @@ namespace ExtremLink_Client.Classes
                 Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
 
                 // Send packet
-                this.udpSocket.SendTo(packet, this.serverEndPoint);
+                this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
             }
         }
         

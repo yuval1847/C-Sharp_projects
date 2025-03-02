@@ -9,13 +9,15 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#00cec9" Offset="0"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
         <StackPanel HorizontalAlignment="Center">
-            <TextBlock Text="Connect to Server" FontSize="60" FontWeight="Bold" Margin="0,100,0,0"/>
+            <TextBlock Text="Connect to Server" Foreground="#00CEC9" FontSize="60" FontWeight="Bold" Margin="0,100,0,0"/>
             <customWidgets:CustomTextBox x:Name="ServerIpCustomTextBox" Placeholder="Server's IP" Width="300" Height="60" Margin="0,100,0,0" VerticalAlignment="Center"/>
             <customWidgets:CustomButton Placeholder="Connect" Width="180" Height="60" Margin="0,150,0,0" CustomClick="ConnectBtn_Click"/>
         </StackPanel>

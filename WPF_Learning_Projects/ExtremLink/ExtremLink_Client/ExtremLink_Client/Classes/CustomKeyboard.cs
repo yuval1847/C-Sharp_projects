@@ -15,7 +15,7 @@ namespace ExtremLink_Client.Classes
         KeyPress
     }
 
-    internal class CustomKeyboard
+    public sealed class CustomKeyboard
     {
         /*
         A class which represents a keyboard object.

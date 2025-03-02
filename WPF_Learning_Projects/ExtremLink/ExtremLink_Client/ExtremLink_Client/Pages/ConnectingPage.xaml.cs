@@ -19,11 +19,11 @@ namespace ExtremLink_Client.Pages
 {
     /// <summary>
     /// Interaction logic for ConnectingPage.xaml
-    /// </summary>
+    /// </summary>    
+    
     public partial class ConnectingPage : UserControl
     {
         private ContentControl contentMain;
-        private Classes.Client client;
 
         public ConnectingPage(ContentControl contentMain)
         {
@@ -36,12 +36,20 @@ namespace ExtremLink_Client.Pages
             // The function got called by clicking on the connect button.
             // The function gets nothing.
             // The function create an client instance and connect to the server.
-            Console.WriteLine("Click");
-            string ServerIpAddr = ServerIpCustomTextBox.Text;
-            this.client = new Classes.Client(ServerIpAddr);
-            this.client.ConnectToServer();
-            this.contentMain.Content = new LoginPage(contentMain, client);
-            
+            string serverIpAddr = ServerIpCustomTextBox.Text;
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    Attacker.AttackerInstance.ConnectToServer(serverIpAddr);
+                    Attacker.AttackerInstance.Start();
+                    break;
+                case TypeOfClient.Victim:
+                    Victim.VictimInstance.ConnectToServer(serverIpAddr);
+                    Victim.VictimInstance.Start();
+                    break;
+            }
+            this.contentMain.Content = new LoginPage(this.contentMain);
         }
+
     }
 }

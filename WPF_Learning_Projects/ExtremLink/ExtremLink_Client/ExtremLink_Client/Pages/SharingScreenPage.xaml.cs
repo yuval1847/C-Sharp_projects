@@ -29,7 +29,6 @@ namespace ExtremLink_Client.Pages
     public partial class SharingScreenPage : UserControl
     {
         private ContentControl contentMain;
-        private Client client;
         private Thread serverFramesResponds;
         private Thread sharingScreenThread;
         private Thread localSharingScreenThread;
@@ -46,10 +45,9 @@ namespace ExtremLink_Client.Pages
             set { this.contentMain = value; }
         }
 
-        public SharingScreenPage(ContentControl contentMain, Client client)
+        public SharingScreenPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
             this.isStreaming = false;
 
             this.serverFramesResponds = new Thread(this.HandleServerRespond);
@@ -96,7 +94,7 @@ namespace ExtremLink_Client.Pages
             // Input: Nothing.
             // Output: The function execute the frame functionality according to the client's server respond.
             // MessageBox.Show("A frames command was received!");
-            switch (this.client.ServerRespond)
+            switch (Victim.VictimInstance.ServerRespond)
             {
                 case "StartSendFrames":
                     this.isStreaming = true;
@@ -109,7 +107,7 @@ namespace ExtremLink_Client.Pages
                     this.StopGettingControlled();
                     this.ChangeSharingScreenTitle("Sharing Screen Stoped");
                     // Note: Here in this case change the page to the home page.
-                    this.contentMain.Content = new HomePage(contentMain, client);
+                    this.contentMain.Content = new HomePage(contentMain);
                     break;
 
                 case "PauseSendFrames":

@@ -69,7 +69,7 @@ namespace ExtremLink_Client.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client;V1.0.0.0;component/pages/instructionspage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client;component/pages/instructionspage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\InstructionsPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

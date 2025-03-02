@@ -24,19 +24,27 @@ namespace ExtremLink_Client.Pages
 
         // Attirbutes:
         private ContentControl contentMain;
-        private Client client;
 
 
-        public HomePage(ContentControl contentMain, Client client)
+        public HomePage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
             InitializeComponent();
         }
 
         private void StartNowBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.contentMain.Content = new ChoosingRulePage(this.contentMain);
+        }
+        
+        private void Instructions_Click(object sender, RoutedEventArgs e)
+        {
+            this.contentMain.Content = new InstructionsPage(this.contentMain);
+        }
+
+        private void Records_Click(object sender, RoutedEventArgs e)
+        {
+            this.contentMain.Content = new SessionsRecordsPage(this.contentMain);
         }
     }
 }

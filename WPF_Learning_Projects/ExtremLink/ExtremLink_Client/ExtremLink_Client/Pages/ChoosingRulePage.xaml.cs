@@ -23,22 +23,22 @@ namespace ExtremLink_Client.Pages
     {
         // Attirbutes:
         private ContentControl contentMain;
-        private Client client;
-        public ChoosingRulePage(ContentControl contentMain, Client client)
+        public ChoosingRulePage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
             InitializeComponent();
         }
 
         private void AttackerBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.contentMain.Content = new ControlPage(this.contentMain, this.client);
+            User.UserInstance.TypeOfClient = TypeOfClient.Attacker;
+            this.contentMain.Content = new ConnectingPage(this.contentMain);
         }
 
         private void VictimBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.contentMain.Content = new SharingScreenPage(this.contentMain, this.client);
+            User.UserInstance.TypeOfClient = TypeOfClient.Victim;
+            this.contentMain.Content = new ConnectingPage(this.contentMain);
         }
     }
 }

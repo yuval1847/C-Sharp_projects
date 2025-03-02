@@ -27,20 +27,17 @@ namespace ExtremLink_Client.Pages
     public partial class LoginPage : UserControl
     {
         private ContentControl contentMain;
-        private Client client;
-        private User currentUser = User.UserInstance;
-
         public ContentControl ContentMain
         {
             get { return this.contentMain; }
             set { this.contentMain = value; }
         }
+        
+        private User currentUser = User.UserInstance;
 
-
-        public LoginPage(ContentControl contentMain, Classes.Client client)
+        public LoginPage(ContentControl contentMain)
         {
             this.ContentMain = contentMain;
-            this.client = client;
             InitializeComponent();
         }
         
@@ -50,29 +47,39 @@ namespace ExtremLink_Client.Pages
             // The fucntion gets nothing.
             // The function send a message to the server via the client in order to login 
             // to the database.
-            Thread clientMessagesHandlingThread = new Thread(this.client.Start);
-            clientMessagesHandlingThread.Start();
-            this.client.SendMessage(this.client.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    Attacker.AttackerInstance.SendMessage(Attacker.AttackerInstance.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+                    break;
+                
+                case TypeOfClient.Victim:
+                    Victim.VictimInstance.SendMessage(Victim.VictimInstance.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+                    break;
+            }
             // Waiting for reciving the server respond.
             Thread.Sleep(750);
-            if (this.client.ServerRespond == "Exist")
+
+
+            if (Attacker.AttackerInstance.ServerRespond == "Exist")
             {
                 this.currentUser.UserName = usernameCustomTextBox.customTB.Text;
-                this.wrongLoginTextBlock.Visibility = Visibility.Visible;
-                this.wrongLoginTextBlock.Text = "successfully connected!";
-                this.wrongLoginTextBlock.Foreground = Brushes.Green;
-                this.contentMain.Content = new SharingScreenPage(this.contentMain, this.client);
+                this.contentMain.Content = new ControlPage(this.contentMain);
             }
-            else if (this.client.ServerRespond == "NotExist")
+            else if (Victim.VictimInstance.ServerRespond == "Exist")
+            {
+                this.currentUser.UserName = usernameCustomTextBox.customTB.Text;
+                this.contentMain.Content = new SharingScreenPage(this.contentMain);
+            }
+            else if (Attacker.AttackerInstance.ServerRespond == "NotExist" || Victim.VictimInstance.ServerRespond == "NotExist")
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
             }
-            // clientMessagesHandlingThread.Abort();
         }
 
         private void CreateNewUser_Click(object sender, RoutedEventArgs e)
         {
-            this.contentMain.Content = new SignUpPage(this.contentMain, this.client);
+            this.contentMain.Content = new SignUpPage(this.contentMain);
         }
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)

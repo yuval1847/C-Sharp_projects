@@ -23,14 +23,12 @@ namespace ExtremLink_Client.Pages
     {
         // Attirbutes:
         private ContentControl contentMain;
-        private Client client;
 
 
         // Constractor:
-        public InstructionsPage(ContentControl contentMain, Client client)
+        public InstructionsPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.client = client;
             InitializeComponent();
         }
 
@@ -40,7 +38,7 @@ namespace ExtremLink_Client.Pages
         {
             // Input: Nothing.
             // Output: The function changes the current page to the home page.
-            this.contentMain.Content = new HomePage(this.contentMain, this.client);
+            this.contentMain.Content = new HomePage(this.contentMain);
         }
     }
 }

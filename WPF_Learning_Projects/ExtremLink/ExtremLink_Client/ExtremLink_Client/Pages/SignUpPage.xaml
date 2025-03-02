@@ -81,7 +81,8 @@
                     <TextBlock x:Name="wrongEmailTextBlock" Visibility="hidden" Text="Should contain '@'!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
                 </StackPanel>
             </Grid>
-            <customWidgets:CustomButton x:Name="signUpBtn" Width="100" Height="40" Placeholder="Sign-Up" Margin="0,7,0,10" CustomClick="SignUpButton_Click"/>
+            <TextBlock x:Name="errorSignUpTextBlock" Visibility="Hidden" Text="This user already exist!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <customWidgets:CustomButton x:Name="signUpBtn" Width="100" Height="40" Placeholder="Sign-Up" Margin="0,0,0,10" CustomClick="SignUpButton_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

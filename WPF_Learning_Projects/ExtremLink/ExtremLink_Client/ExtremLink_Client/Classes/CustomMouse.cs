@@ -19,7 +19,7 @@ namespace ExtremLink_Client.Classes
         RightPress
     }
 
-    internal sealed class CustomMouse
+    public sealed class CustomMouse
     {
         /*
         A class which represents a mouse object.

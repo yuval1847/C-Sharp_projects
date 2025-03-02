@@ -20,6 +20,13 @@ namespace ExtremLink_Client.Classes
             set { this.username = value; }
         }
 
+        private TypeOfClient typeOfClient;
+        public TypeOfClient TypeOfClient
+        {
+            get { return this.typeOfClient; }
+            set { this.typeOfClient = value; }
+        }
+
 
         // Singelton behavior
         private static User userInstance;
