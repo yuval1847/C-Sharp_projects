@@ -34,11 +34,33 @@ namespace ExtremLink_Server.Classes
     {
         // A class which represent a server.
         // Attributes:
+        
+        // A string which represent the IP address of this server.
         private string serverIpAddress;
-        private string clientIpAddress;
+        public string ServerIpAddress
+        {
+            get { return this.serverIpAddress; }
+        }
+        
+        // A string which represent the IP address of the attacker.
+        private string attackerIpAddress;
+        public string AttackerIpAddress
+        {
+            get { return this.attackerIpAddress; }
+        }
+
+        // A string which represent the IP address of the victim.
+        private string victimIpAddress;
+        public string VictimIpAddress
+        {
+            get { return this.victimIpAddress; }
+        }
+
+        // 
         private Socket udpSocket;
         private Socket tcpSocket;
-        private Socket clientTcpSocket;
+        
+        
         private List<object> message;
         private string respond;
         private string udpRespond;
@@ -46,12 +68,7 @@ namespace ExtremLink_Server.Classes
         private EndPoint clientEndPoint;
         public readonly object fileLock = new object();
 
-
-        public string ServerIpAddress
-        {
-            get { return this.serverIpAddress; }
-            set { this.serverIpAddress = value; }
-        }
+        
         public Socket UdpSocket 
         { 
             get { return this.udpSocket; }
@@ -198,6 +215,8 @@ namespace ExtremLink_Server.Classes
                                     this.SendMessage(this.clientTcpSocket, "!", "NotAdded");
                                 }
                             }
+                            break;
+                        case "&":
                             break;
                     }
                 }

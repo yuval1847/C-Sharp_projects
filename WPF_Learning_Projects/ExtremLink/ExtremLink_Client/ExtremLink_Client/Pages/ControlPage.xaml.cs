@@ -40,7 +40,7 @@ namespace ExtremLink_Client.Pages
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            Attacker.AttackerInstance.SendMessage(Attacker.AttackerInstance.TCPSocket, "&", "StartSendFrames");
         }
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {

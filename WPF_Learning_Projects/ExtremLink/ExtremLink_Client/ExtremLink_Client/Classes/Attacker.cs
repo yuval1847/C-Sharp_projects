@@ -155,7 +155,5 @@ namespace ExtremLink_Client.Classes
             JObject jsonData = (JObject)data;
 
         }
-
-
     }
 }

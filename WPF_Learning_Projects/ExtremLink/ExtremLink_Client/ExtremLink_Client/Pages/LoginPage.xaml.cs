@@ -33,8 +33,6 @@ namespace ExtremLink_Client.Pages
             set { this.contentMain = value; }
         }
         
-        private User currentUser = User.UserInstance;
-
         public LoginPage(ContentControl contentMain)
         {
             this.ContentMain = contentMain;
@@ -61,17 +59,17 @@ namespace ExtremLink_Client.Pages
             Thread.Sleep(750);
 
 
-            if (Attacker.AttackerInstance.ServerRespond == "Exist")
+            if (User.UserInstance.TypeOfClient == TypeOfClient.Attacker && Attacker.AttackerInstance.ServerRespond == "Exist")
             {
-                this.currentUser.UserName = usernameCustomTextBox.customTB.Text;
+                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
                 this.contentMain.Content = new ControlPage(this.contentMain);
             }
-            else if (Victim.VictimInstance.ServerRespond == "Exist")
+            else if (User.UserInstance.TypeOfClient == TypeOfClient.Victim &&  Victim.VictimInstance.ServerRespond == "Exist")
             {
-                this.currentUser.UserName = usernameCustomTextBox.customTB.Text;
+                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
                 this.contentMain.Content = new SharingScreenPage(this.contentMain);
             }
-            else if (Attacker.AttackerInstance.ServerRespond == "NotExist" || Victim.VictimInstance.ServerRespond == "NotExist")
+            else
             {
                 this.wrongLoginTextBlock.Visibility = Visibility.Visible;
             }
