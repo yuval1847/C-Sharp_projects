@@ -49,13 +49,23 @@ namespace ExtremLink_Server.Classes
             set { this.udpSocket = value; }
         }
 
+        // A user object which represent the user of the client:
+        private User user;
+        private User User 
+        {
+            get { return this.user; }
+            set { this.user = value; }
+        }
+
         public Client(string serverIpAddress)
         {
             this.serverIpAddress = serverIpAddress;
+            this.user = new User();
         }
 
-        // Connecting function:
-        public string FindClientIpAddress(Socket clientSocket)
+
+        // Connecting functions:
+        private string FindClientIpAddress(Socket clientSocket)
         {
             // The function gets a socket.
             // The function returns the socket's client's ip.
@@ -72,10 +82,9 @@ namespace ExtremLink_Server.Classes
             this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), TCP_PORT));
             this.tcpSocket.Listen(1);
             Socket tempTcpClientSocket = this.tcpSocket.Accept();
-            this.serverIpAddress = this.FindClientIpAddress(tempTcpClientSocket);
+            this.ipAddress = this.FindClientIpAddress(tempTcpClientSocket);
         }
 
-        
 
         // Sending basic messages functions:
         private void SendMessageToClient(string message, string typeOfMessage, Socket socket)

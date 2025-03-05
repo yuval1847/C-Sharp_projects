@@ -21,21 +21,6 @@ namespace ExtremLink_Server.Classes
         }
 
 
-        // Singelton behavior
-        private static User userInstance;
-        public static User UserInstance
-        {
-            get
-            {
-                if (userInstance == null)
-                {
-                    userInstance = new User();
-                }
-                return userInstance;
-            }
-        }
-
-
         public User()
         {
             this.username = "";

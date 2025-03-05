@@ -108,7 +108,7 @@ namespace ExtremLink_Client.Classes
             {
                 lock (this)
                 {
-                    List<object> message = GetMessage(this.tcpSocket);
+                    List<object> message = this.GetTCPMessageFromClient();
                     string data = (string)message[2];
 
                     switch (message[0])
@@ -249,141 +249,82 @@ namespace ExtremLink_Client.Classes
 
 
 
-        // Compress and decompress functions
-        // Regular strings:
-        public byte[] Compress(string data)
+        // Sending basic messages functions:
+        private void SendMessageToClient(string message, string typeOfMessage, Socket socket)
         {
-            // The function gets a string.
-            // The function return the given string after compressing in bytes format.
-            if (string.IsNullOrEmpty(data))
-                return new byte[0];
-
-            byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Compress))
-                {
-                    gzipStream.Write(dataBytes, 0, dataBytes.Length);
-                }
-                return memoryStream.ToArray();
-            }
-        }
-        public string Decompress(byte[] data)
-        {
-            // The function gets a byte array.
-            // The function return the given byte array as a string after decompressing.
-            if (data == null || data.Length == 0)
-                return string.Empty;
-
-            using (var memoryStream = new MemoryStream(data))
-            {
-                using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
-                using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-        }
-
-        // The send and get message functions:
-        public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
-        {
-            // The function gets a socket and 2 strings: 'typeOfMessage' which represents the type of the message
-            // and 'data' which contains the data which have to be transferred.
-            // The function creates a message in a byte array format and sends it to the client.
-            // The message format: Byte{typeOfMessage(string), dataLength(int), data(string), "EOM"}
-            string endOfMessage = "EOM";
-            string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
-            byte[] messageBytes;
+            // Input: A string which represent the message and the socket.
+            // Output: The function sends the message via the given socket.
+            byte[] buffer = Encoding.UTF8.GetBytes($"{typeOfMessage}|{message.Length}|{message}|EOM"); // EOM - "end of message"
 
             // Only compress if it's TCP
-            if (clientSocket.ProtocolType == ProtocolType.Tcp)
+            switch (socket.ProtocolType)
             {
-                messageBytes = this.Compress(message);
-                clientSocket.Send(messageBytes);
-            }
-            else
-            {
-                // For UDP, send uncompressed data
-                messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
-                // A test for analysing the length of the message.
-                MessageBox.Show($"The total length of message: {messageBytes.Length}");
-                clientSocket.SendTo(messageBytes, this.serverUdpEndPoint);
+                case ProtocolType.Tcp:
+                    socket.Send(buffer);
+                    break;
+                case ProtocolType.Udp:
+                    socket.SendTo(buffer, new IPEndPoint(IPAddress.Parse(this.serverIpAddr), 1847));
+                    break;
             }
         }
-        public List<object> GetMessage(Socket clientSocket)
+        public void SendTCPMessageToClient(string message, string typeOfMessage)
         {
-            // The function gets a socket.
-            // The function receives a message from the socket and returns the message in parts as a list object.
-            byte[] buffer = new byte[65536];
-            int bytesRead;
-            EndPoint remoteEndPoint = null;
-
-            if (clientSocket.ProtocolType == ProtocolType.Udp)
-            {
-                // For UDP, we need to use remoteEndPoint to receive data
-                remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                bytesRead = clientSocket.ReceiveFrom(buffer, ref remoteEndPoint);
-            }
-            else
-            {
-                // For TCP, use regular Receive
-                bytesRead = clientSocket.Receive(buffer);
-            }
-
-            // Process received data
-            byte[] actualData = new byte[bytesRead];
-            Array.Copy(buffer, actualData, bytesRead);
-
-            try
-            {
-                string decodedMessage;
-                if (clientSocket.ProtocolType == ProtocolType.Tcp)
-                {
-                    // Decompress TCP messages
-                    decodedMessage = this.Decompress(actualData);
-                }
-                else
-                {
-                    // Don't decompress UDP messages
-                    decodedMessage = System.Text.Encoding.UTF8.GetString(actualData);
-                }
-
-                string[] messageParts = decodedMessage.Split('|');
-
-                // Validate message format
-                if (messageParts.Length != 4)
-                {
-                    throw new Exception("Error: The message isn't in the right format!");
-                }
-                if (messageParts[3] != "EOM")
-                {
-                    throw new Exception("End of message not received correctly. The message is cut.");
-                }
-
-                // Create return list
-                List<object> messagePartsList = new List<object>
-        {
-            messageParts[0],                    // Message type
-            int.Parse(messageParts[1]),         // Data length
-            messageParts[2],                    // Data content
-            messageParts[3]                     // End of message marker
-        };
-
-                if (clientSocket.ProtocolType == ProtocolType.Udp)
-                {
-                    // For UDP, also store the sender's endpoint
-                    messagePartsList.Add(remoteEndPoint);
-                }
-
-                return messagePartsList;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error processing message: {ex.Message}");
-            }
+            // Input: A string which represent the message.
+            // Output: The function sends the message via the tcp socket.
+            this.SendMessageToClient(message, typeOfMessage, this.tcpSocket);
         }
+        public void SendUDPMessageToClient(string message, string typeOfMessage)
+        {
+            // Input: A string which represent the message.
+            // Output: The function sends the message via the tcp socket.
+            this.SendMessageToClient(message, typeOfMessage, this.udpSocket);
+        }
+
+        // Getting basic messages functions:
+        private List<object> OrderMessage(string message)
+        {
+            // The function gets a string which represent a message received from the client.
+            // The fucntion returns the message as a list object which contains the message by it's parameters.
+            string[] messageParts = message.Split('|');
+
+            // Validate message format
+            if (messageParts.Length != 4)
+            {
+                throw new Exception("The message isn't in the right format!");
+            }
+            if (messageParts[3] != "EOM")
+            {
+                throw new Exception("End of message wasn't fully received");
+            }
+
+            List<object> messagePartsList = new List<object>
+                {
+                    messageParts[0],                    // Message type
+                    int.Parse(messageParts[1]),         // Data length
+                    messageParts[2],                    // Data content
+                    messageParts[3]                     // End of message marker
+                };
+
+            return messagePartsList;
+        }
+        public List<object> GetTCPMessageFromClient()
+        {
+            // Input: Nothing.
+            // Output: The received message from the client via he tcp socket as a list of parameters.
+            byte[] buffer = new byte[4096];
+            int receivedBytes = this.tcpSocket.Receive(buffer);
+            return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
+        }
+        public List<object> GetUDPMessageFromClient()
+        {
+            // Input: Nothing.
+            // Output: The received message from the client via the udp socket as a list of parameters.
+            byte[] buffer = new byte[4096];
+            EndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            int receivedBytes = this.udpSocket.ReceiveFrom(buffer, ref remoteEndPoint);
+            return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
+        }
+
 
 
         // Sending frame functions:

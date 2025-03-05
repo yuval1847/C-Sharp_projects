@@ -43,10 +43,10 @@ namespace ExtremLink_Server.Classes
         }
         
         // A string which represent the respond of the client respond:
-        private string clientRespond;
-        public string ClientRespond
+        private string respond;
+        public string Respond
         {
-            get { return this.clientRespond; }
+            get { return this.respond; }
         }
 
         // A client object which repreesnt the attacker client:
@@ -56,49 +56,21 @@ namespace ExtremLink_Server.Classes
             get { return this.attacker; }
         }
 
-        // A client obkect which represent the victim client:
+        // A client object which represent the victim client:
         private Client victim;
         public Client Victim
         {
             get { return this.victim; }
         }
 
-        // A client objects which represent temp client before receiving it's rule.
-        private Client temp1;
 
         public Server()
         {
-            this.clientRespond = "";
+            this.respond = "";
             this.serverIpAddress = this.FindIpAddress();
-            temp1 = new Client(this.serverIpAddress);
-            temp1.ConnectToClient();
-            List<object> ruleMessage = temp1.GetTCPMessageFromClient();
-            if (ruleMessage[2] == "attacker")
-            {
-                this.attacker = temp1;
-
-            }
-            else
-            {
-                this.victim = temp1;
-            }
-
-            /*
-            // Create UDP socket
-            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), 1847));
-            // Create TCP socket
-            this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), 1234));
-            this.tcpSocket.Listen(1);
-            Console.WriteLine("Waiting for client to connect...");
-            this.clientTcpSocket = this.tcpSocket.Accept();
-            Console.WriteLine("Client connected.");
-            this.clientIpAddress = FindClientIpAddress(this.clientTcpSocket);
-            this.clientEndPoint = new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847);
-            */
         }
 
+        // Connecting functions:
         private string FindIpAddress()
         {
             // The function gets nothing.
@@ -106,18 +78,34 @@ namespace ExtremLink_Server.Classes
             IPAddress[] localIpsAddr = Dns.GetHostAddresses(Dns.GetHostName());
             return Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
         }
-        public string FindClientIpAddress(Socket clientSocket)
+        public void ConnectToClients()
         {
-            // The function gets a socket.
-            // The function returns the socket's client's ip.
-            var remoteEndPoint = clientSocket?.RemoteEndPoint as IPEndPoint;
-            return remoteEndPoint.Address.ToString();
+            // Input: Nothing.
+            // Output: The function wait for clients (both attacker and victims) to connect to the server.
+            Client temp1 = new Client(this.serverIpAddress);
+            temp1.ConnectToClient();
+            List<object> ruleMessage = temp1.GetTCPMessageFromClient();
+            switch (ruleMessage[2])
+            {
+                case "attacker":
+                    this.attacker = temp1;
+                    this.victim = new Client(this.serverIpAddress);
+                    this.victim.ConnectToClient();
+                    break;
+                case "victim":
+                    this.victim = temp1;
+                    this.attacker = new Client(this.serverIpAddress);
+                    this.attacker.ConnectToClient();
+                    break;
+            }
         }
+
+
+        // A function which starts the 
         public void Start()
         {
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
-            Console.WriteLine("Server started on UDP port 1847 and TCP port 1234.");
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
         }
@@ -140,6 +128,7 @@ namespace ExtremLink_Server.Classes
             // The function gets nothing.
             // The fucntion handle with different type of TCP packets which are sent by the client.
             // The types of message are:
+            // ~ - Rule choosing
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling

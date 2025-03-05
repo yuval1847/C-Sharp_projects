@@ -42,10 +42,12 @@ namespace ExtremLink_Client.Pages
                 case TypeOfClient.Attacker:
                     Attacker.AttackerInstance.ConnectToServer(serverIpAddr);
                     Attacker.AttackerInstance.Start();
+                    Attacker.AttackerInstance.SendTCPMessageToClient("attacker", "~");
                     break;
                 case TypeOfClient.Victim:
                     Victim.VictimInstance.ConnectToServer(serverIpAddr);
                     Victim.VictimInstance.Start();
+                    Victim.VictimInstance.SendTCPMessageToClient("victim", "~");
                     break;
             }
             this.contentMain.Content = new LoginPage(this.contentMain);

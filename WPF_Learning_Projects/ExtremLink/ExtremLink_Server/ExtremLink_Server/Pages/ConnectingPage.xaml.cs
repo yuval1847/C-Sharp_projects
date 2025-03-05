@@ -50,11 +50,12 @@ namespace ExtremLink_Server.Pages
             // The function gets nothing.
             // The function start the connection.
             this.server = new Server();
-            // used to execute the text changing on the UI thread because it's a different thread.
             Dispatcher.Invoke(() =>
             {
-                waitingTextBlock.Text = "Waiting for client to login...";
+                waitingTextBlock.Text = "Waiting for attacker and victim to login...";
             });
+            this.server.ConnectToClients();
+
             Thread clientMessagesHandlingThread = new Thread(() =>
             {
                 this.server.Start();
