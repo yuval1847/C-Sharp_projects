@@ -71,8 +71,8 @@ namespace ExtremLink_Client.Classes
         public Client()
         {
             // Note: The server IP address you will change in the implementation of the classes of attacker and victim themself.
-            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         }
 
         public void ConnectToServer(string serverIpAddr)

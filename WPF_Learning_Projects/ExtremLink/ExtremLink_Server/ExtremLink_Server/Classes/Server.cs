@@ -42,74 +42,48 @@ namespace ExtremLink_Server.Classes
             get { return this.serverIpAddress; }
         }
         
-        // A string which represent the IP address of the attacker.
-        private string attackerIpAddress;
-        public string AttackerIpAddress
+        // A string which represent the respond of the client respond:
+        private string clientRespond;
+        public string ClientRespond
         {
-            get { return this.attackerIpAddress; }
+            get { return this.clientRespond; }
         }
 
-        // A string which represent the IP address of the victim.
-        private string victimIpAddress;
-        public string VictimIpAddress
+        // A client object which repreesnt the attacker client:
+        private Client attacker;
+        public Client Attacker
         {
-            get { return this.victimIpAddress; }
+            get { return this.attacker; }
         }
 
-        // 
-        private Socket udpSocket;
-        private Socket tcpSocket;
-        
-        
-        private List<object> message;
-        private string respond;
-        private string udpRespond;
-        private BitmapImage currentFrame;
-        private EndPoint clientEndPoint;
-        public readonly object fileLock = new object();
-
-        
-        public Socket UdpSocket 
-        { 
-            get { return this.udpSocket; }
-            set { this.udpSocket = value; }
-        }
-        public Socket TcpSocket
+        // A client obkect which represent the victim client:
+        private Client victim;
+        public Client Victim
         {
-            get { return this.tcpSocket; }
-            set { this.tcpSocket = value; }
-        }
-        public Socket ClientTcpSocket
-        {
-            get { return this.clientTcpSocket; }
-            set {this.clientTcpSocket = value;}
-        }
-        public string Respond
-        {
-            get { return this.respond; }
-            set { this.respond = value; }
-        }
-        public string UdpRespond
-        {
-            get { return this.udpRespond; }
-            set { this.udpRespond = value; }
-        }
-        public string ClientIpAddress
-        {
-            get { return this.clientIpAddress; }
-            set { this.clientIpAddress = value; }
-        }
-        public BitmapImage CurrentFrame
-        {
-            get { return this.currentFrame; }
-            set { this.currentFrame = value; }
+            get { return this.victim; }
         }
 
+        // A client objects which represent temp client before receiving it's rule.
+        private Client temp1;
 
         public Server()
         {
-            this.respond = "";
-            FindIpAddress();
+            this.clientRespond = "";
+            this.serverIpAddress = this.FindIpAddress();
+            temp1 = new Client(this.serverIpAddress);
+            temp1.ConnectToClient();
+            List<object> ruleMessage = temp1.GetTCPMessageFromClient();
+            if (ruleMessage[2] == "attacker")
+            {
+                this.attacker = temp1;
+
+            }
+            else
+            {
+                this.victim = temp1;
+            }
+
+            /*
             // Create UDP socket
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), 1847));
@@ -122,15 +96,15 @@ namespace ExtremLink_Server.Classes
             Console.WriteLine("Client connected.");
             this.clientIpAddress = FindClientIpAddress(this.clientTcpSocket);
             this.clientEndPoint = new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847);
+            */
         }
 
-        public void FindIpAddress()
+        private string FindIpAddress()
         {
             // The function gets nothing.
             // The function sets the server's ip address according to the local ip address.
             IPAddress[] localIpsAddr = Dns.GetHostAddresses(Dns.GetHostName());
-            this.serverIpAddress = Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
-            MessageBox.Show($"Server IP: {this.serverIpAddress}", "IP found!");
+            return Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
         }
         public string FindClientIpAddress(Socket clientSocket)
         {

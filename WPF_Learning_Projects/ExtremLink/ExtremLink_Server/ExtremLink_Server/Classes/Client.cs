@@ -6,11 +6,12 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Markup;
 
 namespace ExtremLink_Server.Classes
 {
-    internal class Client
+    public class Client
     {
         //****************************************************************************
         // A class which represent a client (attacker or victim) from the server side.
@@ -22,6 +23,9 @@ namespace ExtremLink_Server.Classes
         protected readonly int TCP_PORT = 1234;
         protected readonly int UDP_PORT = 1847;
 
+        // A string which represent the IP address of the server:
+        private string serverIpAddress;
+
         // A string which represent the IP address of this client:
         private string ipAddress;
         public string IpAddress
@@ -29,7 +33,7 @@ namespace ExtremLink_Server.Classes
             get { return this.ipAddress; }
         }
 
-        // A socket object of TCP:
+        // A socket object of TCP to communicate with the client:
         private Socket tcpSocket;
         public Socket TcpSocket
         {
@@ -37,7 +41,7 @@ namespace ExtremLink_Server.Classes
             set { this.tcpSocket = value; }
         }
 
-        // A socket object of UDP:
+        // A socket object of UDP to communicate with the client:
         private Socket udpSocket;
         public Socket UdpSocket
         {
@@ -45,11 +49,33 @@ namespace ExtremLink_Server.Classes
             set { this.udpSocket = value; }
         }
 
-        public Client(string ipAddress)
+        public Client(string serverIpAddress)
         {
-            this.ipAddress = ipAddress;
+            this.serverIpAddress = serverIpAddress;
         }
 
+        // Connecting function:
+        public string FindClientIpAddress(Socket clientSocket)
+        {
+            // The function gets a socket.
+            // The function returns the socket's client's ip.
+            var remoteEndPoint = clientSocket?.RemoteEndPoint as IPEndPoint;
+            return remoteEndPoint.Address.ToString();
+        }
+        public void ConnectToClient()
+        {
+            // Input: The function gets nothing.
+            // Output: The function waits for client to connect to the server.
+            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), UDP_PORT));
+            this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), TCP_PORT));
+            this.tcpSocket.Listen(1);
+            Socket tempTcpClientSocket = this.tcpSocket.Accept();
+            this.serverIpAddress = this.FindClientIpAddress(tempTcpClientSocket);
+        }
+
+        
 
         // Sending basic messages functions:
         private void SendMessageToClient(string message, string typeOfMessage, Socket socket)
