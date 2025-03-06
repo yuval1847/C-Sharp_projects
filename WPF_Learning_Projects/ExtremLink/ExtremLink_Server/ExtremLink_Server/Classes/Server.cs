@@ -27,6 +27,7 @@ using System.Net.NetworkInformation;
 using System.Windows.Controls;
 using System.Diagnostics;
 using ExtremLink_Server.Classes;
+using System.Net.Http.Headers;
 
 namespace ExtremLink_Server.Classes
 {
@@ -64,7 +65,21 @@ namespace ExtremLink_Server.Classes
         }
 
 
-        public Server()
+        // Singleton behavior:
+        private static Server serverInstance = null;
+        public static Server ServerInstance
+        {
+            get
+            {
+                if (serverInstance == null)
+                {
+                    serverInstance = new Server();
+                }
+                return serverInstance;
+            }
+        }
+
+        private Server()
         {
             this.respond = "";
             this.serverIpAddress = this.FindIpAddress();
@@ -101,13 +116,14 @@ namespace ExtremLink_Server.Classes
         }
 
 
-        // A function which starts the 
+        // A function which starts the messages handlers
         public void Start()
         {
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
             Task.Run(() => this.HandleUdpCommunication());
-            Task.Run(() => this.HandleTcpCommunication());
+            Task.Run(() => this.HandleAttackerTcpCommunication());
+            Task.Run(() => this.HandleVictimTcpCommunication());
         }
 
 
@@ -123,10 +139,35 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-        private async Task HandleTcpCommunication()
+        private async Task HandleAttackerTcpCommunication()
         {
             // The function gets nothing.
-            // The fucntion handle with different type of TCP packets which are sent by the client.
+            // The fucntion handle with different type of TCP packets which are sent by the attacker client.
+            // The types of message are:
+            // ~ - Rule choosing
+            // ! - Database functionality
+            // & - Frames handling
+            // % - Mouse handling
+            // $ - Sessions handling
+            while (true)
+            {
+                lock (this)
+                {
+                    List<object> message = this.attacker.GetTCPMessageFromClient();
+                    string data = (string)message[2];
+                    switch (message[0])
+                    {
+                        case "!":
+                            this.HandleUsersDatabaseMessages(data, TypeOfClient.attacker);
+                            break;
+                    }
+                }
+            }
+        }
+        private async Task HandleVictimTcpCommunication()
+        {
+            // The function gets nothing.
+            // The fucntion handle with different type of TCP packets which are sent by the victim client.
             // The types of message are:
             // ~ - Rule choosing
             // ! - Database functionality
@@ -136,48 +177,12 @@ namespace ExtremLink_Server.Classes
             while (true)
             {
                 lock (this){
-                    List<object> message = GetMessage(this.clientTcpSocket);
+                    List<object> message = this.victim.GetTCPMessageFromClient();
                     string data = (string)message[2];
                     switch (message[0])
                     {
                         case "!":
-                            if (data.Contains("login"))
-                            {
-                                data = data.Replace("login,", "");
-                                string username = data.Split(",")[0].Split("=")[1];
-                                string password = data.Split(",")[1].Split("=")[1];
-
-                                if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
-                                {
-                                    this.SendMessage(this.clientTcpSocket, "!", "Exist");
-                                    User.UserInstance.UserName = username;
-                                    this.respond = "Exist";
-                                }
-                                else
-                                {
-                                    this.SendMessage(this.clientTcpSocket, "!", "NotExist");
-                                    this.respond = "NotExist";
-                                }
-                            }
-
-                            else if (data.Contains("signup"))
-                            {
-                                data = data.Replace("signup,", "");
-                                string[] parametersArr = data.Split(",");
-                                for (int i = 0; i < 7; i++)
-                                {
-                                    parametersArr[i] = parametersArr[i].Split("=")[1];
-                                }
-
-                                if (this.AddUser(parametersArr, "ExtremLinkDB.mdf"))
-                                {
-                                    this.SendMessage(this.clientTcpSocket, "!", "SuccessfullyAdded");
-                                }
-                                else
-                                {
-                                    this.SendMessage(this.clientTcpSocket, "!", "NotAdded");
-                                }
-                            }
+                            this.HandleUsersDatabaseMessages(data, TypeOfClient.victim);
                             break;
                         case "&":
                             break;
@@ -185,133 +190,95 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-        // Compress and decompress functions:
-        public byte[] Compress(string data)
+        
+        
+        // Handling clients' users managment messages function:       
+        private void HandleLoginMessages(string data, TypeOfClient typeOfClient)
         {
-            // The function gets a string.
-            // The function return the given string after compressing in bytes format.
-            if (string.IsNullOrEmpty(data))
-                return new byte[0];
-
-            byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-
-            using (var memoryStream = new MemoryStream())
+            // Input: A string which represents a login message and the type of the client.
+            // Output: The function handles with the login message.
+            data = data.Replace("login,", "");
+            string username = data.Split(",")[0].Split("=")[1];
+            string password = data.Split(",")[1].Split("=")[1];
+            if (this.IsUserExist(username, password, "ExtremLinkDB.mdf"))
             {
-                using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+                switch (typeOfClient)
                 {
-                    gzipStream.Write(dataBytes, 0, dataBytes.Length);
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", "Exist");
+                        this.attacker.User.UserName = username;
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", "Exist");
+                        this.victim.User.UserName = username;
+                        break;
                 }
-                return memoryStream.ToArray();
-            }
-        }
-        public string Decompress(byte[] data)
-        {
-            // The function gets a byte array.
-            // The function return the given byte array as a string after decompressing.
-            if (data == null || data.Length == 0)
-                return string.Empty;
-
-            using (var memoryStream = new MemoryStream(data))
-            {
-                using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
-                using (var reader = new StreamReader(gzipStream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-        }
-
-
-        // The send and get message functions
-        public void SendMessage(Socket clientSocket, string typeOfMessage, string data)
-        {
-            // The function gets a socket and 2 strings: 'typeOfMessage' which represents the type of the message
-            // and 'data' which contains the data which have to be transferred.
-            // The function creates a message in a byte array format and sends it to the client.
-            // The message format: Byte{typeOfMessage(string), dataLength(int), data(string), "EOM"}
-            string endOfMessage = "EOM";
-            string message = $"{typeOfMessage}|{data.Length}|{data}|{endOfMessage}";
-            byte[] messageBytes;
-
-            // Only compress if it's TCP
-            if (clientSocket.ProtocolType == ProtocolType.Tcp)
-            {
-                messageBytes = this.Compress(message);
-                clientSocket.Send(messageBytes);
             }
             else
             {
-                // For UDP, send uncompressed data
-                messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
-                clientSocket.SendTo(messageBytes, new IPEndPoint(IPAddress.Parse(this.clientIpAddress), 1847));
+                switch (typeOfClient)
+                {
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", "NotExist");
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", "NotExist");
+                        break;
+                }
             }
         }
-        public List<object> GetMessage(Socket clientSocket)
+        private void HandleSignUpMessage(string data, TypeOfClient typeOfClient)
         {
-            // The function gets a socket.
-            // The function receives a message from the socket and returns the message in parts as a list object.
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            EndPoint remoteEndPoint = null;
-
-            if (clientSocket.ProtocolType == ProtocolType.Udp)
+            // Input: A string which represents a sign-up message and the type of the client.
+            // Output: The function handles with the sign-up message.
+            data = data.Replace("signup,", "");
+            string[] parametersArr = data.Split(",");
+            for (int i = 0; i < 7; i++)
             {
-                // For UDP, we need to use remoteEndPoint to receive data
-                remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                bytesRead = clientSocket.ReceiveFrom(buffer, ref remoteEndPoint);
+                parametersArr[i] = parametersArr[i].Split("=")[1];
+            }
+
+            if (this.AddUser(parametersArr, "ExtremLinkDB.mdf"))
+            {
+                switch (typeOfClient)
+                {
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", "SuccessfullyAdded");
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", "SuccessfullyAdded");
+                        break;
+                }
             }
             else
             {
-                // For TCP, use regular Receive
-                bytesRead = clientSocket.Receive(buffer);
-            }
-
-            // Process received data
-            byte[] actualData = new byte[bytesRead];
-            Array.Copy(buffer, actualData, bytesRead);
-
-            try
-            {
-                string decodedMessage;
-                if (clientSocket.ProtocolType == ProtocolType.Tcp)
+                switch (typeOfClient)
                 {
-                    // Decompress TCP messages
-                    decodedMessage = this.Decompress(actualData);
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", "NotAdded");
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", "NotAdded");
+                        break;
                 }
-                else
-                {
-                    // Don't decompress UDP messages
-                    decodedMessage = System.Text.Encoding.UTF8.GetString(actualData);
-                }
-
-                string[] messageParts = decodedMessage.Split('|');
-
-                // Validate message format
-                if (messageParts.Length != 4)
-                {
-                    throw new Exception("Error: The message isn't in the right format!");
-                }
-                if (messageParts[3] != "EOM")
-                {
-                    throw new Exception("End of message not received correctly. The message is cut.");
-                }
-
-                // Create return list
-                List<object> messagePartsList = new List<object>
-                {
-                    messageParts[0],                    // Message type
-                    int.Parse(messageParts[1]),         // Data length
-                    messageParts[2],                    // Data content
-                    messageParts[3]                     // End of message marker
-                };
-
-                return messagePartsList;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error processing message: {ex.Message}");
             }
         }
+        private void HandleUsersDatabaseMessages(string data, TypeOfClient typeOfClient)
+        {
+            // Input: A string which represents a message about users managment from the client and the type of the client.
+            // Output: The function handles with the message.
+            if (data.Contains("login"))
+            {
+                this.HandleLoginMessages(data, typeOfClient);
+            }
+
+            else if (data.Contains("signup"))
+            {
+                this.HandleSignUpMessage(data, typeOfClient);
+            }
+        }
+
+
 
 
         public BitmapImage GetImageOfPNGFile(string fileName)

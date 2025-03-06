@@ -43,35 +43,37 @@ namespace ExtremLink_Client.Pages
         {
             // The function called by clicking on the login button
             // The fucntion gets nothing.
-            // The function send a message to the server via the client in order to login 
-            // to the database.
+            // The function send a login request message to the server via the client in order to login as a user
+            string loginRequest = $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}";
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
-                    Attacker.AttackerInstance.SendMessage(Attacker.AttackerInstance.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+                    Attacker.AttackerInstance.SendTCPMessageToClient("!", loginRequest);
+                    Thread.Sleep(750);
+                    if (Attacker.AttackerInstance.ServerRespond == "Exist")
+                    {
+                        User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
+                        this.contentMain.Content = new ControlPage(this.contentMain);
+                    }
+                    else
+                    {
+                        this.wrongLoginTextBlock.Visibility = Visibility.Visible;
+                    }
                     break;
                 
                 case TypeOfClient.Victim:
-                    Victim.VictimInstance.SendMessage(Victim.VictimInstance.TCPSocket, "!", $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}");
+                    Victim.VictimInstance.SendTCPMessageToClient("!", loginRequest);
+                    Thread.Sleep(750);
+                    if (Victim.VictimInstance.ServerRespond == "Exist")
+                    {
+                        User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
+                        this.contentMain.Content = new SharingScreenPage(this.contentMain);
+                    }
+                    else
+                    {
+                        this.wrongLoginTextBlock.Visibility = Visibility.Visible;
+                    }
                     break;
-            }
-            // Waiting for reciving the server respond.
-            Thread.Sleep(750);
-
-
-            if (User.UserInstance.TypeOfClient == TypeOfClient.Attacker && Attacker.AttackerInstance.ServerRespond == "Exist")
-            {
-                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
-                this.contentMain.Content = new ControlPage(this.contentMain);
-            }
-            else if (User.UserInstance.TypeOfClient == TypeOfClient.Victim &&  Victim.VictimInstance.ServerRespond == "Exist")
-            {
-                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
-                this.contentMain.Content = new SharingScreenPage(this.contentMain);
-            }
-            else
-            {
-                this.wrongLoginTextBlock.Visibility = Visibility.Visible;
             }
         }
 

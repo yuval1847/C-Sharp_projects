@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,7 +23,6 @@ namespace ExtremLink_Server.Pages
     /// </summary>
     public partial class ConnectingPage : UserControl
     {
-        private Server server;
         private ContentControl contentMain;
         private AutoResetEvent serverResponseEvent;
 
@@ -49,17 +49,16 @@ namespace ExtremLink_Server.Pages
         {
             // The function gets nothing.
             // The function start the connection.
-            this.server = new Server();
             Dispatcher.Invoke(() =>
             {
                 waitingTextBlock.Text = "Waiting for attacker and victim to login...";
             });
-            this.server.ConnectToClients();
+
+            Server.ServerInstance.ConnectToClients();
+            Server.ServerInstance.Start();
 
             Thread clientMessagesHandlingThread = new Thread(() =>
             {
-                this.server.Start();
-                // Check for a change in server response (you may need a mechanism to monitor server response change)
                 while (true)
                 {
                     if (this.server.Respond == "Exist")

@@ -267,13 +267,13 @@ namespace ExtremLink_Client.Classes
                     break;
             }
         }
-        public void SendTCPMessageToClient(string message, string typeOfMessage)
+        public void SendTCPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.
             this.SendMessageToClient(message, typeOfMessage, this.tcpSocket);
         }
-        public void SendUDPMessageToClient(string message, string typeOfMessage)
+        public void SendUDPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.

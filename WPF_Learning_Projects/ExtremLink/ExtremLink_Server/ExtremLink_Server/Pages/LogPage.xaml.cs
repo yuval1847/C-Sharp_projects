@@ -24,5 +24,6 @@ namespace ExtremLink_Server.Pages
         {
             InitializeComponent();
         }
+
     }
 }

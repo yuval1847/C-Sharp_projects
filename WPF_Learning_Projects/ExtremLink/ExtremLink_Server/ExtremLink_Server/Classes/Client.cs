@@ -11,6 +11,12 @@ using System.Windows.Markup;
 
 namespace ExtremLink_Server.Classes
 {
+    public enum TypeOfClient
+    {
+        attacker,
+        victim
+    }
+
     public class Client
     {
         //****************************************************************************
@@ -51,11 +57,20 @@ namespace ExtremLink_Server.Classes
 
         // A user object which represent the user of the client:
         private User user;
-        private User User 
+        public User User 
         {
             get { return this.user; }
             set { this.user = value; }
         }
+
+        // A TypeOfClient parameter which represent the type of the client:
+        private TypeOfClient typeOfClient;
+        public TypeOfClient TypeOfClient 
+        {
+            get { return this.typeOfClient; }
+            set { this.typeOfClient = value; }
+        }
+
 
         public Client(string serverIpAddress)
         {
@@ -104,13 +119,13 @@ namespace ExtremLink_Server.Classes
                     break;
             }
         }
-        public void SendTCPMessageToClient(string message, string typeOfMessage)
+        public void SendTCPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.
             this.SendMessageToClient(message, typeOfMessage, this.tcpSocket);
         }
-        public void SendUDPMessageToClient(string message, string typeOfMessage)
+        public void SendUDPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.

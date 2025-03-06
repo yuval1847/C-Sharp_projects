@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExtremLink_Server.Classes
 {
-    internal class User
+    public class User
     {
         /*
         A class which represent the client's user

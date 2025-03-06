@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\obj\Debug\net6.0-windows\
 ExtremLink_Server
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\App.xaml
-8-1004999014
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink\ExtremLink_Server\ExtremLink_Server\App.xaml
+9968637719
 
-14-1637124405
-2011599878121
-CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\ControlPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;Pages\SessionsRecordsPage.xaml;
+171483058922
+201857767818
+CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;MainWindow.xaml;Pages\ConnectingPage.xaml;Pages\ControlPage.xaml;Pages\LoginPage.xaml;Pages\LogPage.xaml;Pages\OpeningPage.xaml;Pages\SessionsRecordsPage.xaml;
 
-False
+True
 
