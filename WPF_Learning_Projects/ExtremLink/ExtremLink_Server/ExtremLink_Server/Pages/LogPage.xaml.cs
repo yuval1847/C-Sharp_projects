@@ -20,10 +20,24 @@ namespace ExtremLink_Server.Pages
     /// </summary>
     public partial class LogPage : UserControl
     {
-        public LogPage()
+
+        // Attributes:
+        private ContentControl contentMain;
+        public ContentControl ContentMain
         {
+            get { return this.contentMain; }
+        }
+
+
+        public LogPage(ContentControl contentMain)
+        {
+            this.contentMain = contentMain;
             InitializeComponent();
         }
 
+        private void ClearLogsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

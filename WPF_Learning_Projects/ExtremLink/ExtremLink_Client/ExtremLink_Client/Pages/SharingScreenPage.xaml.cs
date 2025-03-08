@@ -36,8 +36,6 @@ namespace ExtremLink_Client.Pages
         private Thread keyboardControllingThead;
         private bool isStreaming;
         private const string defaultPngFileOfFrame = "tempFrame.png";
-        private CustomMouse customMouse = CustomMouse.CustomMouseInstance;
-        private CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
 
         public ContentControl ContentMain
         {
@@ -102,18 +100,16 @@ namespace ExtremLink_Client.Pages
                     this.StartGettingControlled();
                     break;
 
-                case "StopSendFrames":
-                    this.isStreaming = false;
-                    this.StopGettingControlled();
-                    this.ChangeSharingScreenTitle("Sharing Screen Stoped");
-                    // Note: Here in this case change the page to the home page.
-                    this.contentMain.Content = new HomePage(contentMain);
-                    break;
-
                 case "PauseSendFrames":
                     this.isStreaming = false;
                     this.ChangeSharingScreenTitle("Sharing Screen Puased");
                     this.StopGettingControlled();
+                    break;
+                
+                case "StopSendFrames":
+                    this.isStreaming = false;
+                    this.StopGettingControlled();
+                    this.ChangeSharingScreenTitle("Sharing Screen Stoped");
                     break;
             }
         }
@@ -130,9 +126,8 @@ namespace ExtremLink_Client.Pages
                     var screen = CaptureScreen();
                     if (screen != null)
                     {
-                        this.client.SendFrame(screen);
+                        Victim.VictimInstance.SendFrame(screen);
                     }
-                    // MoveMouseToCoordinates(this.client.MouseX, this.client.MouseY);
                     // Around 1 FPS
                     // Note: try to use Task.delay intead.
                     Thread.Sleep(1000);
@@ -217,12 +212,6 @@ namespace ExtremLink_Client.Pages
                 int screenHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN);
                 int screenLeft = GetSystemMetrics(SM_XVIRTUALSCREEN);
                 int screenTop = GetSystemMetrics(SM_YVIRTUALSCREEN);
-                /*
-                int screenWidth = (int)System.Windows.SystemParameters.PrimaryScreenWidth * 2;
-                int screenHeight = (int)System.Windows.SystemParameters.PrimaryScreenHeight * 2;
-                int screenLeft = (int)System.Windows.SystemParameters.VirtualScreenLeft;
-                int screenTop = (int)System.Windows.SystemParameters.VirtualScreenTop;
-                */
 
 
                 IntPtr compatibleDC = CreateCompatibleDC(desktopDC);
@@ -278,7 +267,7 @@ namespace ExtremLink_Client.Pages
             // Ouput: The function starting the mouse control over the host itself.
             while (true)
             {
-                this.customMouse.ExecuteCurrentMouseCommand();
+                CustomMouseVictim.CustomMouseInstance.ExecuteCurrentMouseCommand();
                 Thread.Sleep(50);
             }
         }
@@ -290,7 +279,7 @@ namespace ExtremLink_Client.Pages
             // Output: The function starting the keyboard control over the host itself.
             while (true)
             {
-                this.customKeyboard.ExecuteCurrentKeyboardCommand();
+                CustomKeyboardVictim.CustomKeyboardInstance.ExecuteCurrentKeyboardCommand();
                 Thread.Sleep(20);
             }
         }

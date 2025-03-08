@@ -26,8 +26,8 @@ namespace ExtremLink_Server.Classes
         // Attributes:
 
         // Integer constants which represent the sockets' ports:
-        protected readonly int TCP_PORT = 1234;
-        protected readonly int UDP_PORT = 1847;
+        public readonly int TCP_PORT = 1234;
+        public readonly int UDP_PORT = 1847;
 
         // A string which represent the IP address of the server:
         private string serverIpAddress;
@@ -115,7 +115,7 @@ namespace ExtremLink_Server.Classes
                     socket.Send(buffer);
                     break;
                 case ProtocolType.Udp:
-                    socket.SendTo(buffer, new IPEndPoint(IPAddress.Parse(this.ipAddress), 1847));
+                    socket.SendTo(buffer, new IPEndPoint(IPAddress.Parse(this.ipAddress), UDP_PORT));
                     break;
             }
         }

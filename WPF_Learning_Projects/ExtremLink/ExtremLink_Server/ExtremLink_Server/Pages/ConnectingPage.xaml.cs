@@ -49,19 +49,19 @@ namespace ExtremLink_Server.Pages
         {
             // The function gets nothing.
             // The function start the connection.
-            Dispatcher.Invoke(() =>
-            {
-                waitingTextBlock.Text = "Waiting for attacker and victim to login...";
-            });
-
             Server.ServerInstance.ConnectToClients();
             Server.ServerInstance.Start();
+
+            Dispatcher.Invoke(() =>
+            {
+                waitingTextBlock.Text = "Waiting for attacker &\n victim to login...";
+            });
 
             Thread clientMessagesHandlingThread = new Thread(() =>
             {
                 while (true)
                 {
-                    if (this.server.Respond == "Exist")
+                    if (Server.ServerInstance.Attacker.User.UserName != "" && Server.ServerInstance.Victim.User.UserName != "")
                     {
                         this.serverResponseEvent.Set();
                         break;
@@ -76,7 +76,7 @@ namespace ExtremLink_Server.Pages
 
             Dispatcher.Invoke(() =>
             {
-                this.contentMain.Content = new ControlPage(this.contentMain, this.server);
+                this.contentMain.Content = new LogPage(this.contentMain);
             });
         }
     }

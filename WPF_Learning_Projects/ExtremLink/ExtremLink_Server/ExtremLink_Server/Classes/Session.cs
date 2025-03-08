@@ -137,6 +137,7 @@ namespace ExtremLink_Server.Classes
             SqlConnection conn = new SqlConnection(connectionString);
             return conn;
         }
+        /*
         public void UploadSessionToDatabase()
         {
             // Input: Nothing.
@@ -171,7 +172,7 @@ namespace ExtremLink_Server.Classes
                 }
             }
         }
-
+        */
         // Sending client sessions functions:
         
     }

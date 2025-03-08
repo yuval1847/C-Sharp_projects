@@ -63,10 +63,6 @@ namespace ExtremLink_Client.Classes
         // An Endpoint Object which contains the server's ip and port:
         protected EndPoint serverUdpEndPoint;
 
-        // Objects of mouse and keyboard:
-        protected CustomMouse customMouse = CustomMouse.CustomMouseInstance;
-        protected CustomKeyboard customKeyboard = CustomKeyboard.CustomKeyboardInstance;
-
 
         public Client()
         {
@@ -84,6 +80,7 @@ namespace ExtremLink_Client.Classes
             this.serverUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), UDP_PORT);
         }
 
+        /*
         public void Start()
         {
             // The function gets nothing.
@@ -247,7 +244,7 @@ namespace ExtremLink_Client.Classes
             
         }
 
-
+        */
 
         // Sending basic messages functions:
         private void SendMessageToClient(string message, string typeOfMessage, Socket socket)
@@ -267,6 +264,7 @@ namespace ExtremLink_Client.Classes
                     break;
             }
         }
+
         public void SendTCPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
@@ -324,93 +322,5 @@ namespace ExtremLink_Client.Classes
             int receivedBytes = this.udpSocket.ReceiveFrom(buffer, ref remoteEndPoint);
             return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
         }
-
-
-
-        // Sending frame functions:
-        private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
-        {
-            // The function gets a RenderTargetBitmap object.
-            // The function returns the given object as a byte array.
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(renderTarget));
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                encoder.Save(ms);
-                return ms.ToArray();
-            }
-        }
-        private void CreatePngImageFile(byte[] fileContent)
-        {
-            string fileName = "tempFrame.png";
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-
-            try
-            {
-                // Write the byte array to a file
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-                {
-                    fileStream.Write(fileContent, 0, fileContent.Length);
-                }
-
-                // MessageBox.Show($"File created successfully at: {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while creating the PNG file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private byte[] GetFileContent(string fileName)
-        {
-            try
-            {
-                // Read all bytes of the file into a byte array
-                byte[] fileContent = File.ReadAllBytes(fileName);
-                return fileContent;
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions such as file not found or permission issues
-                throw new IOException($"Failed to read file content: {ex.Message}", ex);
-            }
-        }
-        public void SendFrame(RenderTargetBitmap renderTarget)
-        {
-            // Convert RenderTargetBitmap to byte array
-            byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
-
-            // Create a temporary PNG file for debugging and future use
-            this.CreatePngImageFile(frameData);
-
-            // Get the file content
-            byte[] fileContent = GetFileContent("tempFrame.png");
-
-            // Define packet size (MTU-safe)
-            const int packetSize = 1400; // Keeping under the MTU limit
-            int totalPackets = (int)Math.Ceiling((double)fileContent.Length / packetSize);
-
-            // Generate a random stream ID to identify this data stream
-            int streamId = new Random().Next(1, int.MaxValue);
-
-            // Send packets
-            for (int i = 0; i < totalPackets; i++)
-            {
-                // Calculate packet bounds
-                int offset = i * packetSize;
-                int size = Math.Min(packetSize, fileContent.Length - offset);
-
-                // Construct packet (12 bytes of metadata + segment data)
-                byte[] packet = new byte[size + 12];
-                BitConverter.GetBytes(streamId).CopyTo(packet, 0);          // 4 bytes: Stream ID
-                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
-                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
-                Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
-
-                // Send packet
-                this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
-            }
-        }
-        
     }
 }

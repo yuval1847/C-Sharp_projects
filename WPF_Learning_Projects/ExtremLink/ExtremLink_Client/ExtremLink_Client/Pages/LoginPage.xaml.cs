@@ -49,31 +49,20 @@ namespace ExtremLink_Client.Pages
             {
                 case TypeOfClient.Attacker:
                     Attacker.AttackerInstance.SendTCPMessageToClient("!", loginRequest);
-                    Thread.Sleep(750);
-                    if (Attacker.AttackerInstance.ServerRespond == "Exist")
-                    {
-                        User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
-                        this.contentMain.Content = new ControlPage(this.contentMain);
-                    }
-                    else
-                    {
-                        this.wrongLoginTextBlock.Visibility = Visibility.Visible;
-                    }
                     break;
-                
                 case TypeOfClient.Victim:
                     Victim.VictimInstance.SendTCPMessageToClient("!", loginRequest);
-                    Thread.Sleep(750);
-                    if (Victim.VictimInstance.ServerRespond == "Exist")
-                    {
-                        User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
-                        this.contentMain.Content = new SharingScreenPage(this.contentMain);
-                    }
-                    else
-                    {
-                        this.wrongLoginTextBlock.Visibility = Visibility.Visible;
-                    }
                     break;
+            }
+            Thread.Sleep(750);
+            if (Attacker.AttackerInstance.ServerRespond == "Exist")
+            {
+                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
+                this.contentMain.Content = new HomePage(this.contentMain);
+            }
+            else
+            {
+                this.wrongLoginTextBlock.Visibility = Visibility.Visible;
             }
         }
 

@@ -111,7 +111,7 @@ namespace ExtremLink_Client.Pages
                 }
 
                 //this.ContentMain.Content = new LoginPage(this.ContentMain);
-                this.ContentMain.Content = new HomePage(this.ContentMain);
+                this.ContentMain.Content = new ChoosingRulePage(this.ContentMain);
             }
         }
     }

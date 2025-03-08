@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.IO;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace ExtremLink_Client.Classes
 {
@@ -46,6 +49,17 @@ namespace ExtremLink_Client.Classes
 
         }
 
+
+        public void Start()
+        {
+            // The function gets nothing.
+            // The function starts the tasks of the functions which handling with packets.
+            Console.WriteLine("Server started on TCP port 1234 and UDP port 1847.");
+            Task.Run(() => this.HandleUdpCommunication());
+            Task.Run(() => this.HandleTcpCommunication());
+        }
+
+
         // Sockets handlers:
         // Tcp handler function:
         private async Task HandleTcpCommunication()
@@ -61,7 +75,7 @@ namespace ExtremLink_Client.Classes
             {
                 lock (this)
                 {
-                    List<object> message = GetMessage(this.tcpSocket);
+                    List<object> message = this.GetTCPMessageFromClient();
                     string data = (string)message[2];
 
                     switch (message[0])
@@ -153,20 +167,20 @@ namespace ExtremLink_Client.Classes
             // Checking if changing position is needed
             if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                this.customMouse.ChangePosition((float)data.x, (float)data.y);
+                CustomMouseVictim.CustomMouseInstance.ChangePosition((float)data.x, (float)data.y);
             }
 
             // Updating the mouse parameters according to the given message
             switch ((string)data.type)
             {
                 case "mouseMove":
-                    this.customMouse.CurrentCommand = MouseCommands.Move;
+                    CustomMouseVictim.CustomMouseInstance.CurrentCommand = VictimMouseCommands.Move;
                     break;
                 case "mouseLeftPress":
-                    this.customMouse.CurrentCommand = MouseCommands.LeftPress;
+                    CustomMouseVictim.CustomMouseInstance.CurrentCommand = VictimMouseCommands.LeftPress;
                     break;
                 case "mouseRightPress":
-                    this.customMouse.CurrentCommand = MouseCommands.RightPress;
+                    CustomMouseVictim.CustomMouseInstance.CurrentCommand = VictimMouseCommands.RightPress;
                     break;
             }
         }
@@ -184,8 +198,8 @@ namespace ExtremLink_Client.Classes
             switch ((string)data.type)
             {
                 case "keyPress":
-                    this.customKeyboard.CurrentKeyboardCommand = KeyboardCommands.KeyPress;
-                    this.customKeyboard.CurrentKey = (Key)Enum.Parse(typeof(Key), data.PressedKey);
+                    CustomKeyboardVictim.CustomKeyboardInstance.CurrentKeyboardCommand = VictimKeyboardCommands.KeyPress;
+                    CustomKeyboardVictim.CustomKeyboardInstance.CurrentKey = (Key)Enum.Parse(typeof(Key), data.PressedKey);
                     break;
             }
         }
@@ -202,6 +216,93 @@ namespace ExtremLink_Client.Classes
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
 
+        }
+
+
+
+        // Sending frame functions:
+        private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
+        {
+            // The function gets a RenderTargetBitmap object.
+            // The function returns the given object as a byte array.
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                return ms.ToArray();
+            }
+        }
+        private void CreatePngImageFile(byte[] fileContent)
+        {
+            string fileName = "tempFrame.png";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            try
+            {
+                // Write the byte array to a file
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    fileStream.Write(fileContent, 0, fileContent.Length);
+                }
+
+                // MessageBox.Show($"File created successfully at: {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while creating the PNG file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private byte[] GetFileContent(string fileName)
+        {
+            try
+            {
+                // Read all bytes of the file into a byte array
+                byte[] fileContent = File.ReadAllBytes(fileName);
+                return fileContent;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions such as file not found or permission issues
+                throw new IOException($"Failed to read file content: {ex.Message}", ex);
+            }
+        }
+        public void SendFrame(RenderTargetBitmap renderTarget)
+        {
+            // Convert RenderTargetBitmap to byte array
+            byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
+
+            // Create a temporary PNG file for debugging and future use
+            this.CreatePngImageFile(frameData);
+
+            // Get the file content
+            byte[] fileContent = GetFileContent("tempFrame.png");
+
+            // Define packet size (MTU-safe)
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)fileContent.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            for (int i = 0; i < totalPackets; i++)
+            {
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, fileContent.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);          // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
+
+                // Send packet
+                this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
+            }
         }
     }
 }

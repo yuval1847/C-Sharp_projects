@@ -40,22 +40,29 @@ namespace ExtremLink_Client.Pages
         {
             if (this.IsAllParametersRight())
             {
+                string signupRequest = $"signup,firstname={fnCustomTextBox.customTB.Text}," +
+                    $"lastname={lnCustomTextBox.customTB.Text}," +
+                    $"city={cityCustomTextBox.customTB.Text}," +
+                    $"phone={phoneCustomTextBox.customTB.Text}," +
+                    $"username={usernameCustomTextBox.customTB.Text}," +
+                    $"password={passwordCustomTextBox.customTB.Text}," +
+                    $"email={emailCustomTextBox.customTB.Text}";
                 switch (User.UserInstance.TypeOfClient)
                 {
                     case TypeOfClient.Attacker:
-                        Attacker.AttackerInstance.SendMessage(Attacker.AttackerInstance.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
+                        Attacker.AttackerInstance.SendTCPMessageToClient("!", signupRequest);
                         break;
 
                     case TypeOfClient.Victim:
-                        Victim.VictimInstance.SendMessage(Victim.VictimInstance.TCPSocket, "!", $"signup,firstname={fnCustomTextBox.customTB.Text},lastname={lnCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text},username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text},email={emailCustomTextBox.customTB.Text}");
+                        Victim.VictimInstance.SendTCPMessageToClient("!", signupRequest);
                         break;
                 }
                 Thread.Sleep(500);
-                if (Attacker.AttackerInstance.ServerRespond == "SuccessfullyAdded" || Victim.VictimInstance.ServerRespond == "SuccessfullyAdded")
+                if ((User.UserInstance.TypeOfClient == TypeOfClient.Attacker && Attacker.AttackerInstance.ServerRespond == "SuccessfullyAdded") || (User.UserInstance.TypeOfClient == TypeOfClient.Victim && Victim.VictimInstance.ServerRespond == "SuccessfullyAdded"))
                 {
                     this.ContentMain.Content = new LoginPage(this.ContentMain);
                 }
-                else if (Attacker.AttackerInstance.ServerRespond == "NotAdded" || Victim.VictimInstance.ServerRespond == "NotAdded") 
+                else
                 {
                     errorSignUpTextBlock.Visibility = Visibility.Visible;
                 }

@@ -74,7 +74,7 @@ namespace ExtremLink_Client.Classes
         {
             // Input: The function gets a Client object and a string which represent the message.
             // Output: The function sends the server the message via the tcp socket.
-            client.SendMessage(client.TCPSocket, "$", message);
+            client.SendTCPMessageToClient("$", message);
         }
         
 

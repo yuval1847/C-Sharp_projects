@@ -7,6 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.IO;
+using System.Windows.Media.Imaging;
+using System.Windows;
+using System.Threading;
 
 namespace ExtremLink_Client.Classes
 {
@@ -24,6 +28,13 @@ namespace ExtremLink_Client.Classes
         public string VictimIpAddr
         {
             get { return this.victimIpAddr; }
+        }
+
+        // A BitmapImage object which represent the current frame:
+        private BitmapImage currentFrame;
+        public BitmapImage CurrentFrame
+        {
+            get { return this.currentFrame; }
         }
 
         // Singelton behavior:
@@ -47,6 +58,16 @@ namespace ExtremLink_Client.Classes
 
         }
 
+        public void Start()
+        {
+            // The function gets nothing.
+            // The function starts the tasks of the functions which handling with packets.
+            Console.WriteLine("Server started on TCP port 1234 and UDP port 1847.");
+            Task.Run(() => this.HandleUdpCommunication());
+            Task.Run(() => this.HandleTcpCommunication());
+        }
+
+
         // Sockets handlers:
         // Tcp handler function:
         private async Task HandleTcpCommunication()
@@ -62,7 +83,7 @@ namespace ExtremLink_Client.Classes
             {
                 lock (this)
                 {
-                    List<object> message = GetMessage(this.tcpSocket);
+                    List<object> message = this.GetTCPMessageFromClient();
                     string data = (string)message[2];
 
                     switch (message[0])
@@ -93,7 +114,11 @@ namespace ExtremLink_Client.Classes
             // Input: Nothing.
             // Output: The function handles with different types of messages over the udp socket.
             // & - Frames handling.
-            
+            while (true)
+            {
+                this.currentFrame = this.GetFrame();
+                Thread.Sleep(1000);
+            }
         }
 
 
@@ -155,5 +180,104 @@ namespace ExtremLink_Client.Classes
             JObject jsonData = (JObject)data;
 
         }
+
+
+        
+        // Getting frames functions:
+        public BitmapImage GetFrame()
+        {
+            try
+            {
+                // Store received packets
+                Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+                int streamId = -1;
+                int totalPackets = -1;
+
+                // Receive packets
+                while (receivedPackets.Count < totalPackets || totalPackets == -1)
+                {
+                    // Buffer size for each packet
+                    byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                    int bytesRead = this.udpSocket.Receive(buffer);
+
+                    // Extract metadata
+                    int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                    int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                    int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                    // Ensure packets are part of the same stream
+                    if (streamId == -1) streamId = receivedStreamId;
+                    if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                    if (streamId != receivedStreamId) continue;
+
+                    // Extract segment data
+                    byte[] segmentData = new byte[bytesRead - 12];
+                    Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                    // Store segment if not already received
+                    if (!receivedPackets.ContainsKey(packetIndex))
+                    {
+                        receivedPackets[packetIndex] = segmentData;
+                    }
+                }
+
+                // Reassemble the file content
+                using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
+                {
+                    for (int i = 0; i < totalPackets; i++)
+                    {
+                        if (receivedPackets.TryGetValue(i, out var segment))
+                        {
+                            fileStream.Write(segment, 0, segment.Length);
+                        }
+                        else
+                        {
+                            throw new Exception($"Missing packet {i}");
+                        }
+                    }
+                }
+
+                // Load the PNG file to a BitmapImage object
+                var bitmap = new BitmapImage();
+                using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.None;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                }
+                bitmap.Freeze();
+                return bitmap;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+        public BitmapImage GetImageOfPNGFile(string fileName)
+        {
+            // Load the PNG file as a BitmapImage
+            BitmapImage bitmapImage = new BitmapImage();
+            try
+            {
+                using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load the data into memory immediately
+                    bitmapImage.StreamSource = stream; // Use the FileStream as the source
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze(); // Make the BitmapImage thread-safe
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading frame: {ex.Message}");
+            }
+
+            return bitmapImage;
+        }
+
     }
 }
