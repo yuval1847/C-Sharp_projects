@@ -95,9 +95,10 @@ namespace ExtremLink_Server.Classes
             this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), UDP_PORT));
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), TCP_PORT));
-            this.tcpSocket.Listen(1);
+            this.tcpSocket.Listen();
             Socket tempTcpClientSocket = this.tcpSocket.Accept();
             this.ipAddress = this.FindClientIpAddress(tempTcpClientSocket);
+            this.tcpSocket = tempTcpClientSocket;
         }
 
 
@@ -163,9 +164,18 @@ namespace ExtremLink_Server.Classes
         {
             // Input: Nothing.
             // Output: The received message from the client via he tcp socket as a list of parameters.
-            byte[] buffer = new byte[4096];
-            int receivedBytes = this.tcpSocket.Receive(buffer);
-            return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
+            try
+            {
+                byte[] buffer = new byte[4096];
+                int receivedBytes = this.tcpSocket.Receive(buffer);
+                return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+            
         }
         public List<object> GetUDPMessageFromClient()
         {

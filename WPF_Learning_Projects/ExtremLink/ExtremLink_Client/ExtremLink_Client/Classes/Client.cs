@@ -247,7 +247,7 @@ namespace ExtremLink_Client.Classes
         */
 
         // Sending basic messages functions:
-        private void SendMessageToClient(string message, string typeOfMessage, Socket socket)
+        private void SendMessageToClient(string typeOfMessage, string message, Socket socket)
         {
             // Input: A string which represent the message and the socket.
             // Output: The function sends the message via the given socket.
@@ -269,13 +269,13 @@ namespace ExtremLink_Client.Classes
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.
-            this.SendMessageToClient(message, typeOfMessage, this.tcpSocket);
+            this.SendMessageToClient(typeOfMessage, message, this.tcpSocket);
         }
         public void SendUDPMessageToClient(string typeOfMessage, string message)
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.
-            this.SendMessageToClient(message, typeOfMessage, this.udpSocket);
+            this.SendMessageToClient(typeOfMessage, message, this.tcpSocket);
         }
 
         // Getting basic messages functions:

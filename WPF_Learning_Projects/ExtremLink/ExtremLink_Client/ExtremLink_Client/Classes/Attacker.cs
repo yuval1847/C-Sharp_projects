@@ -62,7 +62,6 @@ namespace ExtremLink_Client.Classes
         {
             // The function gets nothing.
             // The function starts the tasks of the functions which handling with packets.
-            Console.WriteLine("Server started on TCP port 1234 and UDP port 1847.");
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
         }

@@ -19,7 +19,14 @@
         <StackPanel HorizontalAlignment="Center">
             <TextBlock Text="Connect to Server" Foreground="#00CEC9" FontSize="60" FontWeight="Bold" Margin="0,100,0,0"/>
             <customWidgets:CustomTextBox x:Name="ServerIpCustomTextBox" Placeholder="Server's IP" Width="300" Height="60" Margin="0,100,0,0" VerticalAlignment="Center"/>
-            <customWidgets:CustomButton Placeholder="Connect" Width="180" Height="60" Margin="0,150,0,0" CustomClick="ConnectBtn_Click"/>
+            <Button x:Name="ConnectBtn" Content="Connect" Background="#034045" Foreground="White" Width="130" Height="50"
+                FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="0"
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,150,0,0"
+                Click="ConnectBtn_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

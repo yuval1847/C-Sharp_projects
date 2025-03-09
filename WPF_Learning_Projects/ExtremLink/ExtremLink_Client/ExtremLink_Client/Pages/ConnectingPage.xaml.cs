@@ -37,6 +37,7 @@ namespace ExtremLink_Client.Pages
             // The function gets nothing.
             // The function create an client instance and connect to the server.
             string serverIpAddr = ServerIpCustomTextBox.Text;
+            MessageBox.Show(serverIpAddr);
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
@@ -52,6 +53,5 @@ namespace ExtremLink_Client.Pages
             }
             this.contentMain.Content = new LoginPage(this.contentMain);
         }
-
     }
 }
