@@ -70,13 +70,15 @@ namespace ExtremLink_Client.Classes
             // session based on the session id.
             return $"{{\"Id\":\"{id}\"}}";
         }
+
+        /*
         private static void SendSessionRequestToServer(Client client, string message)
         {
             // Input: The function gets a Client object and a string which represent the message.
             // Output: The function sends the server the message via the tcp socket.
             client.SendTCPMessageToClient("$", message);
         }
-        
+        */
 
         public static void SendRequest(Client client, TypeOfRequest requestType, int id=0)
         {
@@ -95,7 +97,7 @@ namespace ExtremLink_Client.Classes
                     break;
             }
 
-            SendSessionRequestToServer(client, requestQuery);
+            // SendSessionRequestToServer(client, requestQuery);
         }
     }
 }

@@ -50,7 +50,12 @@ namespace ExtremLink_Server.Pages
             // The function gets nothing.
             // The function start the connection.
             Server.ServerInstance.ConnectToClients();
-            Server.ServerInstance.Start();
+
+            // Waiting until the server and the client will get connected to the clients.
+            while (!Server.ServerInstance.Attacker.IsConnected || !Server.ServerInstance.Victim.IsConnected)
+            {
+                continue;
+            }
 
             Dispatcher.Invoke(() =>
             {

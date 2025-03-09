@@ -37,18 +37,16 @@ namespace ExtremLink_Client.Pages
             // The function gets nothing.
             // The function create an client instance and connect to the server.
             string serverIpAddr = ServerIpCustomTextBox.Text;
-            MessageBox.Show(serverIpAddr);
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
                     Attacker.AttackerInstance.ConnectToServer(serverIpAddr);
+                    // Note: The problem it's with the Start() function in the udp handler in the get frame function:
                     Attacker.AttackerInstance.Start();
-                    Attacker.AttackerInstance.SendTCPMessageToClient("~", "attacker");
                     break;
                 case TypeOfClient.Victim:
                     Victim.VictimInstance.ConnectToServer(serverIpAddr);
                     Victim.VictimInstance.Start();
-                    Victim.VictimInstance.SendTCPMessageToClient("~", "victim");
                     break;
             }
             this.contentMain.Content = new LoginPage(this.contentMain);

