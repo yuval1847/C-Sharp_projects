@@ -70,7 +70,7 @@ namespace ExtremLink_Client.Classes
             // The function connects the TCP socket to the server.
             this.serverIpAddr = serverIpAddr;
             this.tcpSocket.Connect(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_TCP_PORT));
-            this.serverUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_UDP_PORT);
+            this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_UDP_PORT));
         }
 
         public void Start()
@@ -209,10 +209,7 @@ namespace ExtremLink_Client.Classes
             // & - Frames handling.
             while (true)
             {
-                MessageBox.Show("1");
-                // Note: The problem is with the get frame function which throw the message box error.
                 this.currentFrame = this.GetFrame();
-                MessageBox.Show("2");
                 Thread.Sleep(1000);
             }
         }
@@ -294,7 +291,10 @@ namespace ExtremLink_Client.Classes
                 {
                     // Buffer size for each packet
                     byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                    
+                    
                     int bytesRead = this.udpSocket.Receive(buffer);
+
 
                     // Extract metadata
                     int receivedStreamId = BitConverter.ToInt32(buffer, 0);

@@ -41,7 +41,6 @@ namespace ExtremLink_Client.Pages
             {
                 case TypeOfClient.Attacker:
                     Attacker.AttackerInstance.ConnectToServer(serverIpAddr);
-                    // Note: The problem it's with the Start() function in the udp handler in the get frame function:
                     Attacker.AttackerInstance.Start();
                     break;
                 case TypeOfClient.Victim:

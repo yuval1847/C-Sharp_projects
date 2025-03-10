@@ -54,7 +54,7 @@ namespace ExtremLink_Client.Pages
                     break;
             }
             Thread.Sleep(750);
-            if (Attacker.AttackerInstance.ServerRespond == "Exist")
+            if (Attacker.AttackerInstance.ServerRespond == "Exist" ^ Victim.VictimInstance.ServerRespond == "Exist")
             {
                 User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
                 this.contentMain.Content = new HomePage(this.contentMain);
