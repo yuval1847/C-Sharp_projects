@@ -26,15 +26,31 @@ namespace ExtremLink_Client.Pages
         private ContentControl contentMain;
 
 
+        private void UpdateHeader()
+        {
+            // Input: Nothing.
+            // Output: The function updates the page's header with the username.
+           headerTextBlock.Text = headerTextBlock.Text + User.UserInstance.UserName;
+        }
+
         public HomePage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
             InitializeComponent();
+            this.UpdateHeader();
         }
 
         private void StartNowBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.contentMain.Content = new ChoosingRulePage(this.contentMain);
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    this.contentMain.Content = new ControlPage(this.contentMain);
+                    break;
+                case TypeOfClient.Victim:
+                    this.contentMain.Content = new SharingScreenPage(this.contentMain);
+                    break;
+            }
         }
         
         private void Instructions_Click(object sender, RoutedEventArgs e)

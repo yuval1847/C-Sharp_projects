@@ -43,7 +43,9 @@ namespace ExtremLink_Client.Pages
             // The function called by clicking on the login button
             // The fucntion gets nothing.
             // The function send a login request message to the server via the client in order to login as a user
-            string loginRequest = $"login,username={usernameCustomTextBox.customTB.Text},password={passwordCustomTextBox.customTB.Text}";
+            string username = usernameCustomTextBox.customTB.Text;
+            string password = passwordCustomTextBox.customTB.Text;
+            string loginRequest = $"login,username={username},password={password}";
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
@@ -53,10 +55,10 @@ namespace ExtremLink_Client.Pages
                     Victim.VictimInstance.SendTCPMessageToClient("!", loginRequest);
                     break;
             }
-            Thread.Sleep(750);
+            Thread.Sleep(1000);
             if (Attacker.AttackerInstance.ServerRespond == "Exist" ^ Victim.VictimInstance.ServerRespond == "Exist")
             {
-                User.UserInstance.UserName = usernameCustomTextBox.customTB.Text;
+                User.UserInstance.UserName = username;
                 this.contentMain.Content = new HomePage(this.contentMain);
             }
             else

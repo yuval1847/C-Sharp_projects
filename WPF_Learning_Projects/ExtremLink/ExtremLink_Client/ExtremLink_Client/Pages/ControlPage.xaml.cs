@@ -38,6 +38,7 @@ namespace ExtremLink_Client.Pages
         public ControlPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
+            MessageBox.Show(Attacker.AttackerInstance.VictimIpAddr);
             this.clientIpTextBlock.Text = $"Client's IP: {Attacker.AttackerInstance.VictimIpAddr}";
             this.isReceivingFrames = false;
             InitializeComponent();

@@ -168,6 +168,7 @@ namespace ExtremLink_Client.Classes
             // Input: Nothing.
             // Output: The function handles with different types of messages over the tcp socket.
             // The types of message are:
+            // G - General stuff handling
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
@@ -181,6 +182,9 @@ namespace ExtremLink_Client.Classes
 
                     switch (message[0])
                     {
+                        case "G":
+                            this.HandleGeneralStuffMessages(data);
+                            break;
                         case "!":
                             this.HandleUsersManagmentCommands(data);
                             break;
@@ -216,6 +220,20 @@ namespace ExtremLink_Client.Classes
 
 
         // Sub-Handlers:
+        // Handle general stuff messages:
+        private void HandleGeneralStuffMessages(string data)
+        {
+            // Input: A string which represent a given general stuff message from the server.
+            // Output: The function handle with the given message.
+            dynamic message = JsonConvert.DeserializeObject(data);
+            JObject jsonData = (JObject)data;
+            MessageBox.Show("General stuff message was recieved!");
+            if (jsonData.ContainsKey("victim"))
+            {
+                this.victimIpAddr = message.victim;
+            }
+        }
+
         // Handle with user managment commands:
         private void HandleUsersManagmentCommands(string data)
         {

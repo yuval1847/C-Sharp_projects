@@ -78,7 +78,7 @@ namespace ExtremLink_Server.Pages
 
             // Wait for server response event
             this.serverResponseEvent.WaitOne();
-
+            Server.ServerInstance.UpdateClientsIPAddress();
             Dispatcher.Invoke(() =>
             {
                 this.contentMain.Content = new LogPage(this.contentMain);

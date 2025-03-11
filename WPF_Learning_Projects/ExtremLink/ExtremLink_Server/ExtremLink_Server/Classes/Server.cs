@@ -28,6 +28,7 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using ExtremLink_Server.Classes;
 using System.Net.Http.Headers;
+using System.Printing;
 
 namespace ExtremLink_Server.Classes
 {
@@ -123,7 +124,14 @@ namespace ExtremLink_Server.Classes
             Task.Run(() => this.HandleUdpCommunication());
         }
 
-
+        // Update attacker and client's ip about each other on each other.
+        public void UpdateClientsIPAddress()
+        {
+            // Input: Nothing.
+            // Output: The function sends the clients the ip of each other.
+            this.attacker.SendTCPMessageToClient("G", $"{{\"victim\":\"{this.victim.IpAddress}\"}}");
+            this.victim.SendTCPMessageToClient("G", $"{{\"attacker\":\"{this.attacker.IpAddress}\"}}");
+        }
 
         // Messages handlers
         private async Task HandleUdpCommunication()
