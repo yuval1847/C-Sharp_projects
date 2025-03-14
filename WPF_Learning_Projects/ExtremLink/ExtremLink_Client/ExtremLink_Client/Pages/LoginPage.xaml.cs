@@ -55,7 +55,7 @@ namespace ExtremLink_Client.Pages
                     Victim.VictimInstance.SendTCPMessageToClient("!", loginRequest);
                     break;
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             if (Attacker.AttackerInstance.ServerRespond == "Exist" ^ Victim.VictimInstance.ServerRespond == "Exist")
             {
                 User.UserInstance.UserName = username;

@@ -165,33 +165,31 @@ namespace ExtremLink_Client.Classes
             // $ - Sessions handling
             while (true)
             {
-                lock (this)
-                {
-                    List<object> message = this.GetTCPMessageFromClient();
-                    string data = (string)message[2];
+                List<object> message = this.GetTCPMessageFromClient();
+                string data = (string)message[2];
 
-                    switch (message[0])
-                    {
-                        case "G":
-                            this.HandleGeneralStuffMessages(data);
-                            break;
-                        case "!":
-                            this.HandleUsersManagmentCommands(data);
-                            break;
-                        case "&":
-                            this.HandleFramesCommands(data);
-                            break;
-                        case "%":
-                            this.HandleMouseInput(data);
-                            break;
-                        case "^":
-                            this.HandleKeyboardInput(data);
-                            break;
-                        case "$":
-                            this.HandleSessionsCommands(data);
-                            break;
-                    }
+                switch (message[0])
+                {
+                    case "G":
+                        this.HandleGeneralStuffMessages(data);
+                        break;
+                    case "!":
+                        this.HandleUsersManagmentCommands(data);
+                        break;
+                    case "&":
+                        this.HandleFramesCommands(data);
+                        break;
+                    case "%":
+                        this.HandleMouseInput(data);
+                        break;
+                    case "^":
+                        this.HandleKeyboardInput(data);
+                        break;
+                    case "$":
+                        this.HandleSessionsCommands(data);
+                        break;
                 }
+                
             }
         }
 
@@ -206,6 +204,20 @@ namespace ExtremLink_Client.Classes
 
 
         // Sub-Handlers:
+
+        // Handle general stuff messages:
+        private void HandleGeneralStuffMessages(string data)
+        {
+            // Input: A string which represent a given general stuff message from the server.
+            // Output: The function handle with the given message.
+            dynamic message = JsonConvert.DeserializeObject(data);
+            JObject jsonData = (JObject)message;
+            if (jsonData.ContainsKey("attacker"))
+            {
+                this.attackerIpAddr = message.attacker;
+            }
+        }
+
         // Handle with user managment commands:
         private void HandleUsersManagmentCommands(string data)
         {
@@ -300,19 +312,7 @@ namespace ExtremLink_Client.Classes
         }
 
         
-        // Handle general stuff messages:
-        private void HandleGeneralStuffMessages(string data)
-        {
-            // Input: A string which represent a given general stuff message from the server.
-            // Output: The function handle with the given message.
-            dynamic message = JsonConvert.DeserializeObject(data);
-            JObject jsonData = (JObject)data;
-
-            if (jsonData.ContainsKey("attacker"))
-            {
-                this.attackerIpAddr = message.attacker;
-            }
-        }
+        
         
         // Handle Sessions commands:
         private void HandleSessionsCommands(string message)

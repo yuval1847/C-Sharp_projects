@@ -48,6 +48,7 @@ namespace ExtremLink_Client.Pages
             this.contentMain = contentMain;
             this.isStreaming = false;
 
+
             this.serverFramesResponds = new Thread(this.HandleServerRespond);
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);

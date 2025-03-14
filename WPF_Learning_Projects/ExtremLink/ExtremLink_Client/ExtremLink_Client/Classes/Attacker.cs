@@ -110,7 +110,7 @@ namespace ExtremLink_Client.Classes
         {
             // Input: A string which represent the message.
             // Output: The function sends the message via the tcp socket.
-            this.SendMessageToClient(typeOfMessage, message, this.tcpSocket);
+            this.SendMessageToClient(typeOfMessage, message, this.udpSocket);
         }
 
 
@@ -175,33 +175,30 @@ namespace ExtremLink_Client.Classes
             // $ - Sessions handling
             while (true)
             {
-                lock (this)
+                List<object> message = this.GetTCPMessageFromClient();
+                string data = (string)message[2];
+                switch (message[0])
                 {
-                    List<object> message = this.GetTCPMessageFromClient();
-                    string data = (string)message[2];
-
-                    switch (message[0])
-                    {
-                        case "G":
-                            this.HandleGeneralStuffMessages(data);
-                            break;
-                        case "!":
-                            this.HandleUsersManagmentCommands(data);
-                            break;
-                        case "&":
-                            this.HandleFramesCommands(data);
-                            break;
-                        case "%":
-                            this.HandleMouseInput(data);
-                            break;
-                        case "^":
-                            this.HandleKeyboardInput(data);
-                            break;
-                        case "$":
-                            this.HandleSessionsCommands(data);
-                            break;
-                    }
+                    case "G":
+                        this.HandleGeneralStuffMessages(data);
+                        break;
+                    case "!":
+                        this.HandleUsersManagmentCommands(data);
+                        break;
+                    case "&":
+                        this.HandleFramesCommands(data);
+                        break;
+                    case "%":
+                        this.HandleMouseInput(data);
+                        break;
+                    case "^":
+                        this.HandleKeyboardInput(data);
+                        break;
+                    case "$":
+                        this.HandleSessionsCommands(data);
+                        break;
                 }
+                
             }
         }
 
@@ -226,8 +223,7 @@ namespace ExtremLink_Client.Classes
             // Input: A string which represent a given general stuff message from the server.
             // Output: The function handle with the given message.
             dynamic message = JsonConvert.DeserializeObject(data);
-            JObject jsonData = (JObject)data;
-            MessageBox.Show("General stuff message was recieved!");
+            JObject jsonData = (JObject)message;
             if (jsonData.ContainsKey("victim"))
             {
                 this.victimIpAddr = message.victim;

