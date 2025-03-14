@@ -96,6 +96,7 @@ namespace ExtremLink_Client.Pages
             switch (Victim.VictimInstance.ServerRespond)
             {
                 case "StartSendFrames":
+                    MessageBox.Show("StartSendFrames command was received by the victim");
                     this.isStreaming = true;
                     this.ChangeSharingScreenTitle("Sharing Screen Now");
                     this.StartGettingControlled();

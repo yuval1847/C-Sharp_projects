@@ -71,13 +71,12 @@ namespace ExtremLink_Server.Pages
                         this.serverResponseEvent.Set();
                         break;
                     }
-                    Thread.Sleep(100); // Prevent tight loop
+                    Thread.Sleep(100);
                 }
             });
             clientMessagesHandlingThread.Start();
             // Wait for server response event
             this.serverResponseEvent.WaitOne();
-            // Thread.Sleep(1000);
             Server.ServerInstance.UpdateClientsIPAddress();
             Dispatcher.Invoke(() =>
             {

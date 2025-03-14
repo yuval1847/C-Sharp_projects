@@ -22,5 +22,6 @@
                 <Image x:Name="frameImg" Width="400" Height="225" />
             </Border>
         </StackPanel>
+        <TextBlock Text="Version 1.1" FontSize="14" FontFamily="Consolas" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
     </Grid>
 </UserControl>

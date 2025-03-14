@@ -27,9 +27,6 @@ namespace ExtremLink_Client.Pages
         // Attirbutes:
         private ContentControl contentMain;
 
-        private CustomMouseVictim customMouse = CustomMouseVictim.CustomMouseInstance;
-        private CustomKeyboardVictim customKeyboard = CustomKeyboardVictim.CustomKeyboardInstance;
-
         private Session currentSession;
         private Thread recordingThread;
 

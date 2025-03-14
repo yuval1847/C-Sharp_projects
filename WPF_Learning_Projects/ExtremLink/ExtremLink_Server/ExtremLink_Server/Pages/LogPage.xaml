@@ -26,20 +26,16 @@
                    HorizontalAlignment="Center" 
                    Margin="0,30,0,0"/>
 
-        <!-- Log Display Area -->
-        <TextBox x:Name="logTextBox" 
-                 VerticalScrollBarVisibility="Auto" 
-                 HorizontalScrollBarVisibility="Auto" 
-                 IsReadOnly="True" 
+        <!-- Log Display Area (Replaced TextBox with ListBox) -->
+        <ListBox x:Name="logListBox" 
                  Background="Black" 
                  Foreground="#00FF00" 
                  FontSize="14" 
-                 Margin="20,90,20,90" 
-                 TextWrapping="Wrap"
-                 Text="> Server started
-                 &#x0a;> Server successfully connected to the attacker
-                 &#x0a;> Server successfully connected to the victim
-                 &#x0a;> "/>
+                 SelectionChanged="logListBox_SelectionChanged"
+                 Margin="20,90,20,90">
+            <ListBox.Items>
+            </ListBox.Items>
+        </ListBox>
 
         <!-- Clear Button for logs -->
         <Button Content="Clear Logs" Background="#052A70" Foreground="White" Width="200" Height="50"
@@ -50,5 +46,7 @@
                 <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
+
+        <TextBlock Text="Version 1.1" FontSize="14" FontFamily="Consolas" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
     </Grid>
 </UserControl>
