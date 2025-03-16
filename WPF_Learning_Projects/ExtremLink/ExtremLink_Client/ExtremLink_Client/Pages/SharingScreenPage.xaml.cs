@@ -87,34 +87,42 @@ namespace ExtremLink_Client.Pages
             Dispatcher.Invoke(() => sharingScreenTitle.Text = newText);
         }
 
+
+
+
         // Handle server responds.
         private void HandleServerRespond()
         {
             // Input: Nothing.
             // Output: The function execute the frame functionality according to the client's server respond.
-            // MessageBox.Show("A frames command was received!");
-            switch (Victim.VictimInstance.ServerRespond)
+            while (true)
             {
-                case "StartSendFrames":
-                    MessageBox.Show("StartSendFrames command was received by the victim");
-                    this.isStreaming = true;
-                    this.ChangeSharingScreenTitle("Sharing Screen Now");
-                    this.StartGettingControlled();
-                    break;
+                switch (Victim.VictimInstance.ServerRespond)
+                {
+                    case "StartSendFrames":
+                        this.isStreaming = true;
+                        this.ChangeSharingScreenTitle("Sharing Screen Now");
+                        this.StartGettingControlled();
+                        Victim.VictimInstance.InitServerRespond();
+                        break;
 
-                case "PauseSendFrames":
-                    this.isStreaming = false;
-                    this.ChangeSharingScreenTitle("Sharing Screen Puased");
-                    this.StopGettingControlled();
-                    break;
-                
-                case "StopSendFrames":
-                    this.isStreaming = false;
-                    this.StopGettingControlled();
-                    this.ChangeSharingScreenTitle("Sharing Screen Stoped");
-                    break;
+                    case "PauseSendFrames":
+                        this.isStreaming = false;
+                        this.ChangeSharingScreenTitle("Sharing Screen Puased");
+                        this.StopGettingControlled();
+                        Victim.VictimInstance.InitServerRespond();
+                        break;
+
+                    case "StopSendFrames":
+                        this.isStreaming = false;
+                        this.ChangeSharingScreenTitle("Sharing Screen Stoped");
+                        this.StopGettingControlled();
+                        Victim.VictimInstance.InitServerRespond();
+                        break;
+                }
             }
         }
+
 
 
         private void StartSharingScreen()

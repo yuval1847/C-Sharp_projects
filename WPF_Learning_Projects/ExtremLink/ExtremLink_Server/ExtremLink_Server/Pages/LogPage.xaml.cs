@@ -31,6 +31,7 @@ namespace ExtremLink_Server.Pages
             get { return this.contentMain; }
         }
 
+        private AutoResetEvent serverResponseEvent;
 
         // An integer which represent the current log message index.
         private int messageIndex;
@@ -39,20 +40,28 @@ namespace ExtremLink_Server.Pages
         // A thread which handle with the log:
         private Thread logThread;
 
+        // A thread of the connection:
+        private Thread connectionThread;
+
 
         public LogPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
+            this.serverResponseEvent = new AutoResetEvent(false);
             this.messageIndex = 0;
 
             InitializeComponent();
 
-            this.logThread = new Thread(HandleLog);
+            this.logThread = new Thread(this.HandleLog);
             this.logThread.Start();
+            this.connectionThread = new Thread(this.Connect);
+            this.connectionThread.Start();
         }
 
 
         // Functions:
+
+        // Logs functions:
         private void AddLogEntry(string message)
         {
             // Input: A string which represent a log message.
@@ -70,7 +79,8 @@ namespace ExtremLink_Server.Pages
             this.messageIndex = Log.LogInstance.Messages.Count - 1;
 
             // Auto-scroll to the latest log.
-            Dispatcher.Invoke(() => { logListBox.ScrollIntoView(logListBox.Items[logListBox.Items.Count - 1]); });
+            if (logListBox.Items.Count > 0) { Dispatcher.Invoke(() => { logListBox.ScrollIntoView(logListBox.Items[logListBox.Items.Count - 1]); }); }
+            
         }
         private void HandleLog()
         {
@@ -78,7 +88,7 @@ namespace ExtremLink_Server.Pages
             // Output: The function handles the logs.
             while (true)
             {
-                while (messageIndex == Log.LogInstance.Messages.Count - 1) { continue; }
+                while (Log.LogInstance.Messages.Count == 0 || messageIndex == Log.LogInstance.Messages.Count - 1) { continue; }
                 this.UpdateLog();
             }
         }
@@ -94,6 +104,39 @@ namespace ExtremLink_Server.Pages
             // Input: Nothing.
             // Output: The function force the logListBox to be unselectable.
             logListBox.SelectedIndex = -1;
+        }
+
+
+        // Connecting functions:
+        private void Connect()
+        {
+            // Input: Nothing.
+            // Output: The function makes the server connect to the clients.
+            Server.ServerInstance.ConnectToClients();
+
+            // Waiting until the server and the client will get connected to the clients.
+            while (!Server.ServerInstance.Attacker.IsConnected || !Server.ServerInstance.Victim.IsConnected)
+            {
+                continue;
+            }
+
+            Thread clientMessagesHandlingThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    if (Server.ServerInstance.Attacker.User.UserName != "" && Server.ServerInstance.Victim.User.UserName != "")
+                    {
+                        this.serverResponseEvent.Set();
+                        break;
+                    }
+                    Thread.Sleep(100);
+                }
+            });
+            clientMessagesHandlingThread.Start();
+            // Wait for server response event
+            this.serverResponseEvent.WaitOne();
+            Server.ServerInstance.UpdateClientsIPAddress();
+            Log.LogInstance.AddMessage("👨‍💻 Attacker & 💻 Victim got the IP addresses of each other");
         }
     }
 }
