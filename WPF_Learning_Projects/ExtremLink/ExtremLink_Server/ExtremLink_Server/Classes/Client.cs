@@ -1,5 +1,4 @@
-﻿using FFmpeg.AutoGen;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -56,6 +55,13 @@ namespace ExtremLink_Server.Classes
         {
             get { return this.udpSocket; }
             set { this.udpSocket = value; }
+        }
+
+        // An IPEndPoint for the udp connection:
+        private IPEndPoint clientUdpEndPoint;
+        public IPEndPoint ClientUdpEndPoint
+        {
+            get { return this.clientUdpEndPoint; }
         }
 
         // A user object which represent the user of the client:
@@ -117,12 +123,22 @@ namespace ExtremLink_Server.Classes
                     this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, this.VICTIM_UDP_PORT));
                     break;
             }
-                
+            
             this.tcpSocket.Listen();
             Socket tempTcpClientSocket = this.tcpSocket.Accept();
             this.ipAddress = this.FindClientIpAddress(tempTcpClientSocket);
             this.tcpSocket = tempTcpClientSocket;
             this.isConnected = true;
+
+            switch (this.TypeOfClient)
+            {
+                case TypeOfClient.attacker:
+                    this.clientUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.ipAddress), this.ATTACKER_UDP_PORT);
+                    break;
+                case TypeOfClient.victim:
+                    this.clientUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.ipAddress), this.VICTIM_UDP_PORT);
+                    break;
+            }
         }
 
 
