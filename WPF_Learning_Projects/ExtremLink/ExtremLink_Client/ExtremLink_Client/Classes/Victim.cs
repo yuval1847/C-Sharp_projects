@@ -340,6 +340,38 @@ namespace ExtremLink_Client.Classes
 
 
         // Sending frame functions:
+        public string CreatePngFile(RenderTargetBitmap frame)
+        {
+            // Input: A RenderTargetBitmap object which represent a frame from the sharescreen.
+            // Output: The function creates a png file which contains the image and returns it's name.
+            if (frame == null)
+                throw new ArgumentNullException(nameof(frame), "RenderTargetBitmap cannot be null");
+
+            // Create a PNG encoder
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+
+            // Add the frame to the encoder
+            encoder.Frames.Add(BitmapFrame.Create(frame));
+
+            // Generate a unique file name with timestamp
+            string fileName = "temp.png";
+            string filePath = Path.Combine(Path.GetTempPath(), fileName);
+
+            try
+            {
+                // Save the encoded image to a file
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    encoder.Save(fs);
+                }
+
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to create PNG file: {ex.Message}", ex);
+            }
+        }
         public string ConvertPngToH265(string pngFile)
         {
             // Input: A string which represent a png file name.
@@ -401,7 +433,7 @@ namespace ExtremLink_Client.Classes
             }
         }
 
-
+        /*
         private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)
         {
             // The function gets a RenderTargetBitmap object.
@@ -485,5 +517,6 @@ namespace ExtremLink_Client.Classes
                 this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
             }
         }
+        */
     }
 }

