@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="ExtremLink_Client_v2.Pages.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Client_v2.CustomWidgets" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Title -->
+        <TextBlock x:Name="headerTextBlock" Text="WELCOME BACK, " FontSize="50" Foreground="#00CEC9" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0"
+                   FontFamily="Consolas"/>
+
+        <!-- Subtitle -->
+        <TextBlock Text="ExtremLink - Choose, Connect, Control!" FontSize="20" Foreground="#00CECF"
+                   HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,110,0,0"
+                   FontFamily="Consolas" Opacity="1"/>
+
+        <!-- Buttons: -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,120,0,0"> 
+            
+            <!-- Start Now Button -->
+            <Button Content="Start Now" Width="220" Height="55" Background="#034045" Foreground="White"
+                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas"
+                    Click="StartNowBtn_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
+
+            <!-- Instructions Button -->
+            <Button Content="Instructions" Width="220" Height="55" Background="#034045" Foreground="White"
+                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                    HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,60,0,0"
+                    Click="Instructions_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
+
+            <!-- Records Button -->
+            <Button Content="Records" Width="220" Height="55" Background="#034045" Foreground="White"
+                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                    HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Consolas" Margin="0,60,0,0"
+                    Click="Records_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

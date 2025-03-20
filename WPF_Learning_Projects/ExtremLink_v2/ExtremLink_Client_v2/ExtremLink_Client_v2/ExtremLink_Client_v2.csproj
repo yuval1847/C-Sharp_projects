@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\attacker_icon.png" />
+    <None Remove="Images\default_image.png" />
+    <None Remove="Images\email_icon.png" />
+    <None Remove="Images\ExtremLink_Icon.png" />
+    <None Remove="Images\lock_icon.png" />
+    <None Remove="Images\pc_icon.png" />
+    <None Remove="Images\user_icon.png" />
+    <None Remove="Images\user_icon_black.png" />
+    <None Remove="Images\victim_icon.png" />
+    <None Remove="Images\video_icon_1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenCvSharp4" Version="4.10.0.20241108" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\attacker_icon.png" />
+    <Resource Include="Images\default_image.png" />
+    <Resource Include="Images\email_icon.png" />
+    <Resource Include="Images\ExtremLink_Icon.png" />
+    <Resource Include="Images\lock_icon.png" />
+    <Resource Include="Images\pc_icon.png" />
+    <Resource Include="Images\user_icon.png" />
+    <Resource Include="Images\user_icon_black.png" />
+    <Resource Include="Images\victim_icon.png" />
+    <Resource Include="Images\video_icon_1.png" />
+  </ItemGroup>
+
+</Project>

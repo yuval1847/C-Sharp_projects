@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="ExtremLink_Client_v2.Pages.WatchingVideoPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Client_v2.CustomWidgets" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#00cec9">
+        <StackPanel VerticalAlignment="Center">
+
+            <!-- Title -->
+            <TextBlock Text="Watching Session 🎦" FontSize="50" FontWeight="Bold" Foreground="#031019" 
+                       HorizontalAlignment="Center" Margin="0,5,0,10"/>
+
+            <!-- Video Widget -->
+            <Border CornerRadius="5" BorderBrush="#008B8B" BorderThickness="5" Width="640" Height="360" 
+                    HorizontalAlignment="Center" Margin="0,10,0,20">
+                <MediaElement x:Name="frameImg" Source="/Images/default_image.png"
+                              Stretch="UniformToFill"/>
+            </Border>
+
+            <!-- Video Controls -->
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Play -->
+                <customWidgets:CustomButton Width="120" Height="45" Placeholder="▶ Play" 
+                                             Margin="10" Grid.Column="0"/>
+
+                <!-- Pause -->
+                <customWidgets:CustomButton Width="120" Height="45" Placeholder="⏸ Pause" 
+                                             Margin="10" Grid.Column="1"/>
+
+                <!-- Stop -->
+                <customWidgets:CustomButton Width="120" Height="45" Placeholder="⏹ Stop" 
+                                             Margin="10" Grid.Column="2"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Version Info -->
+        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#031019" VerticalAlignment="Bottom" 
+                   HorizontalAlignment="Right" Margin="0,0,20,10"/>
+    </Grid>
+</UserControl>

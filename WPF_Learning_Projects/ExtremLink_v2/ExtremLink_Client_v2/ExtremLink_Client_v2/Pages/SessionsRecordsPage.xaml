@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="ExtremLink_Client_v2.Pages.SessionsRecordsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <Grid Background="#00cec9">
+        <StackPanel Margin="20">
+
+            <!-- Title Section -->
+            <Grid>
+                <TextBlock Text="Sessions Records" FontSize="50" FontWeight="Bold" Foreground="#031019" 
+                           HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <Image Source="/Images/video_icon_1.png" Height="50" Width="55" Margin="0,13,114,9" HorizontalAlignment="Right"/>
+            </Grid>
+
+            <!-- Main Block Container -->
+            <Border Background="#11232D" CornerRadius="10" Padding="15" BorderBrush="#008B8B" BorderThickness="3" Height="473">
+                <StackPanel>
+
+                    <!-- User Section -->
+                    <Grid Margin="0,5,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Source="/Images/user_icon.png" Width="50" Height="50"/>
+                        <TextBlock x:Name="usernameTextBlock" Grid.Column="1" Text="Username" FontSize="22"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#00cec9" 
+                                   Margin="15,0,0,0" FontWeight="Bold"/>
+                    </Grid>
+
+                    <!-- Sessions List -->
+                    <ListView x:Name="SessionRecordsList" Margin="0,10,0,0" Height="370" BorderBrush="#008B8B" Background="#008B8B">
+                        <ListView.Resources>
+                            <!-- Style for GridView Column Headers -->
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="Background" Value="#008B8B"/>
+                                <Setter Property="Foreground" Value="#031019"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Padding" Value="8"/>
+                            </Style>
+                        </ListView.Resources>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Date" Width="200" DisplayMemberBinding="{Binding Date}"/>
+                                <GridViewColumn Header="Video Name" Width="520" DisplayMemberBinding="{Binding VideoName}"/>
+                            </GridView>
+                        </ListView.View>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Background" Value="#11232D"/>
+                                <Setter Property="Foreground" Value="#00cec9"/>
+                                <Setter Property="BorderBrush" Value="#008B8B"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+
+                                <!-- Hover Effect -->
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#008B8B"/>
+                                        <Setter Property="Foreground" Value="#11232D"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Version Info -->
+        <TextBlock Text="Version 1.1" FontSize="14" Foreground="#031019" VerticalAlignment="Bottom" 
+                   HorizontalAlignment="Right" Margin="0,0,20,10"/>
+    </Grid>
+</UserControl>

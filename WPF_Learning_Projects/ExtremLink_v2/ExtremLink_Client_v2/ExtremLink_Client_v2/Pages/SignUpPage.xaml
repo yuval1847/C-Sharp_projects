@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="ExtremLink_Client_v2.Pages.SignUpPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
+             xmlns:customWidgets="clr-namespace:ExtremLink_Client_v2.CustomWidgets" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#00cec9" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="600" Background="Transparent">
+            <Image Source="/Images/ExtremLink_Icon.png" Width="130" Height="130" Margin="0,10,0,0"/>
+            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Sign-up" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!-- Left side -->
+                <!-- First name -->
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <customWidgets:CustomTextBox x:Name="fnCustomTextBox" Placeholder="first name" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongFirstNameTextBlock" Visibility="hidden" Text="Between 1 to 15 letters!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Last Name -->
+                <StackPanel Grid.Column="0" Grid.Row="1">
+                    <customWidgets:CustomTextBox x:Name="lnCustomTextBox" Placeholder="last name" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongLastNameTextBlock" Visibility="hidden" Text="Between 1 to 15 letters!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- City -->
+                <StackPanel Grid.Column="0" Grid.Row="2">
+                    <customWidgets:CustomTextBox x:Name="cityCustomTextBox" Placeholder="city" Width="200" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock x:Name="wrongCityTextBlock" Visibility="hidden" Text="Between 5 to 15 letters!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Phone -->
+                <StackPanel Grid.Column="0" Grid.Row="3">
+                    <customWidgets:CustomTextBox x:Name="phoneCustomTextBox" Placeholder="phone(+972)" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongPhoneTextBlock" Visibility="hidden" Text="Should be 10 digits!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Right side -->
+
+                <!-- Username -->
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <customWidgets:CustomTextBox x:Name="usernameCustomTextBox" Placeholder="new user" Width="200" Height="40" Margin="0,0,0,0"/>
+                    <TextBlock x:Name="wrongUsernameTextBlock" Visibility="hidden" Text="Between 5-15 characters!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Password -->
+                <StackPanel Grid.Column="2" Grid.Row="1">
+                    <customWidgets:CustomTextBox x:Name="passwordCustomTextBox" Placeholder="new password" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongPasswordTextBlock" Visibility="hidden" Text="Between 8-20 characters!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Confirm Password -->
+                <StackPanel Grid.Column="2" Grid.Row="2">
+                    <customWidgets:CustomTextBox x:Name="passwordConfirmCustomTextBox" Placeholder="confirm password" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongPasswordConfirmTextBlock" Visibility="hidden" Text="Passwords don't match!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+
+                <!-- Email -->
+                <StackPanel Grid.Column="2" Grid.Row="3">
+                    <customWidgets:CustomTextBox x:Name="emailCustomTextBox" Placeholder="Email" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <TextBlock x:Name="wrongEmailTextBlock" Visibility="hidden" Text="Should contain '@'!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                </StackPanel>
+            </Grid>
+            <TextBlock x:Name="errorSignUpTextBlock" Visibility="Hidden" Text="This user already exist!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <customWidgets:CustomButton x:Name="signUpBtn" Width="100" Height="40" Placeholder="Sign-Up" Margin="0,0,0,10" CustomClick="SignUpButton_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
