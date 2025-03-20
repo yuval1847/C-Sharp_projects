@@ -88,8 +88,6 @@ namespace ExtremLink_Client.Pages
         }
 
 
-
-
         // Handle server responds.
         private void HandleServerRespond()
         {
@@ -122,7 +120,6 @@ namespace ExtremLink_Client.Pages
                 }
             }
         }
-
 
 
         private void StartSharingScreen()

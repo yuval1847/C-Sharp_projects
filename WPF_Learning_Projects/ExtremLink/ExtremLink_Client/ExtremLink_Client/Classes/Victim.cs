@@ -51,7 +51,6 @@ namespace ExtremLink_Client.Classes
             }
         }
 
-
         // Constructor:
         private Victim() : base()
         {

