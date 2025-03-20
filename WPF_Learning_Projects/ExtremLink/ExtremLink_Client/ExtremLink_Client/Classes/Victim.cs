@@ -11,9 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Net;
 using System.Net.Sockets;
-using System.Drawing;
 using OpenCvSharp;
-
 
 namespace ExtremLink_Client.Classes
 {
@@ -376,22 +374,22 @@ namespace ExtremLink_Client.Classes
             // Input: A string which represent a png file name.
             // Output: The function creates a temp h265 file and returns it's name.
             string tempH265File = "temp.h265";
-            using Mat image = Cv2.ImRead(pngFile);
+            using Mat image = Cv2.ImRead(pngFile, ImreadModes.Color);
+            MessageBox.Show($"{image.Empty()}");
             int width = image.Width;
             int height = image.Height;
 
             // Create H.265 video writer
             using var writer = new VideoWriter(
                 tempH265File,
-                FourCC.HEVC,  // H.265 codec
-                30,           // FPS
+                FourCC.HEVC,
+                1,
                 new OpenCvSharp.Size(width, height));
 
-            // Write frames (5 seconds * 30 FPS)
-            for (int i = 0; i < 150; i++)
-            {
-                writer.Write(image);
-            }
+            // Write the single frame
+            writer.Write(image);
+            writer.Release();
+
             return tempH265File;
 
         }
@@ -414,6 +412,7 @@ namespace ExtremLink_Client.Classes
             int streamId = new Random().Next(1, int.MaxValue);
 
             // Send packets
+            MessageBox.Show($"{totalPackets}");
             for (int i = 0; i < totalPackets; i++)
             {
                 // Calculate packet bounds
