@@ -65,14 +65,7 @@ namespace ExtremLink_Client_v2.Pages
         private BitmapImage LoadFrameFromFile()
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-
-            MessageBox.Show("1");
-            // Note: Debug this line:
             string tempFramePath = System.IO.Path.Combine(baseDirectory, Attacker.AttackerInstance.TempPngFileName);
-            MessageBox.Show("2");
-            
-            
             return Attacker.AttackerInstance.GetBitmapImageFromPNGFile(tempFramePath);
         }
 

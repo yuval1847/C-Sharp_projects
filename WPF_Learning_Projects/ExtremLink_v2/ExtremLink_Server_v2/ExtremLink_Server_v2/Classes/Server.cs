@@ -161,29 +161,26 @@ namespace ExtremLink_Server_v2.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
-            // ⌨ - Keyboard handling
+            // ^ - Keyboard handling
             // $ - Sessions handling
             while (true)
             {
-                lock (this)
+                List<object> message = this.attacker.GetTCPMessageFromClient();
+                string data = (string)message[2];
+                switch (message[0])
                 {
-                    List<object> message = this.attacker.GetTCPMessageFromClient();
-                    string data = (string)message[2];
-                    switch (message[0])
-                    {
-                        case "!":
-                            this.HandleUsersDatabaseMessages(data, TypeOfClient.attacker);
-                            break;
-                        case "&":
-                            this.HandleFramesMessages(data, TypeOfClient.attacker);
-                            break;
-                        case "%":
-                            this.HandleMouseMessages(data);
-                            break;
-                        case "⌨":
-                            this.HandleKeyboardMessages(data);
-                            break;
-                    }
+                    case "!":
+                        this.HandleUsersDatabaseMessages(data, TypeOfClient.attacker);
+                        break;
+                    case "&":
+                        this.HandleFramesMessages(data, TypeOfClient.attacker);
+                        break;
+                    case "%":
+                        this.HandleMouseMessages(data);
+                        break;
+                    case "^":
+                        this.HandleKeyboardMessages(data);
+                        break;
                 }
             }
         }

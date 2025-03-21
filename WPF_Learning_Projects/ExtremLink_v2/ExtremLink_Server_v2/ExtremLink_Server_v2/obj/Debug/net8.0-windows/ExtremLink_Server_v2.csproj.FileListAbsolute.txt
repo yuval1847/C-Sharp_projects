@@ -81,3 +81,7 @@ C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projec
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\obj\Debug\net8.0-windows\ExtremLink_Server_v2.pdb
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\obj\Debug\net8.0-windows\ExtremLink_Server_v2.genruntimeconfig.cache
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\obj\Debug\net8.0-windows\ref\ExtremLink_Server_v2.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\bin\Debug\net8.0-windows\runtimes\win-x64\native\OpenCvSharpExtern.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\bin\Debug\net8.0-windows\runtimes\win-x64\native\opencv_videoio_ffmpeg4100_64.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\bin\Debug\net8.0-windows\runtimes\win-x86\native\OpenCvSharpExtern.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Server_v2\ExtremLink_Server_v2\bin\Debug\net8.0-windows\runtimes\win-x86\native\opencv_videoio_ffmpeg4100.dll

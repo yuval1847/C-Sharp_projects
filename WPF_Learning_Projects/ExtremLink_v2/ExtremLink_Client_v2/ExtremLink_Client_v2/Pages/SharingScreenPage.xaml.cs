@@ -48,15 +48,14 @@ namespace ExtremLink_Client_v2.Pages
             this.contentMain = contentMain;
             this.isStreaming = false;
 
-
             this.serverFramesResponds = new Thread(this.HandleServerRespond);
             this.sharingScreenThread = new Thread(this.StartSharingScreen);
             this.localSharingScreenThread = new Thread(this.LocalSharingScreen);
             this.mouseControllingThead = new Thread(this.StartMouseControl);
             this.keyboardControllingThead = new Thread(this.StartKeyboardControl);
 
-            this.serverFramesResponds.Start();
             InitializeComponent();
+            this.serverFramesResponds.Start();
         }
 
         // Frames handling:

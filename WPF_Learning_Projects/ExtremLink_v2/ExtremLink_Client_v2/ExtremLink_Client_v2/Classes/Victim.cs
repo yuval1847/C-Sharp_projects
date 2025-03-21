@@ -180,12 +180,6 @@ namespace ExtremLink_Client_v2.Classes
                     case "&":
                         this.HandleFramesCommands(data);
                         break;
-                    case "%":
-                        this.HandleMouseInput(data);
-                        break;
-                    case "^":
-                        this.HandleKeyboardInput(data);
-                        break;
                     case "$":
                         this.HandleSessionsCommands(data);
                         break;
@@ -200,13 +194,10 @@ namespace ExtremLink_Client_v2.Classes
             // Input: Nothing.
             // Output: The function handles with different types of messages over the udp socket.
             // & - Frames handling.
-
         }
-
-
         // Sub-Handlers:
 
-        // Handle general stuff messages:
+            // Handle general stuff messages:
         private void HandleGeneralStuffMessages(string data)
         {
             // Input: A string which represent a given general stuff message from the server.
@@ -267,6 +258,7 @@ namespace ExtremLink_Client_v2.Classes
             // Ouput: The function update the CustomMouse object according to the given message's parameters.
 
             // Reading the data in json format
+            // MessageBox.Show(message);
             dynamic data = JsonConvert.DeserializeObject(message);
 
             // Casting the data dynamic object to JObject
@@ -342,8 +334,9 @@ namespace ExtremLink_Client_v2.Classes
             // Input: A RenderTargetBitmap object which represent a frame from the sharescreen.
             // Output: The function creates a png file which contains the image and returns it's name.
             if (frame == null)
+            {
                 throw new ArgumentNullException(nameof(frame), "RenderTargetBitmap cannot be null");
-
+            }
             // Create a PNG encoder
             PngBitmapEncoder encoder = new PngBitmapEncoder();
 
@@ -352,12 +345,11 @@ namespace ExtremLink_Client_v2.Classes
 
             // Generate a unique file name with timestamp
             string fileName = "temp.png";
-            string filePath = Path.Combine(Path.GetTempPath(), fileName);
 
             try
             {
                 // Save the encoded image to a file
-                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
                 {
                     encoder.Save(fs);
                 }
@@ -375,7 +367,6 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function creates a temp h265 file and returns it's name.
             string tempH265File = "temp.h265";
             using Mat image = Cv2.ImRead(pngFile, ImreadModes.Color);
-            MessageBox.Show($"{image.Empty()}");
             int width = image.Width;
             int height = image.Height;
 
@@ -411,7 +402,7 @@ namespace ExtremLink_Client_v2.Classes
             int streamId = new Random().Next(1, int.MaxValue);
 
             // Send packets
-            MessageBox.Show($"{totalPackets}");
+            // MessageBox.Show($"{totalPackets}");
             for (int i = 0; i < totalPackets; i++)
             {
                 // Calculate packet bounds
