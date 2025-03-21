@@ -177,6 +177,12 @@ namespace ExtremLink_Client_v2.Classes
                     case "!":
                         this.HandleUsersManagmentCommands(data);
                         break;
+                    case "%":
+                        this.HandleMouseInput(data);
+                        break;
+                    case "^":
+                        this.HandleKeyboardInput(data);
+                        break;
                     case "&":
                         this.HandleFramesCommands(data);
                         break;
@@ -195,6 +201,8 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function handles with different types of messages over the udp socket.
             // & - Frames handling.
         }
+        
+        
         // Sub-Handlers:
 
             // Handle general stuff messages:
@@ -258,7 +266,6 @@ namespace ExtremLink_Client_v2.Classes
             // Ouput: The function update the CustomMouse object according to the given message's parameters.
 
             // Reading the data in json format
-            // MessageBox.Show(message);
             dynamic data = JsonConvert.DeserializeObject(message);
 
             // Casting the data dynamic object to JObject
