@@ -416,7 +416,6 @@ namespace ExtremLink_Client_v2.Classes
                 bitmap.CacheOption = BitmapCacheOption.OnLoad; // Load immediately into memory
                 bitmap.EndInit();
                 bitmap.Freeze(); // Make it immutable and thread-safe
-
                 return bitmap;
             }
             catch (Exception ex)
