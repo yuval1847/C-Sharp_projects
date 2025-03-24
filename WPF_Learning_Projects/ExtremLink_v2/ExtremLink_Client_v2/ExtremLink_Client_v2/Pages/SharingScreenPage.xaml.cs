@@ -35,7 +35,6 @@ namespace ExtremLink_Client_v2.Pages
         private Thread mouseControllingThead;
         private Thread keyboardControllingThead;
         private bool isStreaming;
-        private const string defaultPngFileOfFrame = "tempFrame.png";
 
         public ContentControl ContentMain
         {
@@ -68,6 +67,7 @@ namespace ExtremLink_Client_v2.Pages
             this.localSharingScreenThread.Start();
             this.mouseControllingThead.Start();
             this.keyboardControllingThead.Start();
+            this.isStreaming = true;
         }
         private void StopGettingControlled()
         {
@@ -129,13 +129,13 @@ namespace ExtremLink_Client_v2.Pages
             {
                 try
                 {
-                    var screen = CaptureScreen();
-                    if (screen != null)
+                    var frame = CaptureScreen();
+                    string tempFileName = "temp.png";
+                    if (frame != null)
                     {
-                        string framePngFileName = Victim.VictimInstance.CreatePngFile(screen);
-                        string frameH265FileName = Victim.VictimInstance.ConvertPngToH265(framePngFileName);
-                        byte[] frameH265ByteArr = Victim.VictimInstance.ConvertH265ToByteArray(frameH265FileName);
-                        Victim.VictimInstance.SendFrame(frameH265ByteArr);
+                        Victim.VictimInstance.CreatePngFile(frame, tempFileName);
+                        byte[] loadedFrame = Victim.VictimInstance.GetFileContent(tempFileName);
+                        Victim.VictimInstance.SendFrame(loadedFrame);
                     }
                     // Around 1 FPS
                     // Note: try to use Task.delay instead.

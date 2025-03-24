@@ -64,9 +64,14 @@ namespace ExtremLink_Client_v2.Pages
         // Frames functions:
         private BitmapImage LoadFrameFromFile()
         {
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string tempFramePath = System.IO.Path.Combine(baseDirectory, Attacker.AttackerInstance.TempPngFileName);
-            return Attacker.AttackerInstance.GetBitmapImageFromPNGFile(tempFramePath);
+            try
+            {
+                return Attacker.AttackerInstance.GetBitmapImageFromPNGFile(Attacker.AttackerInstance.TempPngFileName);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private async void UpdateFrame()
@@ -75,7 +80,7 @@ namespace ExtremLink_Client_v2.Pages
             {
                 try
                 {
-                    if (Attacker.AttackerInstance.CurrentFrame != null)
+                    if (this.LoadFrameFromFile() != null)
                     {
                         BitmapImage tempFrame = this.LoadFrameFromFile();
                         await Dispatcher.InvokeAsync(() => frameImg.Source = tempFrame);

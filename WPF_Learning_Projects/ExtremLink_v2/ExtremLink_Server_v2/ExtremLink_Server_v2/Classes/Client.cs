@@ -97,6 +97,15 @@ namespace ExtremLink_Server_v2.Classes
         }
 
 
+        // Changing the socket's buffer size limit function.
+        private void ChangeSocketBufferSizeLimit(Socket socket, int RecieveBufferSize = 8192, int SendBufferSize = 8192)
+        {
+            // Input: A socket object and 2 integers which rerpesent the size of the recieve and send socket's buffer size limit.
+            // Output: The function change the buffer limit of the given socket
+            socket.ReceiveBufferSize = RecieveBufferSize;
+            socket.SendBufferSize = SendBufferSize;
+        }
+
         // Connecting functions:
         private string FindClientIpAddress(Socket clientSocket)
         {
@@ -111,6 +120,8 @@ namespace ExtremLink_Server_v2.Classes
             // Output: The function waits for client to connect to the server.
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+            this.ChangeSocketBufferSizeLimit(this.udpSocket, 4194304, 4194304);
 
             switch (this.TypeOfClient)
             {
