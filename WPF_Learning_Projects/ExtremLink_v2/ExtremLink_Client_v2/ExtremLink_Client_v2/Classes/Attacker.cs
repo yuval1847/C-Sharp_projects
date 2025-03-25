@@ -299,7 +299,6 @@ namespace ExtremLink_Client_v2.Classes
         }
 
 
-
         // Getting frames functions:
         public byte[] GetFrame()
         {
@@ -408,77 +407,26 @@ namespace ExtremLink_Client_v2.Classes
             if (!File.Exists(pngFileName))
                 throw new FileNotFoundException($"The specified PNG file does not exist: {pngFileName}", pngFileName);
 
+
+            BitmapImage bitmapImage = new BitmapImage();
             try
             {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(pngFileName, UriKind.Relative);
-                bitmap.CacheOption = BitmapCacheOption.OnDemand;
-                bitmap.EndInit();
-                bitmap.Freeze(); // Make it immutable and thread-safe
-                return bitmap;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to load PNG file into BitmapImage: {ex.Message}", ex);
-            }
-        }
-
-        /* public BitmapImage ConvertByteArrayToBitmapImage(byte[] h265Bytes)
-        {
-            try
-            {
-                // Write the byte array to a temporary file since VideoCapture needs a file or stream
-                string tempFile = Path.GetTempFileName() + ".h265";
-                File.WriteAllBytes(tempFile, h265Bytes);
-
-                // Open the video file using VideoCapture
-                using (var videoCapture = new VideoCapture(tempFile))
+                using (var stream = new FileStream(pngFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    if (!videoCapture.IsOpened())
-                        throw new Exception("Could not open video file");
-
-                    // Read the first frame
-                    using (var frame = new Mat())
-                    {
-                        if (!videoCapture.Read(frame) || frame.Empty())
-                            throw new Exception("Could not read frame from video");
-
-                        // Convert the frame (BGR) to RGB
-                        using (var rgbFrame = new Mat())
-                        {
-                            Cv2.CvtColor(frame, rgbFrame, ColorConversionCodes.BGR2RGB);
-
-                            // Convert Mat to byte array
-                            byte[] imageData = rgbFrame.ToBytes(".bmp"); // Use BMP format for simplicity
-
-                            // Create BitmapImage from byte array
-                            BitmapImage bitmap = new BitmapImage();
-                            using (var ms = new MemoryStream(imageData))
-                            {
-                                bitmap.BeginInit();
-                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                                bitmap.StreamSource = ms;
-                                bitmap.EndInit();
-                                bitmap.Freeze(); // Make it usable across threads
-                            }
-
-                            // Clean up temporary file
-                            File.Delete(tempFile);
-
-                            return bitmap;
-                        }
-                    }
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Load the data into memory immediately
+                    bitmapImage.StreamSource = stream; // Use the FileStream as the source
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze(); // Make the BitmapImage thread-safe
                 }
             }
+
             catch (Exception ex)
             {
-                throw new Exception($"Error converting H.265 to BitmapImage: {ex.Message}");
+                throw new Exception(ex.Message);
             }
+
+            return bitmapImage;
         }
-        */
-        /*
-        
-        */
     }
 }

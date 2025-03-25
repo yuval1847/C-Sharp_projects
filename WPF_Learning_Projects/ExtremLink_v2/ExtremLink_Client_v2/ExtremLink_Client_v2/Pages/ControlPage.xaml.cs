@@ -112,11 +112,7 @@ namespace ExtremLink_Client_v2.Pages
         {
             // Input: Nothing.
             // Output: The function loads the defualt non frame image.
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri("\\Images\\default_image.png", UriKind.Relative);
-            bitmap.EndInit();
-            Dispatcher.InvokeAsync(() => frameImg.Source = new BitmapImage(new Uri("Images/myphoto.jpg")));
+            Dispatcher.InvokeAsync(() => frameImg.Source = new BitmapImage(new Uri("\\Images\\default_image.png", UriKind.RelativeOrAbsolute)));
         }
 
         // Mouse functions:
