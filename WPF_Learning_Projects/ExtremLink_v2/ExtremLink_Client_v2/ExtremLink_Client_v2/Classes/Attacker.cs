@@ -381,7 +381,7 @@ namespace ExtremLink_Client_v2.Classes
             encoder.Frames.Add(BitmapFrame.Create(frame));
 
             // Generate a unique file name with timestamp
-            string fileName = $"tempFrame.png";
+            string fileName = this.tempPngFileName;
 
             try
             {
@@ -413,7 +413,7 @@ namespace ExtremLink_Client_v2.Classes
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(pngFileName, UriKind.Relative);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Load immediately into memory
+                bitmap.CacheOption = BitmapCacheOption.OnDemand;
                 bitmap.EndInit();
                 bitmap.Freeze(); // Make it immutable and thread-safe
                 return bitmap;
