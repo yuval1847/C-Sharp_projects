@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Np2jCPRwkQs=",
+  "dgSpecHash": "SQb8x6V+f8Y=",
   "success": true,
   "projectFilePath": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,7 @@
     "C:\\Users\\yuval\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\yuval\\.nuget\\packages\\microsoft.win32.systemevents\\9.0.3\\microsoft.win32.systemevents.9.0.3.nupkg.sha512",
     "C:\\Users\\yuval\\.nuget\\packages\\opencvsharp4\\4.10.0.20241108\\opencvsharp4.4.10.0.20241108.nupkg.sha512",
+    "C:\\Users\\yuval\\.nuget\\packages\\opencvsharp4.extensions\\4.10.0.20241108\\opencvsharp4.extensions.4.10.0.20241108.nupkg.sha512",
     "C:\\Users\\yuval\\.nuget\\packages\\opencvsharp4.runtime.win\\4.10.0.20241108\\opencvsharp4.runtime.win.4.10.0.20241108.nupkg.sha512",
     "C:\\Users\\yuval\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\yuval\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.1\\system.configuration.configurationmanager.8.0.1.nupkg.sha512",

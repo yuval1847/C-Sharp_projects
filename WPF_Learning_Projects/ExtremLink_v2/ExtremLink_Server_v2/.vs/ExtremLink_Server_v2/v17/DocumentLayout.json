@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "ExtremLink_Server_v2\\Classes\\Server.cs",
               "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\Classes\\Server.cs",
               "RelativeToolTip": "ExtremLink_Server_v2\\Classes\\Server.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAwwBQAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAiwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T13:50:22.407Z",
               "EditorCaption": ""
@@ -47,7 +47,8 @@
               "RelativeToolTip": "ExtremLink_Server_v2\\Pages\\LogPage.xaml.cs",
               "ViewState": "AgIAADwAAAAAAAAAAAAYwI4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T13:50:19.333Z"
+              "WhenOpened": "2025-03-21T13:50:19.333Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -59,7 +60,8 @@
               "RelativeToolTip": "ExtremLink_Server_v2\\Classes\\Client.cs",
               "ViewState": "AgIAAFEAAAAAAAAAAAAwwHQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T13:50:23.114Z"
+              "WhenOpened": "2025-03-21T13:50:23.114Z",
+              "EditorCaption": ""
             }
           ]
         }

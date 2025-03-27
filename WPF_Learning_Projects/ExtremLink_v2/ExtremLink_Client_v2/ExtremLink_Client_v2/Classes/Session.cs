@@ -19,6 +19,8 @@ namespace ExtremLink_Client_v2.Classes
         A class which represent a single session
         */
 
+        
+
         // Attributes:
         // A parameter which represent the recording date of the session's video.
         private string recordedTime;
@@ -26,14 +28,6 @@ namespace ExtremLink_Client_v2.Classes
         {
             get { return this.recordedTime; }
             set { this.recordedTime = value; }
-        }
-
-        // A parameter which indicate the duration of the video
-        private string videoDuration;
-        public string VideoDuration
-        {
-            get { return this.videoDuration; }
-            set { this.videoDuration = value; }
         }
 
         // A parameter which contain the video itself as a byte array.
@@ -45,10 +39,9 @@ namespace ExtremLink_Client_v2.Classes
         }
 
         // A constructor
-        public Session(string recordedTime, string videoDuration, byte[] videoContent)
+        public Session(string recordedTime, byte[] videoContent)
         {
             this.recordedTime = recordedTime;
-            this.videoDuration = videoDuration;
             this.videoContent = videoContent;
         }
 

