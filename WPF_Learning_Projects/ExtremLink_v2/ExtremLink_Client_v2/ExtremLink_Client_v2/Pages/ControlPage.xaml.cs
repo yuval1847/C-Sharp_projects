@@ -1,7 +1,9 @@
 ﻿using ExtremLink_Client_v2.Classes;
+using OpenCvSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,7 +94,7 @@ namespace ExtremLink_Client_v2.Pages
         }
         private async void UpdateFrame()
         {
-            
+
             while (this.isReceivingFrames)
             {
                 try
@@ -151,6 +153,7 @@ namespace ExtremLink_Client_v2.Pages
             while (this.isReceivingFrames && this.isRecordingFrame)
             {
                 this.sessions[this.sessions.Count - 1].WriteFrame(this.LoadFrameFromFile());
+                await Task.Delay(1000);
             }
             this.sessions[this.sessions.Count - 1].Stop();
         }
@@ -184,7 +187,7 @@ namespace ExtremLink_Client_v2.Pages
                 }
             }
         }
-        
+
         // Keyboard functions:
         private void FrameImg_KeyboardKeyDown(object sender, KeyEventArgs e)
         {

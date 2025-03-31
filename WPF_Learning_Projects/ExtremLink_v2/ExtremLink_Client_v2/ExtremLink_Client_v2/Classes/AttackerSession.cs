@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace ExtremLink_Client_v2.Classes
@@ -33,13 +34,17 @@ namespace ExtremLink_Client_v2.Classes
         public byte[] VideoContent
         {
             get { return this.videoContent; }
+            set { this.videoContent = value; }
         }
 
         // OpenCv VideoWriter
         private VideoWriter videoWriter;
         private string tempVideoPath; // Temporary file path for video writing
         private int width, height;
-        
+
+        // A MutexLock for the videoWriter
+        private readonly object lockObj = new object();
+
         private bool isActive;
         public bool IsActive
         {
@@ -64,7 +69,7 @@ namespace ExtremLink_Client_v2.Classes
                 this.tempVideoPath,
                 FourCC.H264,
                 FPS,
-                new OpenCvSharp.Size(width, height));
+                new OpenCvSharp.Size(this.width, this.height));
             this.isActive = true;
         }
 
@@ -87,12 +92,15 @@ namespace ExtremLink_Client_v2.Classes
         {
             if (bitmapImage != null)
             {
-                using (Bitmap bitmap = this.BitmapImageToBitmap(bitmapImage))
+                lock (lockObj)
                 {
-                    using (Mat mat = BitmapConverter.ToMat(bitmap))
+                    using (Bitmap bitmap = this.BitmapImageToBitmap(bitmapImage))
                     {
-                        Cv2.Resize(mat, mat, new OpenCvSharp.Size(width, height));
-                        this.videoWriter.Write(mat);
+                        using (Mat mat = BitmapConverter.ToMat(bitmap))
+                        {
+                            Cv2.Resize(mat, mat, new OpenCvSharp.Size(width, height));
+                            this.videoWriter.Write(mat);
+                        }
                     }
                 }
             }
@@ -101,8 +109,11 @@ namespace ExtremLink_Client_v2.Classes
         public void Stop()
         {
             this.isActive = false;
-            this.videoWriter.Release();
-            this.videoWriter.Dispose();
+            lock (lockObj)
+            {
+                this.videoWriter.Release();
+                this.videoWriter.Dispose();
+            }
         }
     }
 }
