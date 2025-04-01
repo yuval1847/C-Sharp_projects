@@ -145,7 +145,7 @@ namespace ExtremLink_Client_v2.Pages
         private async void Record()
         {
             // Input: Nothing.
-            // Output: The function records sessions.
+            // Output: The function records session and sends it to the server.
             AttackerSession record = new AttackerSession(800, 450);
             this.sessions.Add(record);
             this.sessions[this.sessions.Count - 1].Start();
@@ -156,6 +156,7 @@ namespace ExtremLink_Client_v2.Pages
                 await Task.Delay(1000);
             }
             this.sessions[this.sessions.Count - 1].Stop();
+            this.sessions[this.sessions.Count - 1].SendSessionToServer();
         }
 
 

@@ -46,6 +46,13 @@ namespace ExtremLink_Client_v2.Classes
             set { this.udpSocket = value; }
         }
 
+        protected Socket sessionTcpSocket;
+        public Socket SessionTcpSocket
+        {
+            get { return this.sessionTcpSocket; }
+            set { this.sessionTcpSocket = value; }
+        }
+
         // A string which represent the ip address of the server:
         protected string serverIpAddr;
 
@@ -65,7 +72,9 @@ namespace ExtremLink_Client_v2.Classes
             // Note: The server IP address you will change in the implementation of the classes of attacker and victim themself.
             this.tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            this.sessionTcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             this.ChangeSocketBufferSizeLimit(this.udpSocket, 4194304, 4194304);
+            this.ChangeSocketBufferSizeLimit(this.sessionTcpSocket, 4194304, 4194304);
         }
 
         private void ChangeSocketBufferSizeLimit(Socket socket, int RecieveBufferSize=8192, int SendBufferSize=8192)

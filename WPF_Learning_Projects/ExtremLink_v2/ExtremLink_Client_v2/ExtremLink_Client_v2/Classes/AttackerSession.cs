@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -39,7 +41,7 @@ namespace ExtremLink_Client_v2.Classes
 
         // OpenCv VideoWriter
         private VideoWriter videoWriter;
-        private string tempVideoPath; // Temporary file path for video writing
+        private string tempVideoPath;
         private int width, height;
 
         // A MutexLock for the videoWriter
@@ -106,6 +108,20 @@ namespace ExtremLink_Client_v2.Classes
             }
         }
 
+        private byte[] ConvertMP4ToByteArr()
+        {
+            // Input: Nothing.
+            // Output: A byte array which represent the session as mp4 file.
+            try
+            {
+                return File.ReadAllBytes(this.tempVideoPath);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void Stop()
         {
             this.isActive = false;
@@ -114,6 +130,38 @@ namespace ExtremLink_Client_v2.Classes
                 this.videoWriter.Release();
                 this.videoWriter.Dispose();
             }
+            this.videoContent = this.ConvertMP4ToByteArr(); 
         }
+
+        private string GenerateSessionRecordedTimeMessage()
+        {
+            // Input: Nothing.
+            // Output: The function creates a json format request of the recorded time of the session.
+            return $"{{\"RecordedTime\":\"{this.recordedTime.ToString()}\"}}";
+        }
+
+        private void SendSessionRecordedTimeToServer()
+        {
+            // Input: Nothing.
+            // Output: The function sends the session's recorded time (except the content) to the server via the attacker's tcp socket.
+            string message = this.GenerateSessionRecordedTimeMessage();
+            Attacker.AttackerInstance.SendTCPMessageToClient("📹", message);
+        }
+
+        public void SendSessionToServer()
+        {
+            // Input: Nothing.
+            // Output: The function sends the session to the server via the attacker's session tcp socket. 
+            using (FileStream fileStream = new FileStream(this.tempVideoPath, FileMode.Open, FileAccess.Read))
+            {
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    Attacker.AttackerInstance.SessionTcpSocket.Send(buffer, 0, bytesRead, SocketFlags.None);
+                }
+            }
+        }
+
     }
 }
