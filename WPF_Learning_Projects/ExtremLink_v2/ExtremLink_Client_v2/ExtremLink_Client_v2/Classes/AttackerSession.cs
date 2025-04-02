@@ -139,7 +139,6 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function creates a json format request of the recorded time of the session.
             return $"{{\"RecordedTime\":\"{this.recordedTime.ToString()}\"}}";
         }
-
         private void SendSessionRecordedTimeToServer()
         {
             // Input: Nothing.

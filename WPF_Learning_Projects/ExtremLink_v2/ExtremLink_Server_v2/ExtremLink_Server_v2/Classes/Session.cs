@@ -16,7 +16,7 @@ using Microsoft.Data.SqlClient;
 namespace ExtremLink_Server_v2.Classes
 {
 
-    internal class Session
+    public class Session
     {
         /*
         A class which represent a session.
@@ -30,97 +30,26 @@ namespace ExtremLink_Server_v2.Classes
             get { return this.recordedTime; }
         }
 
-        // A parameter which indicate the duration of the video
-        private TimeSpan videoDuration;
-        public TimeSpan VideoDuration
-        {
-            get { return this.videoDuration; }
-        }
-
         // A parameter which contain the video itself as a byte array.
         private byte[] videoContent;
         public byte[] VideoContent
         {
             get { return this.videoContent; }
+            set { this.videoContent = value; }
         }
 
-        // OpenCv VideoWriter
-        private VideoWriter videoWriter;
-        private string tempVideoPath; // Temporary file path for video writing
-        private int width, height, fps;
-
+        private string username;
+        public string Username
+        {
+            get { return this.username; }
+            set { this.username = value; }
+        }
 
         // A constructor
-        public Session(DateTime recordedTime, int width, int height, int fps)
+        public Session(DateTime recordedTime, string username)
         {
             this.recordedTime = recordedTime;
-            this.videoDuration = new TimeSpan();
-            this.width = width;
-            this.height = height;
-            this.fps = fps;
-        }
-        /*
-        // A function which start the recoding by init the 
-        public void StartRecording()
-        {
-            // Input: Nothing.
-            // Output: The function create a temp mp4 file to store the frames as a video and
-            // initializes the video writer which makes it able to start getting frames.
-            tempVideoPath = Path.Combine(Path.GetTempPath(), $"session_{this.recordedTime.ToString()}.mp4");
-            videoWriter = new VideoWriter(tempVideoPath, FourCC.MP4V, fps, new OpenCvSharp.Size(width, height));
-        }
-
-        // A function which add a frame to the entire session's video.
-        public void AddFrame(BitmapImage frame)
-        {
-            // Input: The function gets a bitmap object.
-            // Output: The function add the frame to the videoWriter
-            Bitmap bitmapFrame = ConvertBitmapImageToBitmap(frame);
-            Mat matFrame = BitmapConverter.ToMat(bitmapFrame);
-            Cv2.Resize(matFrame, matFrame, new OpenCvSharp.Size(this.width, this.height));
-            videoWriter.Write(matFrame);
-        }
-
-        // A function which converts BitmapImage to Bitmap
-        private Bitmap ConvertBitmapImageToBitmap(BitmapImage bitmapImage)
-        {
-            // Input: A bitmap image object.
-            // Output: The given BitmapImage object as a Bitmap object.
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BitmapEncoder encoder = new BmpBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-                encoder.Save(outStream);
-                return new Bitmap(outStream);
-            }
-        }
-
-        // A function which return the duration of an mp4 video
-        private TimeSpan GetVideoDuration(string filePath)
-        {
-            // Input: A path which represent the path of the mp4 file.
-            // Output: A TimeSpan object which represent the duration time of the video.
-            var mediaInfo = new MediaInfo.MediaInfo();
-            mediaInfo.Open(filePath);
-            string durationStr = mediaInfo.Get(StreamKind.Video, 0, "Duration");
-            mediaInfo.Close();
-            if (double.TryParse(durationStr, out double durationMs))
-            {
-                return TimeSpan.FromMilliseconds(durationMs);
-            }
-            throw new Exception("Could not determine video duration");
-        }
-
-        // A function which stops recording and store video in byte array
-        public void StopRecording()
-        {
-            // Input: Nothing.
-            // Output: The function stops the recording by stop adding frames,
-            // saves the video duration, store the video content and deletes the temp video file.
-            this.videoWriter.Release();
-            this.videoContent = File.ReadAllBytes(this.tempVideoPath);
-            this.videoDuration = this.GetVideoDuration(this.tempVideoPath);
-            File.Delete(this.tempVideoPath);
+            this.username = username;
         }
 
         // A function which upload the session to database
@@ -142,7 +71,7 @@ namespace ExtremLink_Server_v2.Classes
             // Input: Nothing.
             // Output: The function uploads the session to the database.
             string amoutOfSessionsSqlQuery = "SELECT COUNT(*) FROM [dbo].[Table]";
-            string sessionUploadQuery = "INSERT INTO [dbo].[Table] (Id, Username, VideoData, RecordedTime, Duration) VALUES (@Id, @Username, @VideoData, @RecordedTime, @Duration)";
+            string sessionUploadQuery = "INSERT INTO [dbo].[Table] (Id, Username, VideoData, RecordedTime) VALUES (@Id, @Username, @VideoData, @RecordedTime)";
             int amountOfSessions;
             using (SqlConnection conn = this.ConnectToDB())
             {
@@ -158,10 +87,9 @@ namespace ExtremLink_Server_v2.Classes
                         }
                         // Add parameters to the command to avoid SQL injection
                         com2.Parameters.AddWithValue("@Id", amountOfSessions+1);
-                        com2.Parameters.AddWithValue("@Username", User.UserInstance.UserName);
+                        com2.Parameters.AddWithValue("@Username", this.username);
                         com2.Parameters.AddWithValue("@VideoData", this.videoContent);
                         com2.Parameters.AddWithValue("@RecordedTime", this.recordedTime.ToString());
-                        com2.Parameters.AddWithValue("@Duration", this.videoDuration.ToString());
                         com2.ExecuteNonQuery();
                     }
                 }
@@ -171,8 +99,5 @@ namespace ExtremLink_Server_v2.Classes
                 }
             }
         }
-        */
-        // Sending client sessions functions:
-
     }
 }

