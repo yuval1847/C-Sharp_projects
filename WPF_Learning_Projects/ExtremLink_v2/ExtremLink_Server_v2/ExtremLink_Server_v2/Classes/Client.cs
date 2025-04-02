@@ -152,9 +152,14 @@ namespace ExtremLink_Server_v2.Classes
             }
             
             this.tcpSocket.Listen();
+            this.sessionTcpSocket.Listen();
+
             Socket tempTcpClientSocket = this.tcpSocket.Accept();
             this.ipAddress = this.FindClientIpAddress(tempTcpClientSocket);
             this.tcpSocket = tempTcpClientSocket;
+
+            tempTcpClientSocket = this.sessionTcpSocket.Accept();
+            this.sessionTcpSocket = tempTcpClientSocket;
             this.isConnected = true;
 
             switch (this.TypeOfClient)

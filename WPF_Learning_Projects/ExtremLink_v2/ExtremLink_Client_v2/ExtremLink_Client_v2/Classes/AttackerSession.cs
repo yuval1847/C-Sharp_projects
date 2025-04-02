@@ -127,8 +127,12 @@ namespace ExtremLink_Client_v2.Classes
             this.isActive = false;
             lock (lockObj)
             {
-                this.videoWriter.Release();
-                this.videoWriter.Dispose();
+                try
+                {
+                    this.videoWriter.Release();
+                    this.videoWriter.Dispose();
+                }
+                catch (Exception ex){}
             }
             this.videoContent = this.ConvertMP4ToByteArr(); 
         }
