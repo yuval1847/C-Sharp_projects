@@ -234,8 +234,8 @@ namespace ExtremLink_Server_v2.Classes
             // Output: The fucntion handle with session TCP packets which are sent by the attacker client.
             while (true)
             {
-                
                 byte[] sessionByteArr = GetSession();
+                Log.LogInstance.AddMessage("A session was received!");
                 this.tempSession.VideoContent = sessionByteArr;
                 this.tempSession.UploadSessionToDatabase();
                 this.tempSession = null;
@@ -502,7 +502,7 @@ namespace ExtremLink_Server_v2.Classes
                 byte[] buffer = new byte[8192];
                 int bytesRead;
 
-                while ((bytesRead = attacker.SessionTcpSocket.Receive(buffer)) > 0)
+                while ((bytesRead = this.attacker.SessionTcpSocket.Receive(buffer)) > 0)
                 {
                     fileStream.Write(buffer, 0, bytesRead);
                 }
