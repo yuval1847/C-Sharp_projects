@@ -138,19 +138,6 @@ namespace ExtremLink_Client_v2.Classes
             this.videoContent = this.ConvertMP4ToByteArr(); 
         }
 
-        private string GenerateSessionRecordedTimeMessage()
-        {
-            // Input: Nothing.
-            // Output: The function creates a json format request of the recorded time of the session.
-            return $"{{\"RecordedTime\":\"{this.recordedTime.ToString()}\"}}";
-        }
-        private void SendSessionRecordedTimeToServer()
-        {
-            // Input: Nothing.
-            // Output: The function sends the session's recorded time (except the content) to the server via the attacker's tcp socket.
-            string message = this.GenerateSessionRecordedTimeMessage();
-            Attacker.AttackerInstance.SendTCPMessageToClient("📹🕑", message);
-        }
         private void SendSessionContentToServer()
         {
             // Input: Nothing.
@@ -185,9 +172,7 @@ namespace ExtremLink_Client_v2.Classes
         public void SendSessionToServer()
         {
             // Input: Nothing.
-            // Output: The function sends to the server the session recorded time and it's content.
-            this.SendSessionRecordedTimeToServer();
-            Thread.Sleep(250);
+            // Output: The function sends to the server the session's video content.
             this.SendSessionContentToServer();
         }
     }

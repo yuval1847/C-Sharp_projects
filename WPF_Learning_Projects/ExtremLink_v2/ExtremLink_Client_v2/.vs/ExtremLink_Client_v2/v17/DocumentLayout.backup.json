@@ -7,16 +7,20 @@
       "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\attackersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\controlpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\controlpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\sharingscreenpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\sharingscreenpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\attacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,20 +38,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Client.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Client.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Client.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Client.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Client.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAAAE4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T13:39:06.527Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -60,14 +48,27 @@
               "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\AttackerSession.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\AttackerSession.cs",
               "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\AttackerSession.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAA4wLgAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAowLEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-27T08:58:02.82Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "Client.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Client.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Client.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Client.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Client.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAYwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T13:39:06.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ControlPage.xaml",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
               "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
@@ -79,13 +80,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ControlPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
               "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
               "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKIAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAA7wKIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T13:49:39.036Z",
               "EditorCaption": ""
@@ -105,20 +106,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Attacker.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Attacker.cs",
               "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Attacker.cs",
               "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Attacker.cs",
               "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Attacker.cs",
-              "ViewState": "AgIAAPMAAAAAAAAAAAAAAA0AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAwwA0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T13:49:48.305Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Victim.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
               "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Victim.cs",
@@ -126,8 +127,7 @@
               "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Victim.cs",
               "ViewState": "AgIAAI0BAAAAAAAAAAAowKgBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T13:49:49.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T13:49:49.561Z"
             }
           ]
         }
