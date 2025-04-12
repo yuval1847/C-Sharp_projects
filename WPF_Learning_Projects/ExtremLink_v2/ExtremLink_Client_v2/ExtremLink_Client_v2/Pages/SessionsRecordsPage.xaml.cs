@@ -30,6 +30,7 @@ namespace ExtremLink_Client_v2.Pages
         {
             this.contentMain = contentMain;
             this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
+            this.LoadRecords();
             InitializeComponent();
         }
 
@@ -39,6 +40,10 @@ namespace ExtremLink_Client_v2.Pages
             // Input: Nothing.
             // Output: The function load over the SessionRecordsList the records from the sessions records database.
             // Session.
+            Session.SendRequest(TypeOfSessionRequest.GetSessionProperties);
+            Dispatcher.Invoke(() =>
+            {
+            });
         }
 
     }

