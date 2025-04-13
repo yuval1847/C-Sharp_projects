@@ -25,11 +25,15 @@ namespace ExtremLink_Client_v2.Pages
         private User currentUser = User.UserInstance;
         private ContentControl contentMain;
 
+        // A sessions Ilist which contains the session of the user.
+        private IList<Session> userSessions;
+
 
         public SessionsRecordsPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
             this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
+            this.userSessions = new List<Session>();
             this.LoadRecords();
             InitializeComponent();
         }
@@ -43,6 +47,7 @@ namespace ExtremLink_Client_v2.Pages
             Session.SendRequest(TypeOfSessionRequest.GetSessionProperties);
             Dispatcher.Invoke(() =>
             {
+                
             });
         }
 

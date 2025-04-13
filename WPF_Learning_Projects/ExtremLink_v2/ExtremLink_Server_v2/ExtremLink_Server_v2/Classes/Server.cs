@@ -373,16 +373,71 @@ namespace ExtremLink_Server_v2.Classes
         }
 
         // Handling Session info retrieve command function:
+        private IList<Session> UsersSessionsProperties(string username)
+        {
+            // Input: A string which represent the username of the user that request it's session properties
+            // Output: An Ilist which contains the sessions properties.
+            IList<Session> sessions = new List<Session>();
+            SqlConnection connectionString = ConnectToDB("SessionRecordsDB.mdf");
+            using (SqlConnection conn = connectionString)
+            {
+                conn.Open();
+                string query = @"
+                SELECT [Id], [Username], [RecordedTime]
+                FROM [dbo].[Table]
+                WHERE [Username] = @Username;";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Session session = new Session(reader.GetDateTime(reader.GetOrdinal("RecordedTime")),
+                                reader.GetString(reader.GetOrdinal("Username")),
+                                reader.GetInt32(reader.GetOrdinal("Id")));
+                            sessions.Add(session);
+                        }
+                    }
+                }
+            }
+            return sessions;
+        }
+        private string FromSessionIlistToStringJson(IList<Session> sessionIlist)
+        {
+            // Input: A session Ilist.
+            // Ouput: A string which represent the ilist content as a json format.
+            string jsonFormat = "{{";
+            for (int i = 0; i < sessionIlist.Count; i++) 
+            {
+                jsonFormat += $"\"Id{i + 1}\":\"{sessionIlist[i].Id}\"," +
+                              $"\"Username{i + 1}\":\"{sessionIlist[i].Username}\"," +
+                              $"\"RecordedTime{i + 1}\":\"{sessionIlist[i].Id}\"";
+            }
+            jsonFormat += "}}";
+            return jsonFormat;
+        }
         private void HandleSessionInfoMessage(string data)
         {
             // Input: A string which represents a message about session from a user.
             // Output: The function handles with the given message.
             dynamic message = JsonConvert.DeserializeObject(data);
             JObject jsonData = (JObject)message;
+            string sessionPropertiesStr;
             switch (message.requestType)
             {
                 case "GetSessionProperties":
-
+                    switch (message.typeOfClient)
+                    {
+                        case "Attacker":
+                            sessionPropertiesStr = this.FromSessionIlistToStringJson(this.UsersSessionsProperties(this.attacker.User.UserName));
+                            this.attacker.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
+                            break;
+                        case "Victim":
+                            sessionPropertiesStr = this.FromSessionIlistToStringJson(this.UsersSessionsProperties(this.victim.User.UserName));
+                            this.attacker.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
+                            break;
+                    }
                     break;
                 case "GetSessionContent":
 

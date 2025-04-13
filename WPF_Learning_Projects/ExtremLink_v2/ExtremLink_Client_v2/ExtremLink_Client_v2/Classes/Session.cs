@@ -54,7 +54,7 @@ namespace ExtremLink_Client_v2.Classes
             // Input: A string which represent a username.
             // Output: A string json request to get all the sessions
             // properties which are belong to the specified user.
-            return $"{{\"requestType\":\"{requestType}\",\"username\":\"{username}\"}}";
+            return $"{{\"requestType\":\"{requestType}\",\"typeOfClient\":\"{User.UserInstance.TypeOfClient}\",\"username\":\"{username}\"}}";
         }
         private static string GenerateGetSessionContent(TypeOfSessionRequest requestType, int id)
         {
@@ -97,7 +97,14 @@ namespace ExtremLink_Client_v2.Classes
 
             SendSessionRequestToServer(requestQuery);
         }
-    
+
+        // Get sessions properties/content functions
         
+        /*private static IList<Session> GetSessionsProperties(string username)
+        { 
+            // Input: A string which represent a username.
+            // Output: An Ilist of sessions which contains the properties of the user's session.
+
+        }*/
     }
 }

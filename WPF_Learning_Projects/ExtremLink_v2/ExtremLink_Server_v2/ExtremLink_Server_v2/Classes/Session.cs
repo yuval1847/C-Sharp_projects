@@ -45,11 +45,24 @@ namespace ExtremLink_Server_v2.Classes
             set { this.username = value; }
         }
 
-        // A constructor
+        private int id;
+        public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+        // Constructors
         public Session(DateTime recordedTime, string username)
         {
             this.recordedTime = recordedTime;
             this.username = username;
+        }
+        public Session(DateTime recordedTime, string username, int id)
+        {
+            this.recordedTime = recordedTime;
+            this.username = username;
+            this.id = id;
         }
 
         // A function which upload the session to database
