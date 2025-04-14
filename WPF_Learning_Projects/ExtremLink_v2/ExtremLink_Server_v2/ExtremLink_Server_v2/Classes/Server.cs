@@ -407,7 +407,7 @@ namespace ExtremLink_Server_v2.Classes
         {
             // Input: A session Ilist.
             // Ouput: A string which represent the ilist content as a json format.
-            string jsonFormat = "{{";
+            string jsonFormat = $"{{\"requestType\":\"ListOfUserSessionsProperties\",";
             for (int i = 0; i < sessionIlist.Count; i++) 
             {
                 jsonFormat += $"\"Id{i + 1}\":\"{sessionIlist[i].Id}\"," +
@@ -416,6 +416,62 @@ namespace ExtremLink_Server_v2.Classes
             }
             jsonFormat += "}}";
             return jsonFormat;
+        }
+        private byte[] GetSessionContentById(int id)
+        {
+            // Input: An integer representing a session ID.
+            // Output: The video content from the database for the requested session.
+
+            SqlConnection connectionString = ConnectToDB("SessionRecordsDB.mdf");
+            using (SqlConnection conn = connectionString)
+            {
+                conn.Open();
+                string query = @"SELECT VideoData FROM [Table] WHERE Id = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return (byte[])result;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+        private void SendSessionContent(byte[] sessionContent, Socket socket)
+        {
+            // Input: A byte array object which represents a session video content and the client's (TCP) socket.
+            // Output: The function sends to the client the requested session's content through the given socket.
+            const int packetSize = 1400;
+            int totalPackets = (int)Math.Ceiling((double)sessionContent.Length / packetSize);
+
+            // Generate a random stream ID to identify this data stream
+            int streamId = new Random().Next(1, int.MaxValue);
+
+            // Send packets
+            // MessageBox.Show($"{totalPackets}");
+            for (int i = 0; i < totalPackets; i++)
+            {
+                // Calculate packet bounds
+                int offset = i * packetSize;
+                int size = Math.Min(packetSize, sessionContent.Length - offset);
+
+                // Construct packet (12 bytes of metadata + segment data)
+                byte[] packet = new byte[size + 12];
+                BitConverter.GetBytes(streamId).CopyTo(packet, 0);         // 4 bytes: Stream ID
+                BitConverter.GetBytes(totalPackets).CopyTo(packet, 4);     // 4 bytes: Total packets
+                BitConverter.GetBytes(i).CopyTo(packet, 8);                // 4 bytes: Packet index
+                Array.Copy(sessionContent, offset, packet, 12, size);               // Segment data
+
+                // Send packet
+                socket.Send(packet);
+            }
         }
         private void HandleSessionInfoMessage(string data)
         {
@@ -435,15 +491,25 @@ namespace ExtremLink_Server_v2.Classes
                             break;
                         case "Victim":
                             sessionPropertiesStr = this.FromSessionIlistToStringJson(this.UsersSessionsProperties(this.victim.User.UserName));
-                            this.attacker.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
+                            this.victim.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
                             break;
                     }
                     break;
-                case "GetSessionContent":
 
+                case "GetSessionContent":
+                    switch (message.typeOfClient)
+                    {
+                        case "Attacker":
+                            this.SendSessionContent(this.GetSessionContentById(message.Id), this.attacker.SessionTcpSocket);
+                            break;
+                        case "Victim":
+                            this.SendSessionContent(this.GetSessionContentById(message.Id), this.victim.SessionTcpSocket);
+                            break;
+                    }
                     break;
             }
         }
+
 
         // Getting frames function:
         public byte[] GetFrame()
@@ -500,6 +566,7 @@ namespace ExtremLink_Server_v2.Classes
                 return ms.ToArray();
             }
         }
+
 
         // Sending frame function:
         public void SendFrame(byte[] frame)

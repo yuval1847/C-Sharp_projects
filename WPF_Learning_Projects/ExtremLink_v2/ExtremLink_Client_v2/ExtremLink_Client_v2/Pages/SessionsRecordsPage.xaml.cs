@@ -45,11 +45,25 @@ namespace ExtremLink_Client_v2.Pages
             // Output: The function load over the SessionRecordsList the records from the sessions records database.
             // Session.
             Session.SendRequest(TypeOfSessionRequest.GetSessionProperties);
+            Thread.Sleep(2000);
+            string sessionListJson;
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    sessionListJson = Attacker.AttackerInstance.CurrentSessionBytes;
+                    break;
+                case TypeOfClient.Victim:
+                    
+                    break;
+            }
+            Ilist<Session> sessions = Session.FromSessionPropertiesListJsonStrToSessionIlist();
             Dispatcher.Invoke(() =>
             {
                 
             });
         }
+
+        
 
     }
 }

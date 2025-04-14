@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using OpenCvSharp;
+using System.Text.RegularExpressions;
 
 namespace ExtremLink_Client_v2.Classes
 {
@@ -38,10 +41,24 @@ namespace ExtremLink_Client_v2.Classes
             set { this.videoContent = value; }
         }
 
+        // A parameter which contains the session's id
+        private int id;
+        public int Id
+        {
+            get { return this.id; }
+            set { this.id = value; }
+        }
+
+
         // A constructor
         public Session()
         {
 
+        }
+        public Session(DateTime recordedTime, int id)
+        {
+            this.recordedTime = recordedTime;
+            this.id = id;
         }
 
         // A function which convert the video content to actual video.
@@ -61,7 +78,7 @@ namespace ExtremLink_Client_v2.Classes
             // Input: A which integer which represent session id.
             // Output: A string json request to get the content of the
             // session based on the session id.
-            return $"{{\"requestType\":\"{requestType}\",\"Id\":\"{id}\"}}";
+            return $"{{\"requestType\":\"{requestType}\",\"typeOfClient\":\"{User.UserInstance.TypeOfClient}\",\"Id\":\"{id}\"}}";
         }
 
         private static void SendSessionRequestToServer(string message)
@@ -98,13 +115,42 @@ namespace ExtremLink_Client_v2.Classes
             SendSessionRequestToServer(requestQuery);
         }
 
-        // Get sessions properties/content functions
-        
-        /*private static IList<Session> GetSessionsProperties(string username)
-        { 
-            // Input: A string which represent a username.
-            // Output: An Ilist of sessions which contains the properties of the user's session.
+        // A function which organize string of session properties list to properties
+        private static IList<Session> FromSessionPropertiesListJsonStrToSessionIlist(string sessionPropertiesList)
+        {
+            // Input: A string in JSON format which contains user's session properties.
+            // Output: An IList of Session objects which represent these session properties.
+            int amountOfSessions = Regex.Matches(sessionPropertiesList, "\"Id[0-9]+\"").Count;
+            IList<Session> sessions = new List<Session>();
 
-        }*/
+            for (int i = 0; i < amountOfSessions; i++)
+            {
+                string idPattern = $"\"Id{i + 1}\":\"(.*?)\"";
+                string usernamePattern = $"\"Username{i + 1}\":\"(.*?)\"";
+                string recordedTimePattern = $"\"RecordedTime{i + 1}\":\"(.*?)\"";
+
+                string id = Regex.Match(sessionPropertiesList, idPattern).Groups[1].Value;
+                string username = Regex.Match(sessionPropertiesList, usernamePattern).Groups[1].Value;
+                string recordedTime = Regex.Match(sessionPropertiesList, recordedTimePattern).Groups[1].Value;
+
+                sessions.Add(new Session(DateTime.Parse(recordedTime), int.Parse(id)));
+            }
+
+            return sessions;
+        }
+
+
+        private void CreateTempMP4File(byte[] videoContent)
+        {
+            // Input: A byte array which represents an mp4 file content.
+            // Output: The function creates a temp mp4 file and store the video content inside.
+            string fileName = "tempRecvSession.mp4";
+            if (videoContent == null || videoContent.Length == 0)
+            {
+                throw new ArgumentException("Video content is null or empty.");
+            }
+            string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            File.WriteAllBytes(tempFilePath, videoContent);
+        }
     }
 }
