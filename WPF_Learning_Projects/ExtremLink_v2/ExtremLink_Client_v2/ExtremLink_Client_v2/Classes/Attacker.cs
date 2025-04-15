@@ -190,7 +190,7 @@ namespace ExtremLink_Client_v2.Classes
             // ! - Database functionality
             // & - Frames handling
             // % - Mouse handling
-            // $ - Sessions handling
+            // 📹🕑 - Sessions handling
             while (true)
             {
                 List<object> message = this.GetTCPMessageFromClient();
@@ -212,7 +212,7 @@ namespace ExtremLink_Client_v2.Classes
                     case "^":
                         this.HandleKeyboardInput(data);
                         break;
-                    case "$":
+                    case "📹🕑":
                         this.HandleSessionsCommands(data);
                         break;
                 }
@@ -320,7 +320,7 @@ namespace ExtremLink_Client_v2.Classes
             switch (data.requestType)
             {
                 case "ListOfUserSessionsProperties":
-                    
+                    User.UserInstance.UserSessions = Session.FromSessionPropertiesListJsonStrToSessionIlist(message);
                     break;
             }
 

@@ -25,17 +25,12 @@ namespace ExtremLink_Client_v2.Pages
         private User currentUser = User.UserInstance;
         private ContentControl contentMain;
 
-        // A sessions Ilist which contains the session of the user.
-        private IList<Session> userSessions;
-
-
         public SessionsRecordsPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
-            this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
-            this.userSessions = new List<Session>();
-            this.LoadRecords();
             InitializeComponent();
+            this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
+            this.LoadRecords();
         }
 
 
@@ -46,20 +41,29 @@ namespace ExtremLink_Client_v2.Pages
             // Session.
             Session.SendRequest(TypeOfSessionRequest.GetSessionProperties);
             Thread.Sleep(2000);
-            string sessionListJson;
-            switch (User.UserInstance.TypeOfClient)
-            {
-                case TypeOfClient.Attacker:
-                    sessionListJson = Attacker.AttackerInstance.CurrentSessionBytes;
-                    break;
-                case TypeOfClient.Victim:
-                    
-                    break;
-            }
-            Ilist<Session> sessions = Session.FromSessionPropertiesListJsonStrToSessionIlist();
             Dispatcher.Invoke(() =>
             {
-                
+                // Clear the current items
+                SessionRecordsList.Items.Clear();
+
+                // Check if there are any sessions for the user
+                if (User.UserInstance.UserSessions != null)
+                {
+                    foreach (var session in User.UserInstance.UserSessions)
+                    {
+                        var displayItem = new
+                        {
+                            Date = session.RecordedTime.ToString("yyyy-MM-dd HH:mm"),
+                            VideoName = $"Session_{session.Id}.mp4"
+                        };
+
+                        SessionRecordsList.Items.Add(displayItem);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No session records were found.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             });
         }
 

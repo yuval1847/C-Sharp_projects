@@ -27,6 +27,13 @@ namespace ExtremLink_Client_v2.Classes
             set { this.typeOfClient = value; }
         }
 
+        // An Ilist of the user's sessions properties
+        private IList<Session> userSessions;
+        public IList<Session> UserSessions
+        {
+            get { return this.userSessions; }
+            set { this.userSessions = value; }
+        }
 
         // Singelton behavior
         private static User userInstance;

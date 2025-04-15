@@ -201,7 +201,7 @@ namespace ExtremLink_Client_v2.Classes
                     case "&":
                         this.HandleFramesCommands(data);
                         break;
-                    case "$":
+                    case "📹🕑":
                         this.HandleSessionsCommands(data);
                         break;
                 }
@@ -328,7 +328,7 @@ namespace ExtremLink_Client_v2.Classes
                     break;
             }
         }
-        
+
         // Handle Sessions commands:
         private void HandleSessionsCommands(string message)
         {
@@ -340,6 +340,13 @@ namespace ExtremLink_Client_v2.Classes
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
+
+            switch (data.requestType)
+            {
+                case "ListOfUserSessionsProperties":
+                    User.UserInstance.UserSessions = Session.FromSessionPropertiesListJsonStrToSessionIlist(message);
+                    break;
+            }
 
         }
 

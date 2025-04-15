@@ -9,14 +9,14 @@ using System.Text.RegularExpressions;
 
 namespace ExtremLink_Client_v2.Classes
 {
-    enum TypeOfSessionRequest
+    public enum TypeOfSessionRequest
     {
         GetSessionProperties,
         GetSessionContent
     }
 
 
-    class Session
+    public class Session
     {
         /*
         A class which represent a single session
@@ -116,7 +116,7 @@ namespace ExtremLink_Client_v2.Classes
         }
 
         // A function which organize string of session properties list to properties
-        private static IList<Session> FromSessionPropertiesListJsonStrToSessionIlist(string sessionPropertiesList)
+        public static IList<Session> FromSessionPropertiesListJsonStrToSessionIlist(string sessionPropertiesList)
         {
             // Input: A string in JSON format which contains user's session properties.
             // Output: An IList of Session objects which represent these session properties.
@@ -140,7 +140,7 @@ namespace ExtremLink_Client_v2.Classes
         }
 
 
-        private void CreateTempMP4File(byte[] videoContent)
+        public static void CreateTempMP4File(byte[] videoContent)
         {
             // Input: A byte array which represents an mp4 file content.
             // Output: The function creates a temp mp4 file and store the video content inside.
