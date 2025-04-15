@@ -22,14 +22,13 @@ namespace ExtremLink_Client_v2.Pages
     /// </summary>
     public partial class SessionsRecordsPage : UserControl
     {
-        private User currentUser = User.UserInstance;
         private ContentControl contentMain;
 
         public SessionsRecordsPage(ContentControl contentMain)
         {
             this.contentMain = contentMain;
             InitializeComponent();
-            this.Dispatcher.Invoke(() => { usernameTextBlock.Text = this.currentUser.UserName; });
+            this.Dispatcher.Invoke(() => { usernameTextBlock.Text = User.UserInstance.UserName; });
             this.LoadRecords();
         }
 
@@ -53,6 +52,7 @@ namespace ExtremLink_Client_v2.Pages
                     {
                         var displayItem = new
                         {
+                            Id = session.Id,
                             Date = session.RecordedTime.ToString("yyyy-MM-dd HH:mm"),
                             VideoName = $"Session_{session.Id}.mp4"
                         };

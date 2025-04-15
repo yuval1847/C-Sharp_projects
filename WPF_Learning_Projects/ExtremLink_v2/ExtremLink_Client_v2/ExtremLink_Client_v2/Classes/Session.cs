@@ -85,13 +85,14 @@ namespace ExtremLink_Client_v2.Classes
         {
             // Input: The function gets a Client object and a string which represent the message.
             // Output: The function sends the server the message via the tcp socket.
-            if (User.UserInstance.TypeOfClient == TypeOfClient.Attacker)
+            switch (User.UserInstance.TypeOfClient)
             {
-                Attacker.AttackerInstance.SendTCPMessageToClient("📹🕑", message);
-            }
-            else
-            {
-                Victim.VictimInstance.SendTCPMessageToClient("📹🕑", message);
+                case TypeOfClient.Attacker:
+                    Attacker.AttackerInstance.SendTCPMessageToClient("📹🕑", message);
+                    break;
+                case TypeOfClient.Victim:
+                    Victim.VictimInstance.SendTCPMessageToClient("📹🕑", message);
+                    break;
             }
         }
 

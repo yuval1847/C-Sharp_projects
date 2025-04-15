@@ -21,8 +21,8 @@
             <!-- Title Section -->
             <Grid>
                 <TextBlock Text="Sessions Records" FontSize="50" FontWeight="Bold" Foreground="#00CEC9" 
-                           HorizontalAlignment="Center" Margin="0,5,0,0"/>
-                <Image Source="/Images/video_icon_1.png" Height="50" Width="55" Margin="0,13,114,9" HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <Image Source="/Images/video_icon_1.png" Height="50" Width="55" Margin="0,8,113,14" HorizontalAlignment="Right"/>
             </Grid>
 
             <!-- Main Block Container -->
@@ -57,8 +57,9 @@
 
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
                                 <GridViewColumn Header="Date" Width="200" DisplayMemberBinding="{Binding Date}"/>
-                                <GridViewColumn Header="Video Name" Width="520" DisplayMemberBinding="{Binding VideoName}"/>
+                                <GridViewColumn Header="Video Name" Width="470" DisplayMemberBinding="{Binding VideoName}"/>
                             </GridView>
                         </ListView.View>
 
