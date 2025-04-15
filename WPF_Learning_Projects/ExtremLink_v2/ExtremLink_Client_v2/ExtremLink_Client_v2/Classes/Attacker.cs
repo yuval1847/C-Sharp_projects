@@ -312,14 +312,17 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function handles which the sessions message.
 
             // Reading the data in json format
+            // Note: The message can't be transformed to a json format so fix the message
             dynamic data = JsonConvert.DeserializeObject(message);
+
+            MessageBox.Show("1");
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
-
-            switch (data.requestType)
+            switch ((string)data.requestType)
             {
                 case "ListOfUserSessionsProperties":
+                    MessageBox.Show("2");
                     User.UserInstance.UserSessions = Session.FromSessionPropertiesListJsonStrToSessionIlist(message);
                     break;
             }

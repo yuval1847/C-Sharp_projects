@@ -26,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Server.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\Classes\\Server.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Server_v2\\Classes\\Server.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\Classes\\Server.cs",
+              "RelativeToolTip": "ExtremLink_Server_v2\\Classes\\Server.cs",
+              "ViewState": "AgIAAD4BAAAAAAAAAAA9wJsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T13:50:22.407Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -39,19 +52,6 @@
               "ViewState": "AgIAAD4AAAAAAAAAAAAiwFcAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T07:47:12.455Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Server.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\Classes\\Server.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Server_v2\\Classes\\Server.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Server_v2\\ExtremLink_Server_v2\\Classes\\Server.cs",
-              "RelativeToolTip": "ExtremLink_Server_v2\\Classes\\Server.cs",
-              "ViewState": "AgIAALIAAAAAAAAAAAAmwMwAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T13:50:22.407Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",

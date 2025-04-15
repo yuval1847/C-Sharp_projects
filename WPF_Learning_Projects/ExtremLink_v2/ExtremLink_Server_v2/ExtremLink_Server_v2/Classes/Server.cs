@@ -33,6 +33,7 @@ using System.Diagnostics;
 using ExtremLink_Server_v2.Classes;
 using System.Net.Http.Headers;
 using System.Printing;
+using System.Windows.Interop;
 
 namespace ExtremLink_Server_v2.Classes
 {
@@ -405,18 +406,25 @@ namespace ExtremLink_Server_v2.Classes
         }
         private string FromSessionIlistToStringJson(IList<Session> sessionIlist)
         {
-            // Input: A session Ilist.
-            // Ouput: A string which represent the ilist content as a json format.
+            // Input: A session IList.
+            // Output: A string which represents the IList content as a JSON format.
             string jsonFormat = $"{{\"requestType\":\"ListOfUserSessionsProperties\",";
-            for (int i = 0; i < sessionIlist.Count; i++) 
+
+            for (int i = 0; i < sessionIlist.Count; i++)
             {
                 jsonFormat += $"\"Id{i + 1}\":\"{sessionIlist[i].Id}\"," +
                               $"\"Username{i + 1}\":\"{sessionIlist[i].Username}\"," +
-                              $"\"RecordedTime{i + 1}\":\"{sessionIlist[i].Id}\"";
+                              $"\"RecordedTime{i + 1}\":\"{sessionIlist[i].RecordedTime}\"";
+
+                // Add a comma if it's not the last session
+                if (i < sessionIlist.Count - 1)
+                    jsonFormat += ",";
             }
-            jsonFormat += "}}";
+
+            jsonFormat += "}";
             return jsonFormat;
         }
+
         private byte[] GetSessionContentById(int id)
         {
             // Input: An integer representing a session ID.
@@ -480,10 +488,10 @@ namespace ExtremLink_Server_v2.Classes
             dynamic message = JsonConvert.DeserializeObject(data);
             JObject jsonData = (JObject)message;
             string sessionPropertiesStr;
-            switch (message.requestType)
+            switch ((string)message.requestType)
             {
                 case "GetSessionProperties":
-                    switch (message.typeOfClient)
+                    switch ((string)message.typeOfClient)
                     {
                         case "Attacker":
                             sessionPropertiesStr = this.FromSessionIlistToStringJson(this.UsersSessionsProperties(this.attacker.User.UserName));
@@ -497,7 +505,7 @@ namespace ExtremLink_Server_v2.Classes
                     break;
 
                 case "GetSessionContent":
-                    switch (message.typeOfClient)
+                    switch ((string)message.typeOfClient)
                     {
                         case "Attacker":
                             this.SendSessionContent(this.GetSessionContentById(message.Id), this.attacker.SessionTcpSocket);
