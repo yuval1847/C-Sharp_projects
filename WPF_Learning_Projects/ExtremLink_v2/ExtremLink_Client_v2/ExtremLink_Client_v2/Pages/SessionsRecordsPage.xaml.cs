@@ -67,7 +67,21 @@ namespace ExtremLink_Client_v2.Pages
             });
         }
 
-        
-
+        private void SessionRecordsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = SessionRecordsList.SelectedItem;
+            try
+            {
+                dynamic item = selectedItem;
+                int selectedId = item.Id;
+                Session.SendRequest(TypeOfSessionRequest.GetSessionContent, selectedId);
+                Thread.Sleep(2000);
+                this.contentMain.Content = new WatchingVideoPage(contentMain);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

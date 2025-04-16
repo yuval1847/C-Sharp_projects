@@ -97,6 +97,7 @@ namespace ExtremLink_Client_v2.Classes
             // The function starts the tasks of the functions which handling with packets.
             Task.Run(() => this.HandleUdpCommunication());
             Task.Run(() => this.HandleTcpCommunication());
+            Task.Run(() => this.HandleSessionsTcpCommunication());
         }
 
 
@@ -242,6 +243,7 @@ namespace ExtremLink_Client_v2.Classes
             while (true) 
             {
                 this.currentSessionBytes = this.GetSession();
+                Session.CreateTempMP4File(this.currentSessionBytes);
                 Thread.Sleep(1000);
             }
         }
