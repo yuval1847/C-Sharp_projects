@@ -432,7 +432,6 @@ namespace ExtremLink_Server_v2.Classes
         {
             // Input: An integer representing a session ID.
             // Output: The video content from the database for the requested session.
-
             SqlConnection connectionString = ConnectToDB("SessionRecordsDB.mdf");
             using (SqlConnection conn = connectionString)
             {
@@ -491,6 +490,7 @@ namespace ExtremLink_Server_v2.Classes
             dynamic message = JsonConvert.DeserializeObject(data);
             JObject jsonData = (JObject)message;
             string sessionPropertiesStr;
+            byte[] sessionContent = null;
             switch ((string)message.requestType)
             {
                 case "GetSessionProperties":
@@ -512,10 +512,12 @@ namespace ExtremLink_Server_v2.Classes
                     switch ((string)message.typeOfClient)
                     {
                         case "Attacker":
-                            this.SendSessionContent(this.GetSessionContentById(message.Id), this.attacker.SessionTcpSocket);
+                            sessionContent = this.GetSessionContentById((int)message.Id);
+                            this.SendSessionContent(sessionContent, this.attacker.SessionTcpSocket);
                             break;
                         case "Victim":
-                            this.SendSessionContent(this.GetSessionContentById(message.Id), this.victim.SessionTcpSocket);
+                            sessionContent = this.GetSessionContentById((int)message.Id);
+                            this.SendSessionContent(sessionContent, this.victim.SessionTcpSocket);
                             break;
                     }
                     break;

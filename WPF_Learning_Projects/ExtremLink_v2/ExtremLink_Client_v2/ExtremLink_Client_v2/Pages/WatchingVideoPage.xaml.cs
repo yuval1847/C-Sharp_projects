@@ -33,6 +33,20 @@ namespace ExtremLink_Client_v2.Pages
             this.LoadVideo();
         }
 
+        // Operation buttons:
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void PauseBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         // Functions of the session:
         private void CreateTempSessionVideoFile()
         {

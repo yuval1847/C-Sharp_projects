@@ -150,7 +150,7 @@ namespace ExtremLink_Client_v2.Classes
             {
                 throw new ArgumentException("Video content is null or empty.");
             }
-            string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            string tempFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             File.WriteAllBytes(tempFilePath, videoContent);
         }
 
