@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="4*"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="/Images/user_icon_black.png" HorizontalAlignment="Left" Width="25" Margin="15,30,0,31" Visibility="Visible" RenderTransformOrigin="0.794,0.563"/>
+                <Image Source="/Images/user_icon.png" HorizontalAlignment="Left" Width="25" Margin="15,30,0,31" Visibility="Visible" RenderTransformOrigin="0.794,0.563"/>
                 <customWidgets:CustomTextBox Grid.Column="1" x:Name="usernameCustomTextBox" Placeholder="Username" Width="200" Height="40" Margin="0,20,0,30"/>
             </Grid>
 
@@ -44,7 +44,13 @@
             </Grid>
 
             <TextBlock x:Name="wrongLoginTextBlock" Visibility="Hidden" Text="Error: you entered a wrong username or password!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <customWidgets:CustomButton Width="100" Height="40" Placeholder="Login" Margin="0,0,0,10" CustomClick="LoginButton_Click"/>
+            <Button x:Name="LoginBtn" Content="Login" Width="120" Height="45" Background="#034045" Foreground="White"
+                FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,15" Click="LoginButton_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
             <Button Content="Create new user" Margin ="0,3,0,8" FontSize="14" Foreground="#00CEC9" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="CreateNewUser_Click"/>
             <Button Content="Forgot password" Margin ="0,3,0,8" FontSize="14" Foreground="#00CEC9" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ForgotPassword_Click"/>
 

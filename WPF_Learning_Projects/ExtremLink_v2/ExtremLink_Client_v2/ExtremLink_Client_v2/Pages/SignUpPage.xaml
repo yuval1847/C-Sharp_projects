@@ -9,15 +9,17 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#00cec9" Offset="0"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#031019" Offset="0"/>
+                <GradientStop Color="#034045" Offset="0.5"/>
+                <GradientStop Color="#026F71" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Height="600" Background="Transparent">
             <Image Source="/Images/ExtremLink_Icon.png" Width="130" Height="130" Margin="0,10,0,0"/>
-            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <TextBlock Text="Sign-up" FontSize="24" Foreground="#031019" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="ExtremLink" FontSize="48" FontWeight="Bold" Foreground="#00CEC9" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Sign-up" FontSize="24" Foreground="#00CEC9" HorizontalAlignment="Center" Margin="0,0,0,10"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"/>
@@ -51,7 +53,7 @@
 
                 <!-- Phone -->
                 <StackPanel Grid.Column="0" Grid.Row="3">
-                    <customWidgets:CustomTextBox x:Name="phoneCustomTextBox" Placeholder="phone(+972)" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
+                    <customWidgets:CustomTextBox x:Name="phoneCustomTextBox" Placeholder="phone (+972)" Width="200" Height="40" Margin="0,0,0,0" IsHide="True"/>
                     <TextBlock x:Name="wrongPhoneTextBlock" Visibility="hidden" Text="Should be 10 digits!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
                 </StackPanel>
 
@@ -82,7 +84,13 @@
                 </StackPanel>
             </Grid>
             <TextBlock x:Name="errorSignUpTextBlock" Visibility="Hidden" Text="This user already exist!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <customWidgets:CustomButton x:Name="signUpBtn" Width="100" Height="40" Placeholder="Sign-Up" Margin="0,0,0,10" CustomClick="SignUpButton_Click"/>
+            <Button x:Name="signUpBtn" Content="Sign-Up" Width="120" Height="45" Background="#034045" Foreground="White"
+                FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,10" Click="SignUpButton_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
