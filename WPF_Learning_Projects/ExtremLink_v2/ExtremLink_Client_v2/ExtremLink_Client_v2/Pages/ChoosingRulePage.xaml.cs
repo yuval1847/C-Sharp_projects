@@ -25,6 +25,7 @@ namespace ExtremLink_Client_v2.Pages
         private ContentControl contentMain;
         public ChoosingRulePage(ContentControl contentMain)
         {
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
             this.contentMain = contentMain;
             InitializeComponent();
         }

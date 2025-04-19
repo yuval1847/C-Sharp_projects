@@ -40,5 +40,14 @@ namespace ExtremLink_Client_v2.Pages
             // Output: The function changes the current page to the home page.
             this.contentMain.Content = new HomePage(this.contentMain);
         }
+
+        private void AutoReaderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // This function starts the auto read of the instruction.
+            BackHomeBtn.IsEnabled = false;
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.InsturctionsReaderAI);
+            Thread.Sleep(33000);
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
+        }
     }
 }

@@ -23,32 +23,33 @@
                FontFamily="Consolas"/>
 
             <!-- Instructions Points: -->
-            <TextBlock Text="◈ Enter the IPv4 address of the server which control on this client." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Choose your rule as a client of the program (Attacker or Victim)." FontSize="20" Foreground="#00CECF"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                        FontFamily="Consolas" Opacity="1"/>  
+            <TextBlock Text="◈ Enter the IPv4 address of the server which connects the client." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ Login or Sign up to the program." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Login or Sign up to the system." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ Wait for several seconds and the server will take control of you." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Choose your requested functionality in the home page." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ You can communicate with the server using the chat that
-                       &#x0A;  appears in the side of the controlling page." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ The server can start, pause and stop the controlling." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ The attacker can start, pause and stop the controlling." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ When the server stops, the current page automatically returns
-                       &#x0A;  to the home page." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ When the attacker stops control, he can start over&#x0A;  and reconnect to the victim's pc." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ For exiting the program click on the exit button." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Both attacker and victim can choose and watch each&#x0A;  recording of their sessions." FontSize="20" Foreground="#00CECF"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                        FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ For exiting the program click on the exit button on top." FontSize="20" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
             
             <TextBlock Text="⚠ Warning! This program was created for learning purpose only!" FontSize="20"
-                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,30,0,0" FontFamily="Consolas" Opacity="1">
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,20,0,0" FontFamily="Consolas" Opacity="1">
                 <TextBlock.Foreground>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="Orange" Offset="0"/>
@@ -61,10 +62,19 @@
         <!-- Back to home page button -->
         <Button x:Name="BackHomeBtn" Content="🏠 Back Home" Width="220" Height="55" Background="#034045" Foreground="White"
                 FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,5" Click="BackHomeBtn_Click">
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="150,0,0,5" Click="BackHomeBtn_Click">
                 <Button.Effect>
                     <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
                 </Button.Effect>
+        </Button>
+
+        <!-- Reader button -->
+        <Button x:Name="AutoReaderBtn" Content="🔊 Auto Read" Width="220" Height="55" Background="#034045" Foreground="White"
+        FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+        HorizontalAlignment="Right" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,150,5" Click="AutoReaderBtn_Click">
+            <Button.Effect>
+                <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+            </Button.Effect>
         </Button>
     </Grid>
 </UserControl>

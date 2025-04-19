@@ -122,3 +122,10 @@ C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projec
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\System.Drawing.Common.dll
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\System.Private.Windows.Core.dll
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Asio.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Core.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Midi.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.WinMM.dll

@@ -19,6 +19,11 @@
     <None Remove="Images\user_icon_black.png" />
     <None Remove="Images\victim_icon.png" />
     <None Remove="Images\video_icon_1.png" />
+    <None Remove="Sounds\BackgroundMusic.mp3" />
+    <None Remove="Sounds\ButtonClick.mp3" />
+    <None Remove="Sounds\ControlMusic.mp3" />
+    <None Remove="Sounds\EntranceMusic.mp3" />
+    <None Remove="Sounds\InstrucationsReader.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +46,11 @@
     <Resource Include="Images\user_icon_black.png" />
     <Resource Include="Images\victim_icon.png" />
     <Resource Include="Images\video_icon_1.png" />
+    <Resource Include="Sounds\BackgroundMusic.mp3" />
+    <Resource Include="Sounds\ButtonClick.mp3" />
+    <Resource Include="Sounds\ControlMusic.mp3" />
+    <Resource Include="Sounds\EntranceMusic.mp3" />
+    <Resource Include="Sounds\InstrucationsReader.mp3" />
   </ItemGroup>
 
 </Project>

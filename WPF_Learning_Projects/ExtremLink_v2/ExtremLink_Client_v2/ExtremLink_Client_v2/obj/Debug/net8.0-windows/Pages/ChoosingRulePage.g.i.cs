@@ -69,7 +69,7 @@ namespace ExtremLink_Client_v2.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client_v2;V1.0.0.0;component/pages/choosingrulepage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client_v2;component/pages/choosingrulepage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\ChoosingRulePage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ExtremLink_Client_v2.Classes;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,6 +19,7 @@ namespace ExtremLink_Client_v2
     {
         public MainWindow()
         {
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Entrance);
             InitializeComponent();
             ContentMain.Content = new Pages.OpeningPage(ContentMain);
         }
