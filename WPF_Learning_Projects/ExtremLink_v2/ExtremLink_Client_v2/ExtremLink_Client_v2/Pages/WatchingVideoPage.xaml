@@ -22,53 +22,9 @@
                        HorizontalAlignment="Center" Margin="0,5,0,20"/>
 
             <!-- Video Widget -->
-            <MediaElement x:Name="VideoPlayer" Width="600" Height="337.5" Margin="0,0,0,50"
+            <MediaElement x:Name="VideoPlayer" Width="800" Height="450" Margin="0,0,0,0"
               LoadedBehavior="Manual" UnloadedBehavior="Stop"
               Stretch="UniformToFill"/>
-            <!--Border CornerRadius="5" BorderBrush="#008B8B" BorderThickness="5" Width="640" Height="360" 
-                    HorizontalAlignment="Center" Margin="0,10,0,20">
-                <MediaElement x:Name="frameImg" Source="/Images/default_image.png"
-                              Stretch="UniformToFill"/>
-            </Border> -->
-
-            <!-- Video Controls -->
-            <Grid HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Start button -->
-                <Button Content="▶ Play" Background="#034045" Foreground="White" Width="130" Height="50"
-                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="0"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,30,0"
-                    Click="PlayBtn_Click">
-                    <Button.Effect>
-                        <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
-                    </Button.Effect>
-                </Button>
-
-                <!-- Pause button -->
-                <Button Content="⏸ Pause" Background="#034045" Foreground="White" Width="130" Height="50"
-                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="1"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="30,0,30,0"
-                    Click="PauseBtn_Click">
-                    <Button.Effect>
-                        <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
-                    </Button.Effect>
-                </Button>
-
-                <!-- Stop button -->
-                <Button Content="⏹ Stop" Background="#034045" Foreground="White" Width="130" Height="50"
-                    FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="2"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="30,0,0,0"
-                    Click="StopBtn_Click">
-                    <Button.Effect>
-                        <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
-                    </Button.Effect>
-                </Button>
-            </Grid>
         </StackPanel>
 
         <!-- Version Info -->

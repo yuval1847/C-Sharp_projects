@@ -21,6 +21,14 @@
             <Border BorderBrush="#00CEC9" BorderThickness="1"  Width="400" Height="225">
                 <Image x:Name="frameImg" Width="400" Height="225" />
             </Border>
+            <!-- Back to home page button -->
+            <Button x:Name="BackHomeBtn" Content="🏠 Back Home" Width="130" Height="50" Background="#034045" Foreground="White" Grid.Column="4"
+                FontSize="18" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,25,0,0" Click="BackHomeBtn_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                </Button.Effect>
+            </Button>
         </StackPanel>
         <TextBlock Text="Version 1.1" FontSize="14" FontFamily="Consolas" Foreground="#00cec9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20"/>
     </Grid>

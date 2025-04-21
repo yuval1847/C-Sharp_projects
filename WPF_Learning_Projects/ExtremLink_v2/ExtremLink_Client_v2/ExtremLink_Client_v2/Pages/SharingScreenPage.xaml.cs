@@ -63,6 +63,7 @@ namespace ExtremLink_Client_v2.Pages
         {
             // Input: Nothing.
             // Output: The function starts all the threads of the controlling.
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Controlling);
             this.sharingScreenThread.Start();
             this.localSharingScreenThread.Start();
             this.mouseControllingThead.Start();
@@ -78,13 +79,24 @@ namespace ExtremLink_Client_v2.Pages
             this.mouseControllingThead.Join();
             this.keyboardControllingThead.Join();
         }
-        
+
         // Changing sharescreen TextBlock text.
         private void ChangeSharingScreenTitle(string newText) {
             // Input: a string which contains a text.
             // Output: The function changes the sharing screen title according to the given string using the UI thread.
             Dispatcher.Invoke(() => sharingScreenTitle.Text = newText);
         }
+
+
+        // Buttons:
+        private void BackHomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // A function which changes the current page to the home page.
+            this.StopGettingControlled();
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
+            this.contentMain.Content = new HomePage(this.contentMain);
+        }
+
 
 
         // Handle server responds.
@@ -292,5 +304,7 @@ namespace ExtremLink_Client_v2.Pages
                 Thread.Sleep(20);
             }
         }
+
+        
     }
 }

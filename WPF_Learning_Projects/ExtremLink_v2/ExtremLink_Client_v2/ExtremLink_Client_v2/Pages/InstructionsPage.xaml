@@ -23,33 +23,33 @@
                FontFamily="Consolas"/>
 
             <!-- Instructions Points: -->
-            <TextBlock Text="◈ Choose your rule as a client of the program (Attacker or Victim)." FontSize="20" Foreground="#00CECF"
-                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                        FontFamily="Consolas" Opacity="1"/>  
-            <TextBlock Text="◈ Enter the IPv4 address of the server which connects the client." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ Login or Sign up to the system." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ Choose your requested functionality in the home page." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ The attacker can start, pause and stop the controlling." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ When the attacker stops control, he can start over&#x0A;  and reconnect to the victim's pc." FontSize="20" Foreground="#00CECF"
-                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
-                       FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ Both attacker and victim can choose and watch each&#x0A;  recording of their sessions." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Choose your rule as a client of the program (Attacker or Victim)." FontSize="18" Foreground="#00CECF"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                         FontFamily="Consolas" Opacity="1"/>
-            <TextBlock Text="◈ For exiting the program click on the exit button on top." FontSize="20" Foreground="#00CECF"
+            <TextBlock Text="◈ Enter the IPv4 address of the server which connects the client." FontSize="18" Foreground="#00CECF"
                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
                        FontFamily="Consolas" Opacity="1"/>
-            
-            <TextBlock Text="⚠ Warning! This program was created for learning purpose only!" FontSize="20"
-                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,20,0,0" FontFamily="Consolas" Opacity="1">
+            <TextBlock Text="◈ Login or Sign up to the system." FontSize="18" Foreground="#00CECF"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                       FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ Choose your requested functionality in the home page." FontSize="18" Foreground="#00CECF"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                       FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ The attacker can start, pause and stop the controlling." FontSize="18" Foreground="#00CECF"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                       FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ When the attacker stops control, he can start over&#x0A;  and reconnect to the victim's pc." FontSize="18" Foreground="#00CECF"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                       FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ Both attacker and victim can choose and watch each&#x0A;  recording of their sessions." FontSize="18" Foreground="#00CECF"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                        FontFamily="Consolas" Opacity="1"/>
+            <TextBlock Text="◈ For exiting the program click on the exit button on top." FontSize="18" Foreground="#00CECF"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"
+                       FontFamily="Consolas" Opacity="1"/>
+
+            <TextBlock Text="⚠ Warning! This program was created for learning purpose only!" FontSize="18"
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,20,0,0" FontFamily="Consolas" Opacity="1">
                 <TextBlock.Foreground>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="Orange" Offset="0"/>

