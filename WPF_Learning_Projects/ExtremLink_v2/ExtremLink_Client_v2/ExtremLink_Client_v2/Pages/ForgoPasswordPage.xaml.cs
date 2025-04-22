@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace ExtremLink_Client_v2.Pages
 {
@@ -20,9 +22,25 @@ namespace ExtremLink_Client_v2.Pages
     /// </summary>
     public partial class ForgoPasswordPage : UserControl
     {
-        public ForgoPasswordPage()
+
+        private ContentControl mainContent;
+
+        public ForgoPasswordPage(ContentControl mainContent)
         {
             InitializeComponent();
+            this.mainContent = mainContent;
+        }
+
+        private void BackLoginPageBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // This function returns to the login page.
+            this.mainContent.Content = new LoginPage(this.mainContent);
+        }
+
+        private void SendsPassViaEmailBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // A function which sends to the given user his password via his email.
+
         }
     }
 }

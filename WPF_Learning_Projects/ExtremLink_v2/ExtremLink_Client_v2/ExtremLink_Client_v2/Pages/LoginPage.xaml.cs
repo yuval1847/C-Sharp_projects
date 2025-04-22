@@ -74,8 +74,8 @@ namespace ExtremLink_Client_v2.Pages
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            // A function which changes the current page to the home page.
+            this.contentMain.Content = new ForgoPasswordPage(this.contentMain);
         }
-
     }
 }
