@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
-using System.Net.Mail;
-using SendGrid;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace ExtremLink_Client_v2.Classes
 {
@@ -17,13 +18,25 @@ namespace ExtremLink_Client_v2.Classes
         */
 
         // Attributes:
-        private static string apiKey = "";
 
 
         // Functions:
-        public static async Task SendEmail(string receiver, string subject, string msg)
+        public static async Task SendEmail(string receiverEmailAddress, string subject, string msg)
         {
             // A function which sends emails messages.
+            var email = new MimeMessage();
+            email.From.Add(new MailboxAddress("Yuyu1847", "8b7e64001@smtp-brevo.com"));
+            email.To.Add(new MailboxAddress("", receiverEmailAddress));
+            email.Subject = subject;
+            email.Body = new TextPart("plain")
+            {
+                Text = msg
+            };
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp-relay.brevo.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("8b7e64001@smtp-brevo.com", ); // Note: add here the api_key
+            smtp.Send(email);
+            smtp.Disconnect(true);
         }
     }
 }
