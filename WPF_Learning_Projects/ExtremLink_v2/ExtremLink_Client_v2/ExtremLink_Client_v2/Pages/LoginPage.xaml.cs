@@ -76,6 +76,6 @@ namespace ExtremLink_Client_v2.Pages
         {
             // A function which changes the current page to the home page.
             this.contentMain.Content = new ForgoPasswordPage(this.contentMain);
-        }
+        }  
     }
 }
