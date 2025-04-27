@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ExtremLink_Client_v2.Classes;
 using MailKit.Net.Smtp;
 using MimeKit;
 
@@ -37,10 +38,12 @@ namespace ExtremLink_Client_v2.Pages
             this.mainContent.Content = new LoginPage(this.mainContent);
         }
 
-        private void SendsPassViaEmailBtn_Click(object sender, RoutedEventArgs e)
+        private void SendsPassViaSMSBtn_Click(object sender, RoutedEventArgs e)
         {
             // A function which sends to the given user his password via his email.
 
+            // Testing:
+            SmsManager.sendSmsMessage("", "");
         }
     }
 }

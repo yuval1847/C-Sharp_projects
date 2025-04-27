@@ -77,7 +77,7 @@ namespace ExtremLink_Client_v2.CustomWidgets {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client_v2;V1.0.0.0;component/customwidgets/customtextbox.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ExtremLink_Client_v2;component/customwidgets/customtextbox.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\CustomWidgets\CustomTextBox.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
