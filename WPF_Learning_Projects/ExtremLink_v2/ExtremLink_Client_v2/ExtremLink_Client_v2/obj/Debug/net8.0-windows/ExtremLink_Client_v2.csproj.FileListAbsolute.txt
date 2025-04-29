@@ -145,3 +145,26 @@ C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projec
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Tokens.dll
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Twilio.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\MailKit.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.Bcl.Memory.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Logging.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Tokens.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\MimeKit.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Asio.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Core.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Midi.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\NAudio.WinMM.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\Twilio.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\obj\Debug\net8.0-windows\Pages\ForgoPasswordPage.g.cs
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\obj\Debug\net8.0-windows\Pages\ForgoPasswordPage.baml

@@ -205,6 +205,7 @@ namespace ExtremLink_Client_v2.Pages
             // Input: Nothing.
             // Output: The function getting keyboard key and sending it to the client
             Key pressedKey = e.Key;
+            CustomKeyboardAttacker.CustomKeyboardInstance.CurrentKeyboardCommand = AttackerKeyboardCommands.KeyPress;
             CustomKeyboardAttacker.CustomKeyboardInstance.SendKeyboardCommands(pressedKey);
         }
     }
