@@ -289,7 +289,7 @@ namespace ExtremLink_Client_v2.Pages
             while (true)
             {
                 CustomMouseVictim.CustomMouseInstance.ExecuteCurrentMouseCommand();
-                Thread.Sleep(50);
+                Thread.Sleep(20);
             }
         }
 
