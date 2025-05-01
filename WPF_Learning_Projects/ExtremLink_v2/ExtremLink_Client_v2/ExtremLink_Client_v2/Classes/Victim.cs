@@ -333,23 +333,53 @@ namespace ExtremLink_Client_v2.Classes
         }
         private void HandleKeyboardInput(string message)
         {
-            // Input: string which represent a keyboard commands query message.
-            // Ouput: The function update the CustomKeyboard object according to the given message's parameters.
+            // Input: A JSON string that represents a keyboard command.
+            // Output: Updates the CustomKeyboard object according to the message parameters.
 
-            // Reading the data in json format
-            dynamic data = JsonConvert.DeserializeObject(message);
-
-            // Casting the data dynamic object to JObject
-            JObject jsonData = (JObject)data;
-           
-            switch ((string)data.type)
+            try
             {
-                case "keyPress":
-                    CustomKeyboardVictim.CustomKeyboardInstance.CurrentKeyboardCommand = VictimKeyboardCommands.KeyPress;
-                    CustomKeyboardVictim.CustomKeyboardInstance.CurrentKey = (Key)Enum.Parse(typeof(Key), data.PressedKey);
-                    break;
+                // Deserialize the incoming JSON message into a dynamic object
+                dynamic data = JsonConvert.DeserializeObject(message);
+
+                // Optionally cast to JObject if you need to work with the JSON tree
+                JObject jsonData = (JObject)data;
+
+                string type = (string)data.type;
+
+                switch (type)
+                {
+                    case "keyPress":
+                        CustomKeyboardVictim.CustomKeyboardInstance.CurrentKeyboardCommand = VictimKeyboardCommands.KeyPress;
+
+                        string keyString = (string)data.PressedKey;
+
+                        if (Enum.TryParse(keyString, ignoreCase: true, out Key parsedKey))
+                        {
+                            CustomKeyboardVictim.CustomKeyboardInstance.CurrentKey = parsedKey;
+                        }
+                        else
+                        {
+                            // Handle invalid or unsupported key value
+                            Console.WriteLine($"[Error] Invalid key received: '{keyString}'");
+                        }
+
+                        break;
+
+                    default:
+                        Console.WriteLine($"[Warning] Unknown message type: {type}");
+                        break;
+                }
+            }
+            catch (JsonReaderException ex)
+            {
+                Console.WriteLine($"[Error] Failed to parse JSON: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Error] Unexpected error while handling keyboard input: {ex.Message}");
             }
         }
+
 
         // Handle Sessions commands:
         private void HandleSessionsCommands(string message)

@@ -94,7 +94,7 @@ namespace ExtremLink_Client_v2.Classes
         {
             // Input: Nothing.
             // Output: A string which is a query in a json format which represent the current pressed key.
-            return $"{{\"type\":\"keyPress\",\"PressedKey\":{this.currentKey.ToString()}}}";
+            return $"{{\"type\":\"keyPress\",\"PressedKey\":\"{this.currentKey}\"}}";
         }
 
 
