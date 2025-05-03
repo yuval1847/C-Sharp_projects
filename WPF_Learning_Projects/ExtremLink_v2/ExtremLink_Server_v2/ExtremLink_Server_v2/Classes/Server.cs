@@ -319,6 +319,28 @@ namespace ExtremLink_Server_v2.Classes
                 }
             }
         }
+        private void HandleForgotPassword(string data, TypeOfClient typeOfClient)
+        {
+            // A function which handles forgot password requests.
+            data = data.Replace("forgotPassword,", "");
+            string username = data.Split(",")[0].Split("=")[1];
+            string city = data.Split(",")[1].Split("=")[1];
+            string phone = data.Split(",")[2].Split("=")[1];
+            if (this.IsUserExist(username, city, phone, "ExtremLinkDB.mdf")) 
+            {
+                string password = this.RetrievePassword(username, city, phone, "ExtremLinkDB.mdf");
+                switch (typeOfClient)
+                {
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", $"password={password}");
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", $"password={password}");
+                        break;
+                }
+                Log.LogInstance.AddMessage("A client's user retrived his password");
+            }
+        }
         private void HandleUsersDatabaseMessages(string data, TypeOfClient typeOfClient)
         {
             // Input: A string which represents a message about users managment from the client and the type of the client.
@@ -331,6 +353,11 @@ namespace ExtremLink_Server_v2.Classes
             else if (data.Contains("signup"))
             {
                 this.HandleSignUpMessage(data, typeOfClient);
+            }
+
+            else if (data.Contains("forgotPassword"))
+            {
+                this.HandleForgotPassword(data, typeOfClient);
             }
         }
 
@@ -427,7 +454,6 @@ namespace ExtremLink_Server_v2.Classes
             jsonFormat += "}";
             return jsonFormat;
         }
-
         private byte[] GetSessionContentById(int id)
         {
             // Input: An integer representing a session ID.
@@ -710,6 +736,70 @@ namespace ExtremLink_Server_v2.Classes
             }
             // MessageBox.Show(Convert.ToString(found));
             return found;
+        }
+        public bool IsUserExist(string username, string city, string phone, string databaseFileName)
+        {
+            // A function which chekc if a specific user exists.
+            string sqlQuery = "SELECT * FROM [dbo].[Table] WHERE username = @username AND city = @city AND phone = @phone";
+            bool found = false;
+            using (SqlConnection conn = ConnectToDB(databaseFileName))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand com = new SqlCommand(sqlQuery, conn))
+                    {
+                        // Add parameters to the command to avoid SQL injection
+                        com.Parameters.AddWithValue("@username", username);
+                        com.Parameters.AddWithValue("@city", city);
+                        com.Parameters.AddWithValue("@phone", phone);
+
+                        object result = com.ExecuteScalar();
+                        int count = result == null ? 0 : Convert.ToInt32(result);
+                        // If count is greater than 0, the user exists
+                        found = (count > 0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Connection failed: " + ex.Message);
+                }
+            }
+            // MessageBox.Show(Convert.ToString(found));
+            return found;
+        }
+        public string RetrievePassword(string username, string city, string phone, string databaseFileName)
+        {
+            // A function which returns a user's password.
+            string password = null;
+            string sqlQuery = "SELECT password FROM [dbo].[Table] WHERE username = @username AND city = @city AND phone = @phone";
+
+            using (SqlConnection conn = ConnectToDB(databaseFileName))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlCommand com = new SqlCommand(sqlQuery, conn))
+                    {
+                        com.Parameters.AddWithValue("@username", username);
+                        com.Parameters.AddWithValue("@city", city);
+                        com.Parameters.AddWithValue("@phone", phone);
+
+                        object result = com.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            password = result.ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error retrieving password: " + ex.Message);
+                }
+            }
+
+            return password;
         }
         public bool AddUser(string[] parameters, string databaseFileName)
         {

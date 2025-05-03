@@ -38,12 +38,48 @@ namespace ExtremLink_Client_v2.Pages
             this.mainContent.Content = new LoginPage(this.mainContent);
         }
 
-        private void SendsPassViaSMSBtn_Click(object sender, RoutedEventArgs e)
+        private void ShowPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
-            // A function which sends to the given user his password via his email.
+            // A function which show's the password of a specific user according to it's given credentials.
+            string forgotPasswordRequest = $"forgotPassword,username={usernameCustomTextBox.Text},city={cityCustomTextBox.Text},phone={phoneCustomTextBox.Text}";
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    Attacker.AttackerInstance.SendTCPMessageToClient("!", forgotPasswordRequest);
+                    break;
+                case TypeOfClient.Victim:
+                    Victim.VictimInstance.SendTCPMessageToClient("!", forgotPasswordRequest);
+                    break;
+            }
 
-            // Testing:
-            SmsManager.sendSmsMessage("", "");
+            Thread.Sleep(2000);
+            string password = "";
+            switch (User.UserInstance.TypeOfClient)
+            {
+                case TypeOfClient.Attacker:
+                    if (Attacker.AttackerInstance.ServerRespond.Contains("password"))
+                    {
+                        password = Attacker.AttackerInstance.ServerRespond.Split('=')[1];
+                        MessageBox.Show($"The user's password is: {password}");
+                    }
+                    else
+                    {
+                        wrongPropertiesTextBlock.Visibility = Visibility.Visible;
+                    }
+                    break;
+
+                case TypeOfClient.Victim:
+                    if (Victim.VictimInstance.ServerRespond.Contains("password"))
+                    {
+                        password = Victim.VictimInstance.ServerRespond.Split('=')[1];
+                        MessageBox.Show($"The user's password is: {password}");
+                    }
+                    else
+                    {
+                        wrongPropertiesTextBlock.Visibility = Visibility.Visible;
+                    }
+                    break;
+            }
         }
     }
 }

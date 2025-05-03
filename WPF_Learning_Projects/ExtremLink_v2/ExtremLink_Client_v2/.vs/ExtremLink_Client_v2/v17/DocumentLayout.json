@@ -1,100 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\customkeyboardvictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\customkeyboardvictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\sharingscreenpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\sharingscreenpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\customkeyboardattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\customkeyboardattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\sharingscreenpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\sharingscreenpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 100,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomKeyboardVictim.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAiwKMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T16:47:16.938Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SharingScreenPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml.cs",
-              "ViewState": "AgIAABkBAAAAAAAAAAAAABwBAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T16:23:31.632Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SharingScreenPage.xaml",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\SharingScreenPage.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-01T16:23:27.257Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Victim.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Victim.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Victim.cs",
-              "ViewState": "AgIAAFQBAAAAAAAAAAAAAH0BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T16:23:12.8Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CustomKeyboardAttacker.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAAwGAAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T17:06:38.594Z"
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

@@ -283,6 +283,10 @@ namespace ExtremLink_Client_v2.Classes
                     this.serverRespond = "NotAdded";
                     break;
             }
+            if (data.Contains("password"))
+            {
+                this.serverRespond = data;
+            }
         }
 
         // Handle with frames commands:
