@@ -15,14 +15,4 @@ using System.Windows.Shapes;
 
 namespace ExtremLink_Client_v2.CustomWidgets
 {
-    /// <summary>
-    /// Interaction logic for UserIcon.xaml
-    /// </summary>
-    public partial class UserIcon : UserControl
-    {
-        public UserIcon()
-        {
-            InitializeComponent();
-        }
-    }
 }

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ExtremLink_Server_v2.Classes.Client">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABAIAAABgAAIDIAAiAyICBgAAAAAABIRAACDDgAQI=</HashCode>
+      <FileName>Classes\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Classes.Log">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAAAAAAAACAAAAAAAAAAAABAAAAAQAAAAA=</HashCode>
+      <FileName>Classes\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Classes.Server">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgAkDMAIAAhYIAARgAACAAAyCwAEYIgIcBIAAHAAEA=</HashCode>
+      <FileName>Classes\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Classes.Session">
+    <Position X="2.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAAAAIAQAgCAEAIAAAAAAAgAAAAAAAAgA=</HashCode>
+      <FileName>Classes\Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Classes.User">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ExtremLink_Server_v2.Classes.TypeOfClient">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Classes\Client.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

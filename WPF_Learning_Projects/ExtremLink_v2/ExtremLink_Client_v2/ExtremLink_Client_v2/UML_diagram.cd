@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ExtremLink_Client_v2.Classes.Attacker">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KQCAkIAAgDgCQAAIAggABACAAEAAAQAFAxBIAIKAQMA=</HashCode>
+      <FileName>Classes\Attacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.AttackerSession">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAQIUAAgCBAQIAAAAAAAIAMgAAIIAQA=</HashCode>
+      <FileName>Classes\AttackerSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.Client">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAACAAAAAAAAAIAAAAgAQAAAAAAAIAIAACCABAAAA=</HashCode>
+      <FileName>Classes\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.CustomKeyboardAttacker">
+    <Position X="8.75" Y="6.25" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="ExtremLink_Client_v2.Classes.CustomKeyboardAttacker.LowLevelKeyboardProc" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardAttacker.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABQAAAAAAAAQAEAAgDAAAAQAAAAYADAACgBBiAKA=</HashCode>
+      <FileName>Classes\CustomKeyboardAttacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim.MOUSEINPUT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardVictim.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim.INPUT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardVictim.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim.HARDWAREINPUT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardVictim.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim.InputUnion" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardVictim.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="ExtremLink_Client_v2.Classes.CustomKeyboardVictim.KEYBDINPUT" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\CustomKeyboardVictim.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAABQAAAAAAQAAAAAAAAAAgAAAAYAAAAGoAAAgIA=</HashCode>
+      <FileName>Classes\CustomKeyboardVictim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.CustomMouseAttacker">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAYAAAAAAAAAAAQCAAAFAAAAAQAAAAAAAABAAAAA=</HashCode>
+      <FileName>Classes\CustomMouseAttacker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.CustomMouseVictim">
+    <Position X="7" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IDAABIAAAAABAEAAAQAIQAFAAEAAQQAAAAAIQgCAAAA=</HashCode>
+      <FileName>Classes\CustomMouseVictim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.Session">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgAACAAAIQAAgCAiAIAAAAABAAAAAAAAAAgA=</HashCode>
+      <FileName>Classes\Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.SoundManager">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAgAIAAAACAEAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\SoundManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.User">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAIEEAAAABAACAQAAAgAAAAA=</HashCode>
+      <FileName>Classes\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Classes.Victim">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ASAAgIAAAChAYAAAAAgABBCBQAAQAQAEATAIQoChQMI=</HashCode>
+      <FileName>Classes\Victim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ExtremLink_Client_v2.Classes.AttackerKeyboardCommands">
+    <Position X="8.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\CustomKeyboardAttacker.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ExtremLink_Client_v2.Classes.VictimKeyboardCommands">
+    <Position X="10.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\CustomKeyboardVictim.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ExtremLink_Client_v2.Classes.AttackerMouseCommands">
+    <Position X="5.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\CustomMouseAttacker.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ExtremLink_Client_v2.Classes.VictimMouseCommands">
+    <Position X="7" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\CustomMouseVictim.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ExtremLink_Client_v2.Classes.TypeOfSessionRequest">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAA=</HashCode>
+      <FileName>Classes\Session.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ExtremLink_Client_v2.Classes.EPlaylist">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAAiAAAAABA=</HashCode>
+      <FileName>Classes\SoundManager.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TypeOfClient">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Classes\ETypeOfClient.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
