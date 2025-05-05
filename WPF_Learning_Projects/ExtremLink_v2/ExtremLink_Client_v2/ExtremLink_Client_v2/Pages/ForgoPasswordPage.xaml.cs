@@ -41,7 +41,7 @@ namespace ExtremLink_Client_v2.Pages
         private void ShowPasswordBtn_Click(object sender, RoutedEventArgs e)
         {
             // A function which show's the password of a specific user according to it's given credentials.
-            string forgotPasswordRequest = $"forgotPassword,username={usernameCustomTextBox.Text},city={cityCustomTextBox.Text},phone={phoneCustomTextBox.Text}";
+            string forgotPasswordRequest = $"forgotPassword,username={usernameCustomTextBox.customTB.Text},city={cityCustomTextBox.customTB.Text},phone={phoneCustomTextBox.customTB.Text}";
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
