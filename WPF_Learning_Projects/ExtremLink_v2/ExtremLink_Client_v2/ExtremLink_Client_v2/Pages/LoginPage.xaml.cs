@@ -43,8 +43,8 @@ namespace ExtremLink_Client_v2.Pages
             // The function called by clicking on the login button
             // The fucntion gets nothing.
             // The function send a login request message to the server via the client in order to login as a user
-            string username = usernameCustomTextBox.customTB.Text;
-            string password = passwordCustomTextBox.customTB.Text;
+            string username = usernameCustomTextBox.Text;
+            string password = passwordCustomTextBox.Text;
             string loginRequest = $"login,username={username},password={password}";
             switch (User.UserInstance.TypeOfClient)
             {

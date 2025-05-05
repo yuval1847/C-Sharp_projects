@@ -36,7 +36,7 @@ namespace ExtremLink_Client_v2.Pages
             // The function got called by clicking on the connect button.
             // The function gets nothing.
             // The function create an client instance and connect to the server.
-            string serverIpAddr = ServerIpCustomTextBox.Text;
+            string serverIpAddr = ServerIpCustomTextBox.customTB.Text;
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
