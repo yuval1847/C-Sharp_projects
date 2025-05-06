@@ -57,8 +57,9 @@ namespace ExtremLink_Client_v2.Pages
             switch (User.UserInstance.TypeOfClient)
             {
                 case TypeOfClient.Attacker:
-                    if (Attacker.AttackerInstance.ServerRespond.Contains("password"))
+                    if (Attacker.AttackerInstance.ServerRespond != null && Attacker.AttackerInstance.ServerRespond.Contains("password"))
                     {
+                        wrongPropertiesTextBlock.Visibility = Visibility.Hidden;
                         password = Attacker.AttackerInstance.ServerRespond.Split('=')[1];
                         MessageBox.Show($"The user's password is: {password}");
                     }
@@ -69,8 +70,9 @@ namespace ExtremLink_Client_v2.Pages
                     break;
 
                 case TypeOfClient.Victim:
-                    if (Victim.VictimInstance.ServerRespond.Contains("password"))
+                    if (Victim.VictimInstance.ServerRespond != null && Victim.VictimInstance.ServerRespond.Contains("password"))
                     {
+                        wrongPropertiesTextBlock.Visibility = Visibility.Hidden;
                         password = Victim.VictimInstance.ServerRespond.Split('=')[1];
                         MessageBox.Show($"The user's password is: {password}");
                     }

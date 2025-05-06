@@ -47,7 +47,7 @@
                     </TextBlock.RenderTransform>
                 </TextBlock>
                 <Image Source="/Images/video_icon_1.png" Grid.ColumnSpan="1" Width="20" Height="20" Margin="7,-425,168,500" RenderTransformOrigin="0.496,0.58"/>
-                <TextBlock x:Name="recordingStatusTextBlock" FontFamily="Consolas" Text="Record: off" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Grid.ColumnSpan="2" Margin="35,-418,192,0"/>
+                <TextBlock x:Name="recordingStatusTextBlock" FontFamily="Consolas" Text="Record: off" VerticalAlignment="Top" Foreground="#00cec9" FontSize="15" Margin="35,-418,15,0" Height="16"/>
 
                 <!-- Controlling buttons -->
                 <!-- Start button -->

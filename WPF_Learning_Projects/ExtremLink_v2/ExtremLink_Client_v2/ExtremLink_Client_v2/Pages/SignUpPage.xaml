@@ -83,10 +83,10 @@
                     <TextBlock x:Name="wrongEmailTextBlock" Visibility="hidden" Text="Should contain '@'!" Foreground="Red" FontSize="16" HorizontalAlignment="Left" Margin="0,0,0,5"/>
                 </StackPanel>
             </Grid>
-            <TextBlock x:Name="errorSignUpTextBlock" Visibility="Hidden" Text="This user already exist!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock x:Name="errorSignUpTextBlock" Visibility="Hidden" Text="This user already exist!" Foreground="Red" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,0"/>
             <Button x:Name="signUpBtn" Content="Sign-Up" Width="120" Height="45" Background="#034045" Foreground="White"
                 FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,0,0,10" Click="SignUpButton_Click">
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" FontFamily="Consolas" Margin="0,-15,0,0" Click="SignUpButton_Click">
                 <Button.Effect>
                     <DropShadowEffect Color="#00CEC9" BlurRadius="20" ShadowDepth="0"/>
                 </Button.Effect>

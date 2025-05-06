@@ -33,18 +33,12 @@ namespace ExtremLink_Client_v2.Pages
             this.LoadVideo();
         }
 
-        // Operation buttons:
-        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        // The back home button click function:
+        private void BackHomeBtn_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void PauseBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void StopBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            // Input: Nothing.
+            // Output: The function changes the current page to the home page.
+            this.contentMain.Content = new HomePage(this.contentMain);
         }
 
         // Functions of the session:

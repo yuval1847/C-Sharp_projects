@@ -26,7 +26,7 @@
             </Grid>
 
             <!-- Main Block Container -->
-            <Border Background="Transparent" CornerRadius="10" Padding="15" BorderBrush="#008B8B" BorderThickness="3" Height="473">
+            <Border Background="Transparent" CornerRadius="10" Padding="15" BorderBrush="#008B8B" BorderThickness="3" Height="440">
                 <StackPanel>
 
                     <!-- User Section -->

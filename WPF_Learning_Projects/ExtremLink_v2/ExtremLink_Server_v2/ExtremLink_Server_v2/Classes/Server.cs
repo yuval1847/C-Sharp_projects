@@ -340,6 +340,18 @@ namespace ExtremLink_Server_v2.Classes
                 }
                 Log.LogInstance.AddMessage("A client's user retrived his password");
             }
+            else
+            {
+                switch (typeOfClient)
+                {
+                    case TypeOfClient.attacker:
+                        this.attacker.SendTCPMessageToClient("!", "UserNotFound");
+                        break;
+                    case TypeOfClient.victim:
+                        this.victim.SendTCPMessageToClient("!", "UserNotFound");
+                        break;
+                }
+            }
         }
         private void HandleUsersDatabaseMessages(string data, TypeOfClient typeOfClient)
         {
