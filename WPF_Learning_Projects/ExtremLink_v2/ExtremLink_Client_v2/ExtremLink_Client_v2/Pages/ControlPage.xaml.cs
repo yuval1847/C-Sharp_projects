@@ -43,12 +43,42 @@ namespace ExtremLink_Client_v2.Pages
             this.isRecordingFrame = false;
             InitializeComponent();
             clientIpTextBlock.Text = $"Victim's IP: {Attacker.AttackerInstance.VictimIpAddr}";
+            this.ManageButtons("Init");
         }
 
+        private void ManageButtons(string btnName)
+        {
+            // A function which enable\disable buttons while needed.
+            switch (btnName)
+            {
+                case "PlayBtn":
+                    PlayBtn.IsEnabled = false;
+                    PauseBtn.IsEnabled = true;
+                    StopBtn.IsEnabled = true;
+                    RecordBtn.IsEnabled = true;
+                    BackHomeBtn.IsEnabled = true;
+                    break;
+                case "PauseBtn":
+                    PlayBtn.IsEnabled = true;
+                    PauseBtn.IsEnabled = false;
+                    StopBtn.IsEnabled = true;
+                    RecordBtn.IsEnabled = false;
+                    BackHomeBtn.IsEnabled = true;
+                    break;
+                case "Init":
+                    PlayBtn.IsEnabled = true;
+                    PauseBtn.IsEnabled = false;
+                    StopBtn.IsEnabled = false;
+                    RecordBtn.IsEnabled = false;
+                    BackHomeBtn.IsEnabled = true;
+                    break;
+            }
+        }
 
         // Main buttons:
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.ManageButtons("PlayBtn");
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "StartSendFrames");
             this.isReceivingFrames = true;
             Thread.Sleep(3000);
@@ -57,6 +87,7 @@ namespace ExtremLink_Client_v2.Pages
         }
         private void PauseBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.ManageButtons("PauseBtn");
             Attacker.AttackerInstance.SendTCPMessageToClient("&", "PauseSendFrames");
             this.isReceivingFrames = false;
             this.LoadDefaultFrame();
@@ -68,6 +99,7 @@ namespace ExtremLink_Client_v2.Pages
             this.isReceivingFrames = false;
             this.LoadDefaultFrame();
             SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
+            this.contentMain.Content = new HomePage(this.contentMain);
         }
         private void RecordBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -86,6 +118,9 @@ namespace ExtremLink_Client_v2.Pages
         private void BackHomeBtn_Click(object sender, RoutedEventArgs e)
         {
             // A function which changes the current page to the home page.
+            Attacker.AttackerInstance.SendTCPMessageToClient("&", "StopSendFrames");
+            this.isReceivingFrames = false;
+            this.LoadDefaultFrame();
             SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
             this.contentMain.Content = new HomePage(this.contentMain);
         }

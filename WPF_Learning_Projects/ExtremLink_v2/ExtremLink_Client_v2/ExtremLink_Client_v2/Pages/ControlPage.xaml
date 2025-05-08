@@ -51,7 +51,7 @@
 
                 <!-- Controlling buttons -->
                 <!-- Start button -->
-                <Button Content="▶ Play" Background="#034045" Foreground="White" Width="130" Height="50"
+                <Button Name="PlayBtn" Content="▶ Play" Background="#034045" Foreground="White" Width="130" Height="50"
                     FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="0"
                     HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0"
                     Click="PlayBtn_Click">
@@ -61,7 +61,7 @@
                 </Button>
 
                 <!-- Pause button -->
-                <Button Content="⏸ Pause" Background="#034045" Foreground="White" Width="130" Height="50"
+                <Button Name="PauseBtn" Content="⏸ Pause" Background="#034045" Foreground="White" Width="130" Height="50"
                     FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="1"
                     HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0"
                     Click="PauseBtn_Click">
@@ -71,7 +71,7 @@
                 </Button>
 
                 <!-- Stop button -->
-                <Button Content="⏹ Stop" Background="#034045" Foreground="White" Width="130" Height="50"
+                <Button Name="StopBtn" Content="⏹ Stop" Background="#034045" Foreground="White" Width="130" Height="50"
                         FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="2"
                         HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0"
                         Click="StopBtn_Click">
@@ -81,7 +81,7 @@
                 </Button>
 
                 <!-- Reecord button -->
-                <Button Content="⚫ Record" Background="#034045" Foreground="White" Width="130" Height="50"
+                <Button Name="RecordBtn" Content="⚫ Record" Background="#034045" Foreground="White" Width="130" Height="50"
                         FontSize="22" BorderThickness="2" Cursor="Hand" BorderBrush="#00CEC9" Grid.Column="3"
                         HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Margin="0,0,0,0"
                         Click="RecordBtn_Click">
