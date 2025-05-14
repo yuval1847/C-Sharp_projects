@@ -126,7 +126,7 @@ namespace ExtremLink_Client_v2.Classes
         // Functions:
 
         // A function which presses on the given key.
-        public void PressKey(Key keyToPress )
+        public void PressKey(Key keyToPress)
         {
             // Input: A Key type parameter which should be pressed.
             // Output: The function simulate a pressing on the given keyboard key.
