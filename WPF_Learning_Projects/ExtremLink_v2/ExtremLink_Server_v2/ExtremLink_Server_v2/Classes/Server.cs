@@ -70,14 +70,6 @@ namespace ExtremLink_Server_v2.Classes
             get { return this.victim; }
         }
 
-        // A string which represent a temp file path to the sessions mp4 files
-        private string tempSessionMP4FileName;
-        public string TempSessionMP4FileName
-        {
-            get { return this.tempSessionMP4FileName;}
-            set {  this.tempSessionMP4FileName = value;}
-        }
-
         private Session tempSession;
         public Session TempSession
         {
