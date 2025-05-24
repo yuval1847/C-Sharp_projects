@@ -311,14 +311,14 @@ namespace ExtremLink_Client_v2.Classes
 
             // Casting the data dynamic object to JObject
             JObject jsonData = (JObject)data;
-            
-            int screenWidthRatio = this.screenWidth / 800;
-            int screenHeightRatio = this.screenHeight / 450;
 
             // Checking if changing position is needed
             if (jsonData.ContainsKey("x") && jsonData.ContainsKey("y"))
             {
-                CustomMouseVictim.CustomMouseInstance.ChangePosition((float)data.x * screenWidthRatio, (float)data.y * screenHeightRatio);
+                // Implement here this formulas: x2 = (x1 / width1) * width2  
+                //                               y2 = (y1 / height1) * height2
+                CustomMouseVictim.CustomMouseInstance.ChangePosition(((float)data.x / 800) * GetSystemMetrics(0),
+                                                                     ((float)data.y / 450) * GetSystemMetrics(1));
             }
 
             // Updating the mouse parameters according to the given message

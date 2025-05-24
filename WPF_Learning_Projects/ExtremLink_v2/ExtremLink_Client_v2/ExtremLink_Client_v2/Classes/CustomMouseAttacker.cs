@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Point = System.Windows.Point;
 using System.CodeDom;
 using ExtremLink_Client_v2.Classes;
+using System.Runtime.InteropServices;
 
 namespace ExtremLink_Client_v2.Classes
 {
@@ -29,6 +30,9 @@ namespace ExtremLink_Client_v2.Classes
         A class which represents a mouse object.
         The class designed according to the 'Singleton' design pattern.
         */
+
+        [DllImport("user32.dll")]
+        private static extern int GetSystemMetrics(int nIndex);
 
         // Attributes:
         // A point object which represent the mouse position

@@ -100,6 +100,7 @@ namespace ExtremLink_Client_v2.Classes
             // Output: The function set the current position to the new position.
             this.cursorsPos.X = newXPos;
             this.cursorsPos.Y = newYPos;
+            // MessageBox.Show($"{GetSystemMetrics(0)}, {GetSystemMetrics(1)}");
         }
 
 

@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\soundmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\custommouseattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\custommouseattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\user\\desktop\\files\\projects\\programming\\c# projects\\wpf_learning_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\custommousevictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\custommousevictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +27,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SoundManager.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\SoundManager.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\SoundManager.cs",
-              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\SoundManager.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\SoundManager.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAuwCAAAAAZAAAAAAAAAA==",
+              "Title": "CustomMouseAttacker.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomMouseAttacker.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomMouseAttacker.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomMouseAttacker.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomMouseAttacker.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAIwF4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-19T09:51:59.547Z",
+              "WhenOpened": "2025-05-22T13:05:22.589Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Victim.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "ViewState": "AgIAABsBAAAAAAAAAAAQwDsBAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T12:56:16.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CustomMouseVictim.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomMouseVictim.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomMouseVictim.cs",
+              "ToolTip": "C:\\Users\\USER\\Desktop\\Files\\Projects\\Programming\\C# projects\\WPF_Learning_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomMouseVictim.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomMouseVictim.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAswGAAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T12:20:15.46Z"
             }
           ]
         }
