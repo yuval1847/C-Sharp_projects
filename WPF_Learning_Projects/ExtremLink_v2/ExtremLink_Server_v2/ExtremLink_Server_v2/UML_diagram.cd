@@ -17,7 +17,7 @@
   <Class Name="ExtremLink_Server_v2.Classes.Server">
     <Position X="4" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEgAkDMAIAAhYIAARgAACAAAyCwAEYIgIcBIAAHAAEA=</HashCode>
+      <HashCode>AEgAkDMAIAAhYIAAQgAACAAAyCwAEYIgIcBIAAHAAAA=</HashCode>
       <FileName>Classes\Server.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -34,6 +34,30 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Classes\User.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Pages.LogPage">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABIAIgAAAAQAAAAAAAIAAABAACAAADAgACAAAAAA=</HashCode>
+      <FileName>Pages\LogPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Pages.OpeningPage">
+    <Position X="7.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAAoABAAAAAAQgAAECACAAAAAgAAAAAgAA=</HashCode>
+      <FileName>Pages\OpeningPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ExtremLink_Server_v2.Pages.SessionsRecordsPage">
+    <Position X="5.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\SessionsRecordsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Enum Name="ExtremLink_Server_v2.Classes.TypeOfClient">
     <Position X="2.25" Y="3.75" Width="1.5" />

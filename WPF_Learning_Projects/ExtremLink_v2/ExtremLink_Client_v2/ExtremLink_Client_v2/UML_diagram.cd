@@ -72,7 +72,7 @@
   <Class Name="ExtremLink_Client_v2.Classes.CustomMouseAttacker">
     <Position X="5.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQCAYAAAAAAAAAAAQCAAAFAAAAAQAAAAAAAABAAAAA=</HashCode>
+      <HashCode>AAQCAYAAAAAAAAAAAQCAAAFAAAAAQAAAAAAAAhAAAAA=</HashCode>
       <FileName>Classes\CustomMouseAttacker.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -110,6 +110,102 @@
       <HashCode>ASAAgIAAAChAYAAAAAgABBCBQAAQAQAEATAIQoChQMI=</HashCode>
       <FileName>Classes\Victim.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.ChoosingRulePage" BaseTypeListCollapsed="true">
+    <Position X="1" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAgAAAAAAIA=</HashCode>
+      <FileName>Pages\ChoosingRulePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.ConnectingPage" BaseTypeListCollapsed="true">
+    <Position X="3" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAQAAAAAAAAAAAAgAAAAAACA=</HashCode>
+      <FileName>Pages\ConnectingPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.ControlPage" BaseTypeListCollapsed="true">
+    <Position X="5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgAABAABAIAAEAABAAQAABAAAAAACIAgACAAEhAA=</HashCode>
+      <FileName>Pages\ControlPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.ForgoPasswordPage" BaseTypeListCollapsed="true">
+    <Position X="7" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAIAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\ForgoPasswordPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.HomePage" BaseTypeListCollapsed="true">
+    <Position X="1" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAgCAAAAAAA=</HashCode>
+      <FileName>Pages\HomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.InstructionsPage" BaseTypeListCollapsed="true">
+    <Position X="3" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Pages\InstructionsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.LoginPage" BaseTypeListCollapsed="true">
+    <Position X="5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAIAAAAAAAAAAAACAAAAAiAAAAAAAA=</HashCode>
+      <FileName>Pages\LoginPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.OpeningPage" BaseTypeListCollapsed="true">
+    <Position X="7" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAAoABAAAAAAQgAAECACAAAAAgAAAAAgAA=</HashCode>
+      <FileName>Pages\OpeningPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.SessionsRecordsPage" BaseTypeListCollapsed="true">
+    <Position X="1" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Pages\SessionsRecordsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.SharingScreenPage" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAhAAIAEERAQAAIABACAAAEgGAAAGAiACgAoRzA=</HashCode>
+      <FileName>Pages\SharingScreenPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.SignUpPage" BaseTypeListCollapsed="true">
+    <Position X="3" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAI=</HashCode>
+      <FileName>Pages\SignUpPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ExtremLink_Client_v2.Pages.WatchingVideoPage" BaseTypeListCollapsed="true">
+    <Position X="7" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Pages\WatchingVideoPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Enum Name="ExtremLink_Client_v2.Classes.AttackerKeyboardCommands">
     <Position X="8.75" Y="12.5" Width="1.5" />
