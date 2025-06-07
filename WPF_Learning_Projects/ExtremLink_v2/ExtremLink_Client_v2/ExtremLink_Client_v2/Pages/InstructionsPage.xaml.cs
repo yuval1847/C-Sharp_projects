@@ -47,6 +47,7 @@ namespace ExtremLink_Client_v2.Pages
             BackHomeBtn.IsEnabled = false;
             SoundManager.SoundManagerInstance.PlaySound(EPlaylist.InsturctionsReaderAI);
             Thread.Sleep(33000);
+            BackHomeBtn.IsEnabled = true;
             SoundManager.SoundManagerInstance.PlaySound(EPlaylist.Background);
         }
     }

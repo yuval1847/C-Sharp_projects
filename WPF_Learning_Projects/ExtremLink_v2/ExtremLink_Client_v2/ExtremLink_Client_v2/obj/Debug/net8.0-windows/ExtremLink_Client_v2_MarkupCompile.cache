@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\obj\Debug\net8.0-windows\
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\obj\Debug\net8.0-windows\
 ExtremLink_Client_v2
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-C:\Users\USER\Desktop\Files\Projects\Programming\C# projects\WPF_Learning_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\App.xaml
+C:\Users\yuval\Desktop\Files\Projects\Programming\C#\WPF_Projects\ExtremLink_v2\ExtremLink_Client_v2\ExtremLink_Client_v2\App.xaml
 16-47086277
 
 33305743890
-229-1681562221
+229664388177
 CustomWidgets\CustomButton.xaml;CustomWidgets\CustomTextBox.xaml;CustomWidgets\UserIcon.xaml;MainWindow.xaml;Pages\ChoosingRulePage.xaml;Pages\ConnectingPage.xaml;Pages\ControlPage.xaml;Pages\ForgoPasswordPage.xaml;Pages\HomePage.xaml;Pages\InstructionsPage.xaml;Pages\LoginPage.xaml;Pages\OpeningPage.xaml;Pages\SessionsRecordsPage.xaml;Pages\SharingScreenPage.xaml;Pages\SignUpPage.xaml;Pages\WatchingVideoPage.xaml;
 
 False
