@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:ExtremLink_Client_v2.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800"
-             PreviewKeyDown ="FrameImg_KeyboardKeyDown">
+             Focusable="True"
+             PreviewKeyDown="FrameImg_KeyboardKeyDown">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -19,7 +20,7 @@
 
             <!-- Defualt Image -->
             <Image x:Name="frameImg" Source="/Images/default_image.png" Width="800" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center"
-                   MouseMove="FrameImg_MouseMove" MouseDown="FrameImg_MouseDown"/>
+                   MouseMove="FrameImg_MouseMove" MouseDown="FrameImg_MouseDown" PreviewKeyDown="FrameImg_KeyboardKeyDown"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

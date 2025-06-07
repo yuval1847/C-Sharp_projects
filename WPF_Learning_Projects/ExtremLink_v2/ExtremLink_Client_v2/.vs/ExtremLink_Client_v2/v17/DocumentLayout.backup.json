@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\instructionspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\instructionspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\controlpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\instructionspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\instructionspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\pages\\controlpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\pages\\controlpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\customkeyboardattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\customkeyboardattacker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\victim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|c:\\users\\yuval\\desktop\\files\\projects\\programming\\c#\\wpf_projects\\extremlink_v2\\extremlink_client_v2\\extremlink_client_v2\\classes\\customkeyboardvictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A460C140-3B93-4005-BC45-005F56B57E27}|ExtremLink_Client_v2\\ExtremLink_Client_v2.csproj|solutionrelative:extremlink_client_v2\\classes\\customkeyboardvictim.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +30,70 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "InstructionsPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml.cs",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml.cs",
-              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml.cs",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAAwDEAAAApAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ControlPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
+              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAwO4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T08:53:59.422Z",
+              "WhenOpened": "2025-06-07T10:04:22.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "InstructionsPage.xaml",
-              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml",
-              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml",
-              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml",
-              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\InstructionsPage.xaml",
+              "DocumentIndex": 0,
+              "Title": "ControlPage.xaml",
+              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
+              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Pages\\ControlPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-06-07T08:53:47.543Z",
+              "WhenOpened": "2025-06-07T10:04:13.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CustomKeyboardAttacker.cs",
+              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
+              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomKeyboardAttacker.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAHsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-07T09:56:07.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Victim.cs",
+              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\Victim.cs",
+              "ViewState": "AgIAAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-07T09:54:00.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CustomKeyboardVictim.cs",
+              "DocumentMoniker": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
+              "RelativeDocumentMoniker": "ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
+              "ToolTip": "C:\\Users\\yuval\\Desktop\\Files\\Projects\\Programming\\C#\\WPF_Projects\\ExtremLink_v2\\ExtremLink_Client_v2\\ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
+              "RelativeToolTip": "ExtremLink_Client_v2\\Classes\\CustomKeyboardVictim.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-07T09:53:53.003Z",
               "EditorCaption": ""
             }
           ]
